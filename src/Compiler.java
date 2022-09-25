@@ -11,5 +11,6 @@ public class Compiler {
         in.close();
         String s = new String(bytes, StandardCharsets.UTF_8);
         Lexer lexer = new Lexer(s);
+        Parser parser = new Parser(lexer.getTokenArrayList());
     }
 }

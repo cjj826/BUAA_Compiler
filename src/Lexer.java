@@ -1,6 +1,7 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Lexer {
@@ -12,8 +13,15 @@ public class Lexer {
     private String lexerAns;
     private final HashMap<String, String> classCode;
     private final int len;
+    private int line;
     private final String code;
     private Boolean debug;
+    
+    public ArrayList<Token> getTokenArrayList() {
+        return tokenArrayList;
+    }
+    
+    private ArrayList<Token> tokenArrayList;
     
     public Lexer(String code) {
         this.code = code;
@@ -23,10 +31,17 @@ public class Lexer {
         this.classCode = new HashMap<>();
         initHashMap();
         this.len = code.length();
-        this.debug = true;
+        this.debug = false;
+        this.line = 1;
+        this.tokenArrayList = new ArrayList<>();
         //调用getSym及处理
         while (pos < len) {
-            getSym();
+            int ret = getSym();
+            if (ret < 0) {
+                continue;
+            }
+            Token newToken = new Token(symbol, token, line);
+            tokenArrayList.add(newToken);
         }
         if (debug) {
             try {
@@ -37,7 +52,6 @@ public class Lexer {
                 System.out.println("Something wrong!");
             }
         }
-        
     }
     
     public void initHashMap() {
@@ -92,6 +106,9 @@ public class Lexer {
         getChar();
         //跳过空白符
         while (pos < len && isSpace()) {
+            if (curChar == '\n') {
+                line++;
+            }
             getChar();
         }
         //标识符或保留字
@@ -171,16 +188,23 @@ public class Lexer {
                     while (pos < len && curChar != '\n') {
                         getChar();
                     }
-                    return 0;
+                    line++;
+                    return -1;
                 } else if (curChar == '*') {
                     do {
                         do {
                             getChar();
+                            if (curChar == '\n') {
+                                line++;
+                            }
                         } while (curChar != '*');
                         do {
                             getChar();
+                            if (curChar == '\n') {
+                                line++;
+                            }
                             if (curChar == '/') {
-                                return 0;
+                                return -1;
                             }
                         } while (curChar == '*');
                     } while (true);
@@ -274,7 +298,7 @@ public class Lexer {
             }
         }
         //正常结束
-        lexerAns += symbol + " " + token + '\n';
+        lexerAns += symbol + " " + token + " " + line + '\n';
         return 0;
     }
 }
