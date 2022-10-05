@@ -13,6 +13,7 @@ public class Parser {
     private boolean debug;
     
     //当调用某个子程序时，它所要分析的第一个字符已经在curToken中，当子程序返回前，curToken存储的是分析过的字符串的下一字符
+    
     public void PostOrder(Token root) {
         if (root != null) {
             ArrayList<Token> son = root.getChildTokens();
@@ -28,6 +29,20 @@ public class Parser {
         }
     }
     
+    public void PreOrder(Token root) {
+        if (root != null) {
+            if (root.getToken().equals("")) {
+                System.out.println("<" + root.getSymbol() + ">");
+            } else {
+                System.out.println(root.getSymbol() + " " + root.getToken());
+            }
+            ArrayList<Token> son = root.getChildTokens();
+            int len = root.getSum();
+            for (int i = 0; i < len; i++) {
+                PreOrder(son.get(i));
+            }
+        }
+    }
     
     public Parser(ArrayList<Token> tokenArrayList) throws IOException {
         this.debug = true;
@@ -37,7 +52,7 @@ public class Parser {
         this.len = this.tokenArrayList.size();
         getToken();
         this.root = CompUnit();
-//        PostOrder(this.root);
+        //PreOrder(this.root);
         if (debug) {
             try {
                 BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
@@ -155,7 +170,7 @@ public class Parser {
             constDecl.addChild(ConstDef());
         }
         constDecl.addChild(curToken); //;
-        getToken(); //输出分号并指向分号结束后的下一字符
+        getToken(); //输出分号并指向分号结束后的下一个字符
         grammarAns += "<ConstDecl>\n";
         return constDecl;
     }
@@ -234,7 +249,7 @@ public class Parser {
             varDef.addChild(curToken); //']'
             getToken();
         }
-        if (curToken.getSymbol().equals(Sym.assign)) {
+        if (curToken.getSymbol().equals(Sym.Assign)) {
             varDef.addChild(curToken);
             getToken();
             varDef.addChild(InitVal());
@@ -403,26 +418,12 @@ public class Parser {
                 stmt.addChild(Block());
                 break;
             default:
-                int i = 0;
-                int flag = 0;
-                while (pos + i < len) {
-                    if (viewForward(i).equals(Sym.Fen)) {
-                        flag = 1;
-                        break;
-                    } else if (viewForward(i).equals(Sym.assign)) {
-                        flag = -1;
-                        break;
-                    }
-                    i++;
-                }
-                if (flag == 1) {
-                    if (!curToken.getSymbol().equals(Sym.Fen)) {
-                        stmt.addChild(Exp());
-                    }
-                    stmt.addChild(curToken);
-                    getToken();
-                } else if (flag == -1) {
-                    stmt.addChild(LVal());
+                int tempPos = pos; //记录当前pos
+                Token tempToken = curToken; //记录当前token
+                String tempGrammarAns = grammarAns; //记录当前ans
+                Token tempLVal = LVal();
+                if (curToken.getSymbol().equals(Sym.Assign)) {
+                    stmt.addChild(tempLVal);
                     stmt.addChild(curToken); //=
                     getToken();
                     if (!curToken.getSymbol().equals(Sym.Getint)) {
@@ -435,9 +436,16 @@ public class Parser {
                         stmt.addChild(curToken);
                         getToken();
                     }
-                    stmt.addChild(curToken);
-                    getToken();
+                } else {
+                    grammarAns = tempGrammarAns;
+                    pos = tempPos;
+                    curToken = tempToken;
+                    if (!curToken.getSymbol().equals(Sym.Fen)) {
+                        stmt.addChild(Exp());
+                    }
                 }
+                stmt.addChild(curToken);
+                getToken();
                 break;
         }
         grammarAns += "<Stmt>\n";

@@ -28,7 +28,7 @@ public class Sym {
     public static final String Gequal = "GEQ";
     public static final String Equal = "EQL";
     public static final String NEqual = "NEQ";
-    public static final String assign = "ASSIGN";
+    public static final String Assign = "ASSIGN";
     public static final String Fen = "SEMICN";
     public static final String Dou = "COMMA";
     public static final String Ls = "LPARENT";
