@@ -1,0 +1,42 @@
+package frontend;
+
+public class Sym {
+    public static final String Ident = "IDENFR";
+    public static final String IntConst = "INTCON";
+    public static final String FormatString = "STRCON";
+    public static final String Main = "MAINTK";
+    public static final String Const = "CONSTTK";
+    public static final String Int = "INTTK";
+    public static final String Break = "BREAKTK";
+    public static final String Continue = "CONTINUETK";
+    public static final String If = "IFTK";
+    public static final String Else = "ELSETK";
+    public static final String Not = "NOT";
+    public static final String And = "AND";
+    public static final String Or = "OR";
+    public static final String While = "WHILETK";
+    public static final String Getint = "GETINTTK";
+    public static final String Printf = "PRINTFTK";
+    public static final String Return = "RETURNTK";
+    public static final String Add = "PLUS";
+    public static final String Sub = "MINU";
+    public static final String Void = "VOIDTK";
+    public static final String Mul = "MULT";
+    public static final String Div = "DIV";
+    public static final String Mod = "MOD";
+    public static final String Less = "LSS";
+    public static final String Lequal = "LEQ";
+    public static final String Great = "GRE";
+    public static final String Gequal = "GEQ";
+    public static final String Equal = "EQL";
+    public static final String NEqual = "NEQ";
+    public static final String Assign = "ASSIGN";
+    public static final String Fen = "SEMICN";
+    public static final String Dou = "COMMA";
+    public static final String Ls = "LPARENT";
+    public static final String Rs = "RPARENT";
+    public static final String Lm = "LBRACK";
+    public static final String Rm = "RBRACK";
+    public static final String Lb = "LBRACE";
+    public static final String Rb = "RBRACE";
+}
