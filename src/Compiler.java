@@ -1,5 +1,6 @@
 import frontend.Lexer;
 import frontend.Parser;
+import frontend.SetTable;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,5 +16,6 @@ public class Compiler {
         String s = new String(bytes, StandardCharsets.UTF_8);
         Lexer lexer = new Lexer(s);
         Parser parser = new Parser(lexer.getTokenArrayList());
+        SetTable setTable = new SetTable(parser.getRoot());
     }
 }

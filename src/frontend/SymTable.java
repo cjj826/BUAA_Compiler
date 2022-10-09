@@ -1,29 +1,45 @@
 package frontend;
 
+import frontend.Node.Node;
+
 import java.util.HashMap;
 
-public class SymTable {
-    HashMap<String, TableItem> symbolTable;
-    private HashMap<String, TableItem> fatherSymbolTable;
+public class SymTable implements Node {
+    private HashMap<String, TableItem> symbolTable;
+    private SymTable fatherSymbolTable; //指向父符号表
     
-    public SymTable(HashMap<String, TableItem> fatherSymbolTable) {
+    public SymTable(SymTable fatherSymbolTable) {
         this.symbolTable = new HashMap<>();
         this.fatherSymbolTable = fatherSymbolTable;
     }
     
     public void addSymbol(TableItem tableItem) {
-        this.symbolTable.put(tableItem.getName(), tableItem);
+        if (symbolTable.containsKey(tableItem.getName())) {
+            //重名
+            error.add(new ErrorItem(tableItem.getLine(), "b",
+                    tableItem.getName() + " is redefined in " + tableItem.getLine()));
+        } else {
+            this.symbolTable.put(tableItem.getName(), tableItem);
+        }
     }
     
-    public void isSame() {
-    
+    public TableItem find(String name) {
+        if (symbolTable.containsKey(name)) {
+            return symbolTable.get(name);
+        } else {
+            if (fatherSymbolTable != null) {
+                return fatherSymbolTable.find(name);
+            } else {
+                return null;
+            }
+        }
     }
     
-    public HashMap<String, TableItem> getFatherSymbolTable() {
+    public SymTable getFatherSymbolTable() {
         return fatherSymbolTable;
     }
     
-    public void setFatherSymbolTable(HashMap<String, TableItem> fatherSymbolTable) {
+    public void setFatherSymbolTable(SymTable fatherSymbolTable) {
         this.fatherSymbolTable = fatherSymbolTable;
     }
 }

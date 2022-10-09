@@ -1,14 +1,20 @@
 package frontend;
 
-import frontend.Node.Token;
+import frontend.Node.*;
+import frontend.Node.Number;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Parser {
+public class Parser implements Node {
     private ArrayList<Token> tokenArrayList;
+    
+    public Token getRoot() {
+        return root;
+    }
+    
     private Token root;
     private Token curToken; //当前单词
     private int pos; //总是指向下一个单词
@@ -49,14 +55,14 @@ public class Parser {
     }
     
     public Parser(ArrayList<Token> tokenArrayList) throws IOException {
-        this.debug = true;
+        this.debug = false;
         this.tokenArrayList = tokenArrayList;
         this.pos = 0;
         this.grammarAns = "";
         this.len = this.tokenArrayList.size();
         getToken();
         this.root = CompUnit();
-        PreOrder(this.root);
+        //PreOrder(this.root);
         if (debug) {
             try {
                 BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
@@ -105,7 +111,7 @@ public class Parser {
     }
     
     public Token CompUnit() {
-        Token r = new Token("CompUnit", "", 0);
+        Token r = new CompUnit("CompUnit", "", curToken.getLine());
         //const int a = 0;
         while (isDecl()) {
             r.addChild(Decl());
@@ -123,25 +129,47 @@ public class Parser {
             father.addChild(curToken);
             getToken();
         } else {
-            System.out.println(curToken.getSymbol() + curToken.getLine());
+            //System.out.println(curToken.getSymbol() + curToken.getLine());
             error(2);
         }
     }
     
+    public int frontTokenLine() {
+        return tokenArrayList.get(pos - 2).getLine();
+    }
+    
+    public void possibleLoss(Token father, String type) {
+        if (curToken.getSymbol().equals(type)) {
+            father.addChild(curToken);
+            getToken();
+        } else {
+            String name = type.equals(Sym.Fen) ? ";" :
+                          type.equals(Sym.Rs) ? ")" :
+                          type.equals(Sym.Rm) ? "]" : String.valueOf(';');
+            String errorType = type.equals(Sym.Fen) ? "i" :
+                    type.equals(Sym.Rs) ? "j" :
+                            type.equals(Sym.Rm) ? "k" : "i";
+            grammarAns += type + " " + name + "\n";
+            //System.out.println("lack " + name + " in line " + frontTokenLine());
+            error.add(new ErrorItem(frontTokenLine(), errorType,
+                    "lack " + name + " in line " + frontTokenLine()));
+            father.addChild(new Token("EXC", name, frontTokenLine()));
+        }
+    }
+    
     public Token MainFuncDef() {
-        Token mainFuncDef = new Token("MainFuncDef", "", 0);
+        Token mainFuncDef = new MainFuncDef("MainFuncDef", "", curToken.getLine());
         definedTake(mainFuncDef, Sym.Int); // int
         definedTake(mainFuncDef, Sym.Main); // main
         definedTake(mainFuncDef, Sym.Ls); // (
-        mainFuncDef.addChild(curToken); // )
-        getToken();
+        possibleLoss(mainFuncDef, Sym.Rs); // )
         mainFuncDef.addChild(Block());
         grammarAns += "<MainFuncDef>\n";
         return mainFuncDef;
     }
     
     public Token Decl() {
-        Token decl = new Token("Decl", "", 0);
+        Token decl = new Decl("Decl", "", curToken.getLine());
         if (curToken.getSymbol().equals(Sym.Const)) {
             decl.addChild(ConstDecl());
         } else {
@@ -151,22 +179,21 @@ public class Parser {
     }
     
     public Token FuncDef() {
-        Token funcDef = new Token("FuncDef", "", 0);
+        Token funcDef = new FuncDef("FuncDef", "", curToken.getLine());
         funcDef.addChild(FuncType());
         definedTake(funcDef, Sym.Ident);// ident
         definedTake(funcDef, Sym.Ls);// (
         if (curToken.getSymbol().equals(Sym.Int)) {
             funcDef.addChild(FuncFParams());
         }
-        funcDef.addChild(curToken); //)
-        getToken();
+        possibleLoss(funcDef, Sym.Rs); // )
         funcDef.addChild(Block());
         grammarAns += "<FuncDef>\n";
         return funcDef;
     }
     
     public Token ConstDecl() {
-        Token constDecl = new Token("ConstDecl", "", 0);
+        Token constDecl = new ConstDecl("ConstDecl", "", curToken.getLine());
         definedTake(constDecl, Sym.Const); //const
         definedTake(constDecl, Sym.Int); //int
         constDecl.addChild(ConstDef());
@@ -174,34 +201,31 @@ public class Parser {
             definedTake(constDecl, Sym.Dou); //,
             constDecl.addChild(ConstDef());
         }
-        constDecl.addChild(curToken); //;
-        getToken(); //输出分号并指向分号结束后的下一个字符
+        possibleLoss(constDecl, Sym.Fen); //;
         grammarAns += "<ConstDecl>\n";
         return constDecl;
     }
     
     public Token VarDecl() {
-        Token varDecl = new Token("VarDecl", "", 0);
+        Token varDecl = new VarDecl("VarDecl", "", 0);
         definedTake(varDecl, Sym.Int); // int
         varDecl.addChild(VarDef());
         while (curToken.getSymbol().equals(Sym.Dou)) {
             definedTake(varDecl, Sym.Dou); //,
             varDecl.addChild(VarDef());
         }
-        varDecl.addChild(curToken); //;
-        getToken();
+        possibleLoss(varDecl, Sym.Fen); // ;
         grammarAns += "<VarDecl>\n";
         return varDecl;
     }
     
     public Token ConstDef() {
-        Token constDef = new Token("ConstDef", "", 0);
+        Token constDef = new ConstDef("ConstDef", "", curToken.getLine());
         definedTake(constDef, Sym.Ident); //ident
         while (curToken.getSymbol().equals(Sym.Lm)) {
             definedTake(constDef, Sym.Lm); // [
             constDef.addChild(ConstExp());
-            constDef.addChild(curToken); //']'
-            getToken();
+            possibleLoss(constDef, Sym.Rm); //']'
         }
         definedTake(constDef, Sym.Assign); // =
         constDef.addChild(ConstInitVal());
@@ -210,14 +234,14 @@ public class Parser {
     }
     
     public Token ConstExp() {
-        Token constExp = new Token("ConstExp", "", 0);
+        Token constExp = new ConstExp("ConstExp", "", curToken.getLine());
         constExp.addChild(AddExp());
         grammarAns += "<ConstExp>\n";
         return constExp;
     }
     
     public Token ConstInitVal() {
-        Token constInitVal = new Token("ConstInitVal", "", 0);
+        Token constInitVal = new ConstInitVal("ConstInitVal", "", curToken.getLine());
         if (curToken.getSymbol().equals(Sym.Lb)) {
             definedTake(constInitVal, Sym.Lb); //{
             if (!curToken.getSymbol().equals(Sym.Rb)) {
@@ -227,8 +251,7 @@ public class Parser {
                     constInitVal.addChild(ConstInitVal());
                 }
             }
-            constInitVal.addChild(curToken); //}
-            getToken();
+            definedTake(constInitVal, Sym.Rb); //}
         } else {
             constInitVal.addChild(ConstExp());
         }
@@ -237,13 +260,12 @@ public class Parser {
     }
     
     public Token VarDef() {
-        Token varDef = new Token("VarDef", "", 0);
+        Token varDef = new VarDef("VarDef", "", curToken.getLine());
         definedTake(varDef, Sym.Ident);//ident
         while (curToken.getSymbol().equals(Sym.Lm)) {
             definedTake(varDef, Sym.Lm);//[
             varDef.addChild(ConstExp());
-            varDef.addChild(curToken); //']'
-            getToken();
+            possibleLoss(varDef, Sym.Rm); //]
         }
         if (curToken.getSymbol().equals(Sym.Assign)) {
             definedTake(varDef, Sym.Assign);//=
@@ -254,7 +276,7 @@ public class Parser {
     }
     
     public Token InitVal() {
-        Token initVal = new Token("InitVal", "", 0);
+        Token initVal = new InitVal("InitVal", "", curToken.getLine());
         if (curToken.getSymbol().equals(Sym.Lb)) {
             definedTake(initVal, Sym.Lb);//{
             if (!curToken.getSymbol().equals(Sym.Rb)) {
@@ -273,14 +295,14 @@ public class Parser {
     }
     
     public Token Exp() {
-        Token exp = new Token("Exp", "", 0);
+        Token exp = new Exp("Exp", "", curToken.getLine());
         exp.addChild(AddExp());
         grammarAns += "<Exp>\n";
         return exp;
     }
     
     public Token FuncType() {
-        Token funcType = new Token("FuncType", "", 0);
+        Token funcType = new FuncType("FuncType", "", curToken.getLine());
         funcType.addChild(curToken); //void || int
         getToken();
         grammarAns += "<FuncType>\n";
@@ -288,7 +310,7 @@ public class Parser {
     }
     
     public Token FuncFParams() {
-        Token funcFParams = new Token("FuncFParams", "", 0);
+        Token funcFParams = new FuncFParams("FuncFParams", "", curToken.getLine());
         funcFParams.addChild(FuncFParam());
         while (curToken.getSymbol().equals(Sym.Dou)) {
             definedTake(funcFParams, Sym.Dou); //,
@@ -299,18 +321,16 @@ public class Parser {
     }
     
     public Token FuncFParam() {
-        Token funcFParam = new Token("FuncFParam", "", 0);
+        Token funcFParam = new FuncFParam("FuncFParam", "", curToken.getLine());
         definedTake(funcFParam, Sym.Int); // int
         definedTake(funcFParam, Sym.Ident); // Ident
         if (curToken.getSymbol().equals(Sym.Lm)) {
             definedTake(funcFParam, Sym.Lm); // [
-            funcFParam.addChild(curToken); //]
-            getToken();
+            possibleLoss(funcFParam, Sym.Rm); // ]
             while (curToken.getSymbol().equals(Sym.Lm)) {
                 definedTake(funcFParam, Sym.Lm); // [
                 funcFParam.addChild(ConstExp());
-                funcFParam.addChild(curToken); //]
-                getToken();
+                possibleLoss(funcFParam, Sym.Rm); // ]
             }
         }
         grammarAns += "<FuncFParam>\n";
@@ -318,19 +338,18 @@ public class Parser {
     }
     
     public Token Block() {
-        Token block = new Token("Block", "", 0);
+        Token block = new Block("Block", "", curToken.getLine());
         definedTake(block, Sym.Lb); //{
         while (!curToken.getSymbol().equals(Sym.Rb)) {
             block.addChild(BlockItem());
         }
-        block.addChild(curToken);//}
-        getToken();
+        definedTake(block, Sym.Rb); // }
         grammarAns += "<Block>\n";
         return block;
     }
     
     public Token BlockItem() {
-        Token blockItem = new Token("BlockItem", "", 0);
+        Token blockItem = new BlockItem("BlockItem", "", curToken.getLine());
         if (isDecl()) {
             blockItem.addChild(Decl());
         } else {
@@ -346,7 +365,7 @@ public class Parser {
     }
     
     public Token Stmt() {
-        Token stmt = new Token("Stmt", "", 0);
+        Token stmt = new Stmt("Stmt", "", curToken.getLine());
         switch (curToken.getSymbol()) {
             case Sym.Printf:
                 definedTake(stmt, Sym.Printf); //printf
@@ -356,40 +375,34 @@ public class Parser {
                     definedTake(stmt, Sym.Dou); //,
                     stmt.addChild(Exp());
                 }
-                stmt.addChild(curToken); //)
-                getToken();
-                stmt.addChild(curToken); //;
-                getToken();
+                possibleLoss(stmt, Sym.Rs); // )
+                possibleLoss(stmt, Sym.Fen); // ;
                 break;
             case Sym.Return:
                 definedTake(stmt, Sym.Return); //return
                 if (isFirstOfExp()) {
                     stmt.addChild(Exp());
                 }
-                stmt.addChild(curToken); //;
-                getToken();
+                possibleLoss(stmt, Sym.Fen); //;
                 break;
             case Sym.Break:
             case Sym.Continue:
                 stmt.addChild(curToken); // break || continue
                 getToken();
-                stmt.addChild(curToken); //;
-                getToken();
+                possibleLoss(stmt, Sym.Fen); //;
                 break;
             case Sym.While:
                 definedTake(stmt, Sym.While); //while
                 definedTake(stmt, Sym.Ls); //(
                 stmt.addChild(Cond());
-                stmt.addChild(curToken); // ')'
-                getToken();
+                possibleLoss(stmt, Sym.Rs); // )
                 stmt.addChild(Stmt());
                 break;
             case Sym.If:
                 definedTake(stmt, Sym.If); //if
                 definedTake(stmt, Sym.Ls); //(
                 stmt.addChild(Cond());
-                stmt.addChild(curToken); //')'
-                getToken();
+                possibleLoss(stmt, Sym.Rs); // )
                 stmt.addChild(Stmt());
                 if (curToken.getSymbol().equals(Sym.Else)) {
                     definedTake(stmt, Sym.Else); //else
@@ -412,8 +425,7 @@ public class Parser {
                     } else {
                         definedTake(stmt, Sym.Getint); //getint
                         definedTake(stmt, Sym.Ls); //(
-                        stmt.addChild(curToken); //)
-                        getToken();
+                        possibleLoss(stmt, Sym.Rs); // )
                     }
                 } else {
                     grammarAns = tempGrammarAns;
@@ -423,8 +435,7 @@ public class Parser {
                         stmt.addChild(Exp());
                     }
                 }
-                stmt.addChild(curToken); //;
-                getToken();
+                possibleLoss(stmt, Sym.Fen); //;
                 break;
         }
         grammarAns += "<Stmt>\n";
@@ -432,31 +443,30 @@ public class Parser {
     }
     
     public Token LVal() {
-        Token lVal = new Token("LVal", "", 0);
+        Token lVal = new LVal("LVal", "", curToken.getLine());
         definedTake(lVal, Sym.Ident); //ident
         while (curToken.getSymbol().equals(Sym.Lm)) {
             definedTake(lVal, Sym.Lm); //[
             lVal.addChild(Exp());
-            lVal.addChild(curToken);// ]
-            getToken();
+            possibleLoss(lVal, Sym.Rm); //]
         }
         grammarAns += "<LVal>\n";
         return lVal;
     }
     
     public Token Cond() {
-        Token cond = new Token("Cond", "", 0);
+        Token cond = new Cond("Cond", "", curToken.getLine());
         cond.addChild(LOrExp());
         grammarAns += "<Cond>\n";
         return cond;
     }
     
     public Token AddExp() {
-        Token addExp = new Token("AddExp", "", 0);
+        Token addExp = new AddExp("AddExp", "", curToken.getLine());
         addExp.addChild(MulExp());
         while (curToken.getSymbol().equals(Sym.Add) || curToken.getSymbol().equals(Sym.Sub)) {
             grammarAns += "<AddExp>\n";
-            Token tempExp = new Token("AddExp", "", 0);
+            Token tempExp = new AddExp("AddExp", "", curToken.getLine());
             tempExp.addChild(addExp);
             addExp = tempExp;
             addExp.addChild(curToken); // + || -
@@ -468,11 +478,11 @@ public class Parser {
     }
     
     public Token LOrExp() {
-        Token lOrExp = new Token("LOrExp", "", 0);
+        Token lOrExp = new LOrExp("LOrExp", "", 0);
         lOrExp.addChild(LAndExp());
         while (curToken.getSymbol().equals(Sym.Or)) {
             grammarAns += "<LOrExp>\n";
-            Token tempExp = new Token("LOrExp", "", 0);
+            Token tempExp = new LOrExp("LOrExp", "", 0);
             tempExp.addChild(lOrExp);
             lOrExp = tempExp;
             definedTake(lOrExp, Sym.Or); // ||
@@ -483,12 +493,11 @@ public class Parser {
     }
     
     public Token PrimaryExp() {
-        Token primaryExp = new Token("PrimaryExp", "", 0);
+        Token primaryExp = new PrimaryExp("PrimaryExp", "", 0);
         if (curToken.getSymbol().equals(Sym.Ls)) {
             definedTake(primaryExp, Sym.Ls); // (
             primaryExp.addChild(Exp());
-            primaryExp.addChild(curToken); // )
-            getToken();
+            possibleLoss(primaryExp, Sym.Rs); //)
         } else if (curToken.getSymbol().equals(Sym.IntConst)) {
             primaryExp.addChild(Number());
         } else {
@@ -499,7 +508,7 @@ public class Parser {
     }
     
     public Token FuncRParams() {
-        Token funcRParams = new Token("FuncRParams", "", 0);
+        Token funcRParams = new FuncRParams("FuncRParams", "", 0);
         funcRParams.addChild(Exp());
         while (curToken.getSymbol().equals(Sym.Dou)) {
             definedTake(funcRParams, Sym.Dou); //,
@@ -510,15 +519,14 @@ public class Parser {
     }
     
     public Token UnaryExp() {
-        Token unaryExp = new Token("UnaryExp", "", 0);
+        Token unaryExp = new UnaryExp("UnaryExp", "", 0);
         if (curToken.getSymbol().equals(Sym.Ident) && viewForward(1).equals(Sym.Ls)) {
             definedTake(unaryExp, Sym.Ident); //ident
             definedTake(unaryExp, Sym.Ls); //(
             if (isFirstOfExp()) { //这里还是有问题！！！
                 unaryExp.addChild(FuncRParams());
             }
-            unaryExp.addChild(curToken); // )
-            getToken();
+            possibleLoss(unaryExp, Sym.Rs); // )
         } else if (curToken.getSymbol().equals(Sym.Add) || curToken.getSymbol().equals(Sym.Sub)
                 || curToken.getSymbol().equals(Sym.Not)) {
             unaryExp.addChild(UnaryOp());
@@ -531,7 +539,7 @@ public class Parser {
     }
     
     public Token UnaryOp() {
-        Token unaryOp = new Token("UnaryOp", "", 0);
+        Token unaryOp = new UnaryOp("UnaryOp", "", 0);
         unaryOp.addChild(curToken); // + || - || !
         getToken();
         grammarAns += "<UnaryOp>\n";
@@ -539,18 +547,18 @@ public class Parser {
     }
     
     public Token Number() {
-        Token number = new Token("Number", "", 0);
+        Token number = new Number("Number", "", 0);
         definedTake(number, Sym.IntConst); // intConst
         grammarAns += "<Number>\n";
         return number;
     }
     
     public Token MulExp() {
-        Token mulExp = new Token("MulExp", "", 0);
+        Token mulExp = new MulExp("MulExp", "", 0);
         mulExp.addChild(UnaryExp());
         while (curToken.getSymbol().equals(Sym.Mul) || curToken.getSymbol().equals(Sym.Div) || curToken.getSymbol().equals(Sym.Mod)) {
             grammarAns += "<MulExp>\n";
-            Token tempExp = new Token("MulExp", "", 0);
+            Token tempExp = new MulExp("MulExp", "", 0);
             tempExp.addChild(mulExp);
             mulExp = tempExp;
             mulExp.addChild(curToken); // * || / || %
@@ -562,12 +570,12 @@ public class Parser {
     }
     
     public Token RelExp() {
-        Token relExp = new Token("RelExp", "", 0);
+        Token relExp = new RelExp("RelExp", "", 0);
         relExp.addChild(AddExp());
         while (curToken.getSymbol().equals(Sym.Less) || curToken.getSymbol().equals(Sym.Great)
                 || curToken.getSymbol().equals(Sym.Lequal) || curToken.getSymbol().equals(Sym.Gequal)) {
             grammarAns += "<RelExp>\n";
-            Token tempExp = new Token("RelExp", "", 0);
+            Token tempExp = new RelExp("RelExp", "", 0);
             tempExp.addChild(relExp);
             relExp = tempExp;
             relExp.addChild(curToken); // < || > || <= || >=
@@ -579,11 +587,11 @@ public class Parser {
     }
     
     public Token EqExp() {
-        Token eqExp = new Token("EqExp", "", 0);
+        Token eqExp = new EqExp("EqExp", "", 0);
         eqExp.addChild(RelExp());
         while (curToken.getSymbol().equals(Sym.Equal) || curToken.getSymbol().equals(Sym.NEqual)) {
             grammarAns += "<EqExp>\n";
-            Token tempExp = new Token("EqExp", "", 0);
+            Token tempExp = new EqExp("EqExp", "", 0);
             tempExp.addChild(eqExp);
             eqExp = tempExp;
             eqExp.addChild(curToken); // == || !=
@@ -595,11 +603,11 @@ public class Parser {
     }
     
     public Token LAndExp() {
-        Token lAndExp = new Token("LAndExp", "", 0);
+        Token lAndExp = new LAndExp("LAndExp", "", 0);
         lAndExp.addChild(EqExp());
         while (curToken.getSymbol().equals(Sym.And)) {
             grammarAns += "<LAndExp>\n";
-            Token tempExp = new Token("LAndExp", "", 0);
+            Token tempExp = new LAndExp("LAndExp", "", 0);
             tempExp.addChild(lAndExp);
             lAndExp = tempExp;
             definedTake(lAndExp, Sym.And);
