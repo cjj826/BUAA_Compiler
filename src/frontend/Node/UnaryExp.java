@@ -51,7 +51,7 @@ public class UnaryExp extends Token {
                     childTokens.get(i).visit(irTable);
                 }
             }
-            new Call(func.getType(), MyModule.curBB, func, args);
+            return new Call(func.getType(), MyModule.curBB, func, args);
         }
         return null;
     }

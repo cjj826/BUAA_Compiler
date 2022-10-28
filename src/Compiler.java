@@ -23,7 +23,8 @@ public class Compiler {
             System.out.println("error in testfile");
         } else {
             parser.getRoot().visit(new IrTable(null));
-            System.out.println(MyModule.myModule);
+            String ans = MyModule.myModule.toString();
+            System.out.println(ans);
         }
     }
 }

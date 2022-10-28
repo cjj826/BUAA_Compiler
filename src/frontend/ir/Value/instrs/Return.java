@@ -17,7 +17,11 @@ public class Return extends Instr {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         Value retValue = this.getOperandList().get(0);
-        sb.append("ret ").append(retValue.getType()).append(" ").append(retValue.getName()).append("\n");
+        if (retValue != null) {
+            sb.append("ret ").append(retValue.getType()).append(" ").append(retValue.getName()).append("\n");
+        } else {
+            sb.append("ret void\n");
+        }
         return sb.toString();
     }
 }

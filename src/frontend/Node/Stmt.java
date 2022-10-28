@@ -30,7 +30,10 @@ public class Stmt extends Token {
         int length = childTokens.size();
         if (childTokens.get(0).getSymbol().equals(Sym.Return)) {
             //对exp进行visit，获取返回值value
-            Value retValue = childTokens.get(1).visit(irTable); //visit exp;
+            Value retValue = null;
+            if (childTokens.get(1) instanceof Exp) {
+                retValue = childTokens.get(1).visit(irTable); //visit exp;
+            }
             return new Return(retValue, MyModule.curBB);
         } else if (childTokens.get(0) instanceof LVal && childTokens.get(1).getSymbol().equals(Sym.Assign)) {
             Value pointer = ((LVal) childTokens.get(0)).getPointer(irTable);

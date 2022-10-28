@@ -28,6 +28,9 @@ public class BasicBlock extends Value {
             sb.append(instr);
             changeLine = true;
         }
+        if (sb.toString().charAt(sb.toString().length() - 1) != '\n') {
+            sb.append("\n\tret void\n");
+        }
         return sb.toString();
     }
 }

@@ -38,7 +38,7 @@ public class BinaryOp extends Instr {
                 sb.append("mul i32 ");
                 break;
             case Div:
-                sb.append("div i32 ");
+                sb.append("sdiv i32 ");
                 break;
             case Mod:
                 sb.append("srem i32 ");

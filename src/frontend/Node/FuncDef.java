@@ -5,6 +5,7 @@ import frontend.Sym;
 import frontend.error.SymTable;
 import frontend.TableItem;
 import frontend.ir.IrTable;
+import frontend.ir.IrTableItem;
 import frontend.ir.MyModule;
 import frontend.ir.Value.Arg;
 import frontend.ir.Value.BasicBlock;
@@ -44,6 +45,7 @@ public class FuncDef extends Token {
                 Function function = new Function(type, name, arguments);
                 MyModule.myModule.addFunction(function);
                 function.addBlock(MyModule.curBB);
+                irTable.addItem(new IrTableItem(function.getName(), function.getType(), false, function));
                 token.visit(curIrTable);
             } else {
                 token.visit(curIrTable);

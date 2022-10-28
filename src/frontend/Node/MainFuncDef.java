@@ -4,6 +4,7 @@ import frontend.error.FuncTableItem;
 import frontend.error.SymTable;
 import frontend.TableItem;
 import frontend.ir.IrTable;
+import frontend.ir.IrTableItem;
 import frontend.ir.MyModule;
 import frontend.ir.Value.BasicBlock;
 import frontend.ir.Value.Function;
@@ -33,6 +34,7 @@ public class MainFuncDef extends Token {
         MyModule.myModule.addFunction(function);
         MyModule.curBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++); //当前基本块
         function.addBlock(MyModule.curBB);
+        irTable.addItem(new IrTableItem(function.getName(), function.getType(), false, function));
         childTokens.get(childTokens.size() - 1).visit(curIrTable); //解析BasicBlock
         return null;
     }

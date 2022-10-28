@@ -14,7 +14,11 @@ public class Call extends Instr {
     public Call(Type type, BasicBlock parent, Value func, ArrayList<Value> args) {
         super(parent);
         setType(type);
-        setName("%reg" + REG_NUM++);
+        if (type.isVoidType()) {
+            setName("");
+        } else {
+            setName("%reg" + REG_NUM++);
+        }
         this.getOperandList().add(func);
         this.getOperandList().addAll(args);
     }
@@ -22,7 +26,9 @@ public class Call extends Instr {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         Value func = this.getOperandList().get(0);
-        sb.append(getName()).append(" = ");
+        if (!getType().isVoidType()) {
+            sb.append(getName()).append(" = ");
+        }
         sb.append("call ");
         sb.append(func.getType()).append(" ");
         sb.append("@").append(func.getName());
@@ -32,6 +38,7 @@ public class Call extends Instr {
             if (i > 1) {
                 sb.append(", ");
             }
+//            System.out.println(this.getOperandList().get(i).getName());
             sb.append(this.getOperandList().get(i).getType()).append(" ");
             sb.append(this.getOperandList().get(i).getName());
         }
