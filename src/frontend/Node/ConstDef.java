@@ -1,7 +1,9 @@
 package frontend.Node;
 
-import frontend.SymTable;
+import frontend.error.SymTable;
 import frontend.TableItem;
+import frontend.ir.IrTable;
+import frontend.ir.Value.Value;
 
 public class ConstDef extends Token {
     
@@ -12,6 +14,11 @@ public class ConstDef extends Token {
     @Override
     public TableItem check(SymTable symTable) {
         symTable.addSymbol(getDef(true, symTable));
+        return null;
+    }
+    
+    public Value visit(IrTable irTable) {
+        irTable.addItem(getVar(true, irTable));
         return null;
     }
 }

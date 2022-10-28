@@ -1,11 +1,39 @@
 package frontend.Node;
 
 import frontend.*;
+import frontend.error.ErrorItem;
+import frontend.error.SymTable;
+import frontend.error.SymTableItem;
+import frontend.ir.IrTable;
+import frontend.ir.IrTableItem;
+import frontend.ir.MyModule;
+import frontend.ir.Value.GlobalVariable;
+import frontend.ir.Value.Value;
+import frontend.ir.Value.instrs.Load;
+
+import java.awt.font.GlyphJustificationInfo;
 
 public class LVal extends Token {
     
     public LVal(String symbol, String token, int line) {
         super(symbol, token, line);
+    }
+    
+    @Override
+    public Value visit(IrTable irTable) {
+        Value pointer = getPointer(irTable);
+        if (isGlobal) {
+            //目前在解析全局变量 读取a，则a必为constant int
+            return ((GlobalVariable) pointer).getInitialValue();
+        } else {
+            return new Load(pointer, MyModule.curBB);
+        }
+    }
+    
+    public Value getPointer(IrTable irTable) {
+        Token ident = getChildTokens().get(0);
+        IrTableItem irTableItem = irTable.findItem(ident.getToken());
+        return irTableItem.getPointer();
     }
     
     @Override

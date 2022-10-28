@@ -1,8 +1,10 @@
 package frontend.Node;
 
-import frontend.SymTable;
-import frontend.SymTableItem;
+import frontend.error.SymTable;
+import frontend.error.SymTableItem;
 import frontend.TableItem;
+import frontend.ir.IrTable;
+import frontend.ir.Value.Value;
 
 public class VarDef extends Token {
     
@@ -14,6 +16,11 @@ public class VarDef extends Token {
     public TableItem check(SymTable symTable) {
         SymTableItem symTableItem = getDef(false, symTable);
         symTable.addSymbol(symTableItem);
+        return null;
+    }
+    
+    public Value visit(IrTable irTable) {
+        irTable.addItem(getVar(false, irTable));
         return null;
     }
 }

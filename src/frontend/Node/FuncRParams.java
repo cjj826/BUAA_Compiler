@@ -1,8 +1,10 @@
 package frontend.Node;
 
-import frontend.ErrorItem;
-import frontend.SymTable;
+import frontend.error.ErrorItem;
+import frontend.error.SymTable;
 import frontend.TableItem;
+import frontend.ir.IrTable;
+import frontend.ir.Value.Value;
 
 import java.util.ArrayList;
 
@@ -10,6 +12,19 @@ public class FuncRParams extends Token {
     
     public FuncRParams(String symbol, String token, int line) {
         super(symbol, token, line);
+    }
+    
+    public ArrayList<Value> getArgs(IrTable irTable) {
+        ArrayList<Token> childTokens = getChildTokens();
+        ArrayList<Value> args = new ArrayList<>();
+        for (Token token : childTokens) {
+            if (token instanceof Exp) {
+                args.add(token.visit(irTable));
+            } else {
+                token.visit(irTable);
+            }
+        }
+        return args;
     }
     
     public void checkParams(ArrayList<TableItem> formParams, int line, SymTable symTable) {
@@ -30,7 +45,8 @@ public class FuncRParams extends Token {
             //检查参数类型是否一致，不能有const
             for (int i = 0; i < formParams.size(); i++) {
                 TableItem expParam = exps.get(i).check(symTable);
-                if (expParam.getDimension() != formParams.get(i).getDimension()) {
+                if (expParam.getDimension() != formParams.get(i).getDimension() ||
+                (expParam.getDimension() > 0 && expParam.isConst())) {
                     error.add(new ErrorItem(line, "e",
                             "param type unmatched in func in line " + line));
                 }

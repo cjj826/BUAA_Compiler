@@ -1,4 +1,6 @@
-package frontend;
+package frontend.error;
+
+import frontend.TableItem;
 
 import java.util.ArrayList;
 

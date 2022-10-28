@@ -1,6 +1,16 @@
 package frontend.Node;
 
 import frontend.*;
+import frontend.error.ErrorItem;
+import frontend.error.FuncTableItem;
+import frontend.error.SymTable;
+import frontend.ir.IrTable;
+import frontend.ir.MyModule;
+import frontend.ir.Value.ConstantInteger;
+import frontend.ir.Value.Value;
+import frontend.ir.Value.instrs.BinaryOp;
+import frontend.ir.Value.instrs.Call;
+import frontend.ir.Value.instrs.Op;
 
 import java.util.ArrayList;
 
@@ -8,6 +18,42 @@ public class UnaryExp extends Token {
     
     public UnaryExp(String symbol, String token, int line) {
         super(symbol, token, line);
+    }
+    
+    public Value visit(IrTable irTable) {
+        ArrayList<Token> childTokens = getChildTokens();
+        int size = childTokens.size();
+        if (size == 1) {
+            return childTokens.get(0).visit(irTable);
+        } else if (size == 2)  {
+            //实现 unaryOp getUnaryOp.symbol
+            String sym = childTokens.get(0).getChildTokens().get(0).getSymbol();
+            Op temp = sym.equals(Sym.Add) ? Op.Add :
+                    sym.equals(Sym.Sub) ? Op.Sub : Op.Not;
+            if (temp.equals(Op.Add)) {
+                return childTokens.get(1).visit(irTable);
+            } else if (temp.equals(Op.Sub)) {
+                Value value = childTokens.get(1).visit(irTable);
+                if (value instanceof ConstantInteger) {
+                    return new ConstantInteger(value.getType(), eval("0", value.getName(), temp));
+                }
+                return new BinaryOp(ConstantInteger.Constant0, temp, value, MyModule.curBB);
+            }
+        } else {
+            //TODO
+            String name = childTokens.get(0).getToken(); //函数名
+            Value func = MyModule.myModule.functions.get(name);
+            ArrayList<Value> args = new ArrayList<>();
+            for (int i = 1; i < size; i++) {
+                if (childTokens.get(i) instanceof FuncRParams) {
+                    args = ((FuncRParams) childTokens.get(i)).getArgs(irTable);
+                } else {
+                    childTokens.get(i).visit(irTable);
+                }
+            }
+            new Call(func.getType(), MyModule.curBB, func, args);
+        }
+        return null;
     }
     
     @Override
@@ -26,6 +72,9 @@ public class UnaryExp extends Token {
                     Token token = getChildTokens().get(2);
                     if (token instanceof FuncRParams) {
                         ((FuncRParams) token).checkParams(params, firstToken.getLine(), symTable);
+                    } else if (params.size() != 0) { //没有实参
+                        error.add(new ErrorItem(firstToken.getLine(), "d",
+                                "param num in func is not matched in line " + firstToken.getLine()));
                     }
                 }
             }

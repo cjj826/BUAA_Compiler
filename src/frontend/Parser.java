@@ -2,6 +2,7 @@ package frontend;
 
 import frontend.Node.*;
 import frontend.Node.Number;
+import frontend.error.ErrorItem;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -129,7 +130,7 @@ public class Parser implements Node {
             father.addChild(curToken);
             getToken();
         } else {
-            //System.out.println(curToken.getSymbol() + curToken.getLine());
+            System.out.println(curToken.getSymbol() + " " +curToken.getLine());
             error(2);
         }
     }

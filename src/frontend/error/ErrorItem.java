@@ -1,4 +1,4 @@
-package frontend;
+package frontend.error;
 
 public class ErrorItem {
     private int line; //行号

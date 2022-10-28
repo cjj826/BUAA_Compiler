@@ -1,6 +1,6 @@
 package frontend.Node;
 
-import frontend.*;
+import frontend.error.ErrorItem;
 
 public class Block extends Token {
     
@@ -19,16 +19,9 @@ public class Block extends Token {
             if (type.equals("void")) {
                 for (Token childToken : this.getChildTokens()) {
                     if (childToken instanceof BlockItem) {
-                        //blockItem
                         if (childToken.getChildTokens().get(0) instanceof Stmt) {
                             //stmt
-                            Token stmt = childToken.getChildTokens().get(0);
-                            if (stmt.getChildTokens().get(0).getToken().equals("return")) {
-                                if (!stmt.getChildTokens().get(1).getToken().equals(";")) {
-                                    error.add(new ErrorItem(stmt.getChildTokens().get(0).getLine(), "f",
-                                            "void func has return value in line " + stmt.getChildTokens().get(0).getLine()));
-                                }
-                            }
+                            childToken.getChildTokens().get(0).isReturnRight(type);
                         }
                     }
                 }

@@ -1,6 +1,7 @@
-package frontend;
+package frontend.error;
 
 import frontend.Node.Node;
+import frontend.TableItem;
 
 import java.util.HashMap;
 

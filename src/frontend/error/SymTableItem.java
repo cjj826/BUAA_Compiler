@@ -1,9 +1,10 @@
-package frontend;
+package frontend.error;
+
+import frontend.TableItem;
 
 public class SymTableItem implements TableItem {
     private String name; //名字
     private int dimension; //声明维度
-    private int useDimension; //使用维度
     private Boolean isConst; //是否为常量
     private int line; //行号
     

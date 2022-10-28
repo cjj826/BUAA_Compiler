@@ -1,5 +1,6 @@
-package frontend;
+package frontend.error;
 
+import frontend.Node.CompUnit;
 import frontend.Node.Token;
 
 public class SetTable {
@@ -12,4 +13,7 @@ public class SetTable {
         this.root.check(globalSymTable);
     }
     
+    public boolean isError() {
+        return ((CompUnit) this.root).isError();
+    }
 }

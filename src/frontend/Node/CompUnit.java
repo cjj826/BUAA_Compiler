@@ -1,8 +1,10 @@
 package frontend.Node;
 
-import frontend.ErrorItem;
-import frontend.SymTable;
+import frontend.error.ErrorItem;
+import frontend.error.SymTable;
 import frontend.TableItem;
+import frontend.ir.IrTable;
+import frontend.ir.Value.Value;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -13,10 +15,26 @@ import java.util.Comparator;
 public class CompUnit extends Token {
     
     private boolean debug;
+    private boolean isError;
     
     public CompUnit(String symbol, String token, int line) {
         super(symbol, token, line);
-        debug = true;
+        debug = false;
+        isError = false;
+    }
+    
+    @Override
+    public Value visit(IrTable irTable) {
+        isGlobal = true;
+        ArrayList<Token> childTokens = getChildTokens();
+        for (Token token : childTokens) {
+            token.visit(irTable);
+        }
+        return null;
+    }
+    
+    public boolean isError() {
+        return isError;
     }
     
     @Override
@@ -45,6 +63,9 @@ public class CompUnit extends Token {
             } catch (IOException e) {
                 System.out.println("Something wrong!");
             }
+        }
+        if (!errorAns.isEmpty()) {
+            isError = true;
         }
     }
 }

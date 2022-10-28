@@ -1,6 +1,20 @@
 package frontend.Node;
 
 import frontend.*;
+import frontend.error.ErrorItem;
+import frontend.error.SymTable;
+import frontend.error.SymTableItem;
+import frontend.ir.IrTable;
+import frontend.ir.IrTableItem;
+import frontend.ir.MyModule;
+import frontend.ir.Value.ConstantInteger;
+import frontend.ir.Value.GlobalVariable;
+import frontend.ir.Value.Value;
+import frontend.ir.Value.instrs.Alloc;
+import frontend.ir.Value.instrs.Op;
+import frontend.ir.Value.instrs.Store;
+import frontend.ir.type.IntegerType;
+import frontend.ir.type.Type;
 
 import java.util.ArrayList;
 
@@ -9,6 +23,9 @@ public class Token implements Node {
     private String token;
     private int line;
     private ArrayList<Token> childTokens;
+    
+    public static Type varType = IntegerType.I32; //默认为i32，还可能为数组类型
+    public static boolean isGlobal = true;
     
     public Token(String symbol, String token, int line) {
         this.symbol = symbol;
@@ -120,11 +137,58 @@ public class Token implements Node {
     }
     
     public void isReturnRight(String type) {
-        //调用者一定是FuncDef，子节点为type, ident, (, [FuncParams], ), Block
-        //有返回值的函数的最后一句一定会显示地给出return语句，没有可以视为错误
-        //无返回值的函数出现return不一定算错，可能由return;
-        Token block = this.childTokens.get(this.childTokens.size() - 1);
-        //block子节点为 {, blockItem, }
-        block.isReturnRight(type);
+    
+    }
+    
+    public Value visit(IrTable irTable) {
+        for (Token childToken : childTokens) {
+            childToken.visit(irTable);
+        }
+        return null;
+    }
+    
+    public String eval(String a, String b, Op op) {
+        int first = Integer.parseInt(a);
+        int second = Integer.parseInt(b);
+        switch (op) {
+            case Add:
+                return String.valueOf(first + second);
+            case Sub:
+                return String.valueOf(first - second);
+            case Mul:
+                return String.valueOf(first * second);
+            case Div:
+                return String.valueOf(first / second);
+            case Mod:
+                return String.valueOf(first % second);
+            default:
+                //todo 待完善
+                break;
+        }
+        return null;
+    }
+    
+    public IrTableItem getVar(boolean isConst, IrTable irTable) {
+        String name = "";
+        Value value = null;
+        for (Token token : childTokens) {
+            if (token.getSymbol().equals(Sym.Ident)) {
+                name = token.getToken();
+            } else if (token instanceof InitVal || token instanceof ConstInitVal) {
+                value = token.visit(irTable);
+            } else {
+                token.visit(irTable);
+            }
+        }
+        Value pointer;
+        if (isGlobal) {
+            pointer = new GlobalVariable(varType, name, value == null ? ConstantInteger.Constant0 : value, isConst);
+        } else {
+            pointer = new Alloc(varType, MyModule.curBB);
+            if (value != null) {
+                new Store(value, pointer, MyModule.curBB);
+            }
+        }
+        return new IrTableItem(name, varType, isConst, pointer);
     }
 }

@@ -1,13 +1,24 @@
 package frontend.Node;
 
-import frontend.SymTable;
+import frontend.error.SymTable;
 import frontend.TableItem;
+import frontend.ir.IrTable;
+import frontend.ir.Value.Value;
 
 import java.util.ArrayList;
 
 public class PrimaryExp extends Token {
     public PrimaryExp(String symbol, String token, int line) {
         super(symbol, token, line);
+    }
+    
+    public Value visit(IrTable irTable) {
+        if (getChildTokens().size() == 1) {
+            return getChildTokens().get(0).visit(irTable);
+        } else if (getChildTokens().size() == 3){
+            return getChildTokens().get(1).visit(irTable);
+        }
+        return null;
     }
     
     @Override

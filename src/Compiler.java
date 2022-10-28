@@ -1,6 +1,8 @@
 import frontend.Lexer;
 import frontend.Parser;
-import frontend.SetTable;
+import frontend.error.SetTable;
+import frontend.ir.IrTable;
+import frontend.ir.MyModule;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,5 +19,11 @@ public class Compiler {
         Lexer lexer = new Lexer(s);
         Parser parser = new Parser(lexer.getTokenArrayList());
         SetTable setTable = new SetTable(parser.getRoot());
+        if (setTable.isError()) {
+            System.out.println("error in testfile");
+        } else {
+            parser.getRoot().visit(new IrTable(null));
+            System.out.println(MyModule.myModule);
+        }
     }
 }

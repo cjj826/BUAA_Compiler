@@ -79,7 +79,7 @@ public class Lexer {
         pos++;
     }
     
-    //空格、tab 键、换行符
+    //空格、tab 键、换行符、会包括\r
     public boolean isSpace() {
         return Character.isWhitespace(curChar);
     }
@@ -102,7 +102,7 @@ public class Lexer {
     }
     
     public void error() {
-    
+        System.out.println("undefined error in Lexer! in line " + line);
     }
     
     public int getSym() {

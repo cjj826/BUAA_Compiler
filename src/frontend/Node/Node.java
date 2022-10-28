@@ -1,6 +1,6 @@
 package frontend.Node;
 
-import frontend.ErrorItem;
+import frontend.error.ErrorItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
