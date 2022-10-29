@@ -6,16 +6,19 @@ import frontend.error.SymTable;
 import frontend.TableItem;
 import frontend.ir.IrTable;
 import frontend.ir.MyModule;
+import frontend.ir.Value.BasicBlock;
 import frontend.ir.Value.ConstantInteger;
 import frontend.ir.Value.Value;
 import frontend.ir.Value.instrs.Call;
-import frontend.ir.Value.instrs.Instr;
+import frontend.ir.Value.instrs.Jump;
 import frontend.ir.Value.instrs.Return;
 import frontend.ir.Value.instrs.Store;
 import frontend.ir.type.IntegerType;
+import frontend.ir.type.VoidType;
+
+import static frontend.ir.Value.Value.BLOCK_NUM;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class Stmt extends Token {
     
@@ -30,51 +33,129 @@ public class Stmt extends Token {
         int length = childTokens.size();
         if (childTokens.get(0).getSymbol().equals(Sym.Return)) {
             //对exp进行visit，获取返回值value
-            Value retValue = null;
+            Value retValue = null; //return;
             if (childTokens.get(1) instanceof Exp) {
                 retValue = childTokens.get(1).visit(irTable); //visit exp;
             }
-            return new Return(retValue, MyModule.curBB);
+            return new Return(retValue, curBB);
         } else if (childTokens.get(0) instanceof LVal && childTokens.get(1).getSymbol().equals(Sym.Assign)) {
             Value pointer = ((LVal) childTokens.get(0)).getPointer(irTable);
             Value value;
-            if (childTokens.get(2).getSymbol().equals(Sym.Getint)) {
+            if (childTokens.get(2).getSymbol().equals(Sym.Getint)) { //lval = getint();
                 Value func = MyModule.myModule.functions.get("getint");
-                value = new Call(func.getType(), MyModule.curBB, func, new ArrayList<>());
+                value = new Call(func.getType(), curBB, func, new ArrayList<>());
             } else {
-                value = childTokens.get(2).visit(irTable);
+                value = childTokens.get(2).visit(irTable); // lval = exp;
             }
-            new Store(value, pointer, MyModule.curBB);
+            new Store(value, pointer, curBB);
         } else if (childTokens.get(0).getSymbol().equals(Sym.Printf)) {
             String formatString = childTokens.get(2).getToken();
             System.out.println("the out is " + formatString);
             int len = formatString.length();
             pos = 4; //指向第一个exp
-            for (int i = 1; i < len - 1; i++) {
+            ArrayList<Value> args = new ArrayList<>();
+            for (int i = 1; i < len; i++) {
                 if (formatString.charAt(i) == '%') {
-                    Value func = MyModule.myModule.functions.get("putint");
-                    ArrayList<Value> args = new ArrayList<>();
                     args.add(childTokens.get(pos).visit(irTable));
-                    new Call(func.getType(), MyModule.curBB, func, args);
                     i += 1;
                     pos += 2;
-                } else {
-                    Value func = MyModule.myModule.functions.get("putch");
-                    ArrayList<Value> args = new ArrayList<>();
-                    if (formatString.charAt(i) == '\\') {
-                        args.add(new ConstantInteger(IntegerType.I32, String.valueOf((int)('\n'))));
-                        i += 1;
-                    } else {
-                        args.add(new ConstantInteger(IntegerType.I32, String.valueOf((int)(formatString.charAt(i)))));
-                    }
-                    new Call(func.getType(), MyModule.curBB, func, args);
                 }
             }
-        } else {
+            int argPosition = 0;
+            for (int i = 1; i < len - 1; i++) {
+                ArrayList<Value> tempArgs = new ArrayList<>();
+                if (formatString.charAt(i) == '%') {
+                    Value func = MyModule.myModule.functions.get("putint");
+                    tempArgs.add(args.get(argPosition++));
+                    new Call(func.getType(), curBB, func, tempArgs);
+                    i += 1;
+                } else {
+                    Value func = MyModule.myModule.functions.get("putch");
+                    if (formatString.charAt(i) == '\\') {
+                        tempArgs.add(new ConstantInteger(IntegerType.I32, String.valueOf((int) ('\n'))));
+                        i += 1;
+                    } else {
+                        tempArgs.add(new ConstantInteger(IntegerType.I32, String.valueOf((int) (formatString.charAt(i)))));
+                    }
+                    new Call(func.getType(), curBB, func, tempArgs);
+                }
+            }
+        } else if (childTokens.get(0).getSymbol().equals(Sym.If)) {
+            return visitIf(irTable);
+        } else if (childTokens.get(0) instanceof Block) {
+            IrTable curIrTable = new IrTable(irTable);
+            childTokens.get(0).visit(curIrTable);
+        } else if (childTokens.get(0).getSymbol().equals(Sym.While)) {
+            return visitWhile(irTable);
+        } else if (childTokens.get(0).getSymbol().equals(Sym.Break)) {
+            return new Jump(whileEnd.peek(), curBB);
+        } else if (childTokens.get(0).getSymbol().equals(Sym.Continue)) {
+            return new Jump(whileStart.peek(), curBB);
+        } else{
             for (Token token : childTokens) {
                 token.visit(irTable);
             }
         }
+        return null;
+    }
+    
+    public Value visitWhile(IrTable irTable) {
+        Token cond = getChildTokens().get(2); // cond表达式
+        Token whileStmt = getChildTokens().get(4);
+        BasicBlock startBlock = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++, curFunc);
+        new Jump(startBlock, curBB);
+        BasicBlock whileBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++, curFunc);
+        BasicBlock followBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++, curFunc);
+        curBB = startBlock;
+        cond.getCond(whileBB, followBB, irTable);
+        curBB = whileBB;
+        whileStart.push(startBlock);
+        whileEnd.push(followBB);
+        whileStmt.visit(irTable);
+        whileStart.pop();
+        whileEnd.pop();
+        new Jump(startBlock, curBB);
+        curBB = followBB;
+        return null;
+    }
+    
+    public Value visitIf(IrTable irTable) {
+        ArrayList<Token> childTokens = getChildTokens();
+        Stmt trueStmt = null;
+        Stmt falseStmt = null;
+        Token cond = childTokens.get(2); // cond表达式
+        for (Token token : childTokens) {
+            if (token instanceof Stmt) {
+                if (trueStmt != null) {
+                    falseStmt = (Stmt) token;
+                } else {
+                    trueStmt = (Stmt) token;
+                }
+            }
+        }
+        BasicBlock trueBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++, curFunc);
+        BasicBlock falseBB = null;
+        if (falseStmt != null) {
+            falseBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++, curFunc);
+        }
+        BasicBlock followBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++, curFunc);
+        if (falseStmt != null) {
+            //if else
+            cond.getCond(trueBB, falseBB, irTable);
+            curBB = trueBB;
+            trueStmt.visit(irTable);
+            new Jump(followBB, curBB);
+            curBB = falseBB;
+            falseStmt.visit(irTable);
+        } else {
+            //if
+            cond.getCond(trueBB, followBB, irTable);
+            curBB = trueBB;
+            assert trueStmt != null;
+            trueStmt.visit(irTable);
+        }
+        new Jump(followBB, curBB);
+        curBB = followBB;
         return null;
     }
     

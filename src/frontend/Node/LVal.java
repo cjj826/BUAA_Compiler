@@ -26,7 +26,7 @@ public class LVal extends Token {
             //目前在解析全局变量 读取a，则a必为constant int
             return ((GlobalVariable) pointer).getInitialValue();
         } else {
-            return new Load(pointer, MyModule.curBB);
+            return new Load(pointer, curBB);
         }
     }
     

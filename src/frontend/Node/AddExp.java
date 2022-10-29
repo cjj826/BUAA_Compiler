@@ -9,6 +9,7 @@ import frontend.ir.Value.ConstantInteger;
 import frontend.ir.Value.Value;
 import frontend.ir.Value.instrs.BinaryOp;
 import frontend.ir.Value.instrs.Op;
+import frontend.ir.type.IntegerType;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,9 @@ public class AddExp extends Token {
             if (first instanceof ConstantInteger && second instanceof ConstantInteger) {
                 return new ConstantInteger(first.getType(), eval(first.getName(), second.getName(), temp));
             }
-            return new BinaryOp(first, temp, second, MyModule.curBB);
+            first = checkIcmp(first);
+            second = checkIcmp(second);
+            return new BinaryOp(IntegerType.I32, first.getType(), first, temp, second, curBB);
         }
     }
     

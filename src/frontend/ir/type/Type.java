@@ -7,7 +7,6 @@ VOID：无返回值
 INTEGER：整数 i32, i1
 POINTER：指针
 ARRAY：数组
-FUCTIONTYPE：函数类型
  */
 
 public class Type {

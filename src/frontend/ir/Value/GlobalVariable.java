@@ -10,7 +10,7 @@ public class GlobalVariable extends Value {
     private Value initialValue;
     
     public GlobalVariable(Type type, String name, Value value, boolean isConst) {
-        //globalVariable的type 也为 pointerType, name 为 %g
+        //globalVariable的 type 也为 pointerType, name 为 %g
         //全局变量未初始化时初始化为 0
         super(type, name);
         setType(new PointerType(type));

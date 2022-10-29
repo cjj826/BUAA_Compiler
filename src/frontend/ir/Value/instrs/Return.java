@@ -14,13 +14,16 @@ public class Return extends Instr {
         super(parent);
     }
     
+    /*
+    return value == null 对应 return;
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         Value retValue = this.getOperandList().get(0);
         if (retValue != null) {
-            sb.append("ret ").append(retValue.getType()).append(" ").append(retValue.getName()).append("\n");
+            sb.append("ret ").append(retValue.getType()).append(" ").append(retValue.getName());
         } else {
-            sb.append("ret void\n");
+            sb.append("ret void");
         }
         return sb.toString();
     }

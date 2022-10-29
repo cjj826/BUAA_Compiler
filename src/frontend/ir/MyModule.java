@@ -15,7 +15,6 @@ import java.util.HashMap;
 public class MyModule {
     
     public static final MyModule myModule = new MyModule();
-    public static BasicBlock curBB;
     private boolean debug;
     
     public ArrayList<GlobalVariable> globals = new ArrayList<>();
@@ -31,7 +30,7 @@ public class MyModule {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (GlobalVariable var : globals) {
-            sb.append(var).append("\n\n");
+            sb.append(var).append("\n");
         }
         for (Function function : functions.values()) {
             switch (function.getName()) {

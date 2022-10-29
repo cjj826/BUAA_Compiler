@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Function extends Value {
+    public void setArgument(ArrayList<Value> argument) {
+        this.argument = argument;
+    }
+    
     private ArrayList<Value> argument;
     
     public LinkedList<BasicBlock> getBlocks() {

@@ -38,7 +38,6 @@ public class Call extends Instr {
             if (i > 1) {
                 sb.append(", ");
             }
-//            System.out.println(this.getOperandList().get(i).getName());
             sb.append(this.getOperandList().get(i).getType()).append(" ");
             sb.append(this.getOperandList().get(i).getName());
         }

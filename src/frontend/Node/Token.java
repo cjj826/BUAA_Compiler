@@ -7,25 +7,29 @@ import frontend.error.SymTableItem;
 import frontend.ir.IrTable;
 import frontend.ir.IrTableItem;
 import frontend.ir.MyModule;
-import frontend.ir.Value.ConstantInteger;
-import frontend.ir.Value.GlobalVariable;
-import frontend.ir.Value.Value;
+import frontend.ir.Value.*;
 import frontend.ir.Value.instrs.Alloc;
 import frontend.ir.Value.instrs.Op;
 import frontend.ir.Value.instrs.Store;
+import frontend.ir.Value.instrs.Zext;
 import frontend.ir.type.IntegerType;
 import frontend.ir.type.Type;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Token implements Node {
     private String symbol;
     private String token;
     private int line;
     private ArrayList<Token> childTokens;
+    public static Stack<BasicBlock> whileStart = new Stack<>();
+    public static Stack<BasicBlock> whileEnd = new Stack<>();
     
     public static Type varType = IntegerType.I32; //默认为i32，还可能为数组类型
     public static boolean isGlobal = true;
+    public static BasicBlock curBB = null;
+    public static Function curFunc = null;
     
     public Token(String symbol, String token, int line) {
         this.symbol = symbol;
@@ -184,11 +188,23 @@ public class Token implements Node {
         if (isGlobal) {
             pointer = new GlobalVariable(varType, name, value == null ? ConstantInteger.Constant0 : value, isConst);
         } else {
-            pointer = new Alloc(varType, MyModule.curBB);
+            pointer = new Alloc(varType, curBB);
             if (value != null) {
-                new Store(value, pointer, MyModule.curBB);
+                new Store(value, pointer, curBB);
             }
         }
         return new IrTableItem(name, varType, isConst, pointer);
+    }
+    
+    public Value checkIcmp(Value opValue) {
+        if (opValue.getType().toString().equals("i1")) {
+            return new Zext(opValue, IntegerType.I32, curBB);
+        } else {
+            return opValue;
+        }
+    }
+    
+    public Value getCond(BasicBlock trueBlock, BasicBlock falseBlock, IrTable irTable) {
+        return null;
     }
 }

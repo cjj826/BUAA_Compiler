@@ -11,6 +11,7 @@ import frontend.ir.Value.Value;
 import frontend.ir.Value.instrs.BinaryOp;
 import frontend.ir.Value.instrs.Call;
 import frontend.ir.Value.instrs.Op;
+import frontend.ir.type.IntegerType;
 
 import java.util.ArrayList;
 
@@ -28,16 +29,19 @@ public class UnaryExp extends Token {
         } else if (size == 2)  {
             //实现 unaryOp getUnaryOp.symbol
             String sym = childTokens.get(0).getChildTokens().get(0).getSymbol();
+            Value value = childTokens.get(1).visit(irTable);
+            value = checkIcmp(value);
             Op temp = sym.equals(Sym.Add) ? Op.Add :
                     sym.equals(Sym.Sub) ? Op.Sub : Op.Not;
             if (temp.equals(Op.Add)) {
                 return childTokens.get(1).visit(irTable);
             } else if (temp.equals(Op.Sub)) {
-                Value value = childTokens.get(1).visit(irTable);
                 if (value instanceof ConstantInteger) {
                     return new ConstantInteger(value.getType(), eval("0", value.getName(), temp));
                 }
-                return new BinaryOp(ConstantInteger.Constant0, temp, value, MyModule.curBB);
+                return new BinaryOp(IntegerType.I32, value.getType(), ConstantInteger.Constant0, temp, value, curBB);
+            } else {
+                return new BinaryOp(IntegerType.I1, IntegerType.I32, ConstantInteger.Constant0, Op.Eq, value, curBB);
             }
         } else {
             //TODO
@@ -51,9 +55,8 @@ public class UnaryExp extends Token {
                     childTokens.get(i).visit(irTable);
                 }
             }
-            return new Call(func.getType(), MyModule.curBB, func, args);
+            return new Call(func.getType(), curBB, func, args);
         }
-        return null;
     }
     
     @Override

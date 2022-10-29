@@ -31,9 +31,9 @@ public class MainFuncDef extends Token {
         Type type = IntegerType.I32;
         String name = "main";
         Function function = new Function(type, name, new ArrayList<>());
+        curFunc = function;
         MyModule.myModule.addFunction(function);
-        MyModule.curBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++); //当前基本块
-        function.addBlock(MyModule.curBB);
+        curBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++, curFunc); //当前基本块
         irTable.addItem(new IrTableItem(function.getName(), function.getType(), false, function));
         childTokens.get(childTokens.size() - 1).visit(curIrTable); //解析BasicBlock
         return null;

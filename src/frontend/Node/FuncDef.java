@@ -30,21 +30,22 @@ public class FuncDef extends Token {
         isGlobal = false;
         ArrayList<Token> childTokens = getChildTokens();
         IrTable curIrTable = new IrTable(irTable); //进入函数，产生新一级符号表
-        Type type = null;
-        String name = "";
-        MyModule.curBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++);
         ArrayList<Value> arguments = new ArrayList<>();
+        Function function = new Function(null, "", arguments);
         for (Token token : childTokens) {
             if (token instanceof FuncType) {
-                type = ((FuncType) token).getFuncType().equals("int") ? IntegerType.I32 : new VoidType();
+                Type type = ((FuncType) token).getFuncType().equals("int") ? IntegerType.I32 : new VoidType();
+                function.setType(type);
             } else if (token.getSymbol().equals(Sym.Ident)) {
-                name = token.getToken();
+                String name = token.getToken();
+                function.setName(name);
+                curFunc = function;
+                MyModule.myModule.addFunction(function);
+                curBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++, curFunc);
             } else if (token instanceof FuncFParams) {
                 arguments = ((FuncFParams) token).getArgs(curIrTable);
+                function.setArgument(arguments);
             } else if (token instanceof Block) {
-                Function function = new Function(type, name, arguments);
-                MyModule.myModule.addFunction(function);
-                function.addBlock(MyModule.curBB);
                 irTable.addItem(new IrTableItem(function.getName(), function.getType(), false, function));
                 token.visit(curIrTable);
             } else {

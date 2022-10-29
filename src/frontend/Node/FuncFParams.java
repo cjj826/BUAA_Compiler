@@ -25,8 +25,8 @@ public class FuncFParams extends Token {
             if (token instanceof FuncFParam) {
                 Value arg = token.visit(irTable);
                 arguments.add(arg);
-                Value pointer = new Alloc(varType, MyModule.curBB);
-                new Store(arg, pointer, MyModule.curBB);
+                Value pointer = new Alloc(varType, curBB);
+                new Store(arg, pointer, curBB);
                 irTable.addItem(new IrTableItem(((Arg)arg).getOriginName(), varType, false, pointer));
             } else {
                 token.visit(irTable);
