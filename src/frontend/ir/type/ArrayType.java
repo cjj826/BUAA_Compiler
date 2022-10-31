@@ -14,7 +14,16 @@ public class ArrayType extends Type{
         this.size = size;
     }
     
+    public Type getElementType() {
+        return this.elementType;
+    }
+    
+    @Override
+    public int getLength() {
+        return this.size * elementType.getLength();
+    }
+    
     public String toString() {
-        return '[' + size + " x " + elementType.toString() + ']';
+        return "[" + size + " x " + elementType.toString() + "]";
     }
 }

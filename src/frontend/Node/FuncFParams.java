@@ -1,10 +1,9 @@
 package frontend.Node;
 
 import frontend.error.SymTable;
-import frontend.TableItem;
+import frontend.error.TableItem;
 import frontend.ir.IrTable;
 import frontend.ir.IrTableItem;
-import frontend.ir.MyModule;
 import frontend.ir.Value.Arg;
 import frontend.ir.Value.Value;
 import frontend.ir.Value.instrs.Alloc;
@@ -27,7 +26,7 @@ public class FuncFParams extends Token {
                 arguments.add(arg);
                 Value pointer = new Alloc(varType, curBB);
                 new Store(arg, pointer, curBB);
-                irTable.addItem(new IrTableItem(((Arg)arg).getOriginName(), varType, false, pointer));
+                irTable.addItem(new IrTableItem(((Arg)arg).getOriginName(), varType, false, pointer, null));
             } else {
                 token.visit(irTable);
             }

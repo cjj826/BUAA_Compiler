@@ -1,4 +1,4 @@
-package frontend;
+package frontend.error;
 
 public interface TableItem {
     

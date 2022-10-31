@@ -3,11 +3,10 @@ package frontend.Node;
 import frontend.error.FuncTableItem;
 import frontend.Sym;
 import frontend.error.SymTable;
-import frontend.TableItem;
+import frontend.error.TableItem;
 import frontend.ir.IrTable;
 import frontend.ir.IrTableItem;
 import frontend.ir.MyModule;
-import frontend.ir.Value.Arg;
 import frontend.ir.Value.BasicBlock;
 import frontend.ir.Value.Function;
 import frontend.ir.Value.Value;
@@ -46,7 +45,7 @@ public class FuncDef extends Token {
                 arguments = ((FuncFParams) token).getArgs(curIrTable);
                 function.setArgument(arguments);
             } else if (token instanceof Block) {
-                irTable.addItem(new IrTableItem(function.getName(), function.getType(), false, function));
+                irTable.addItem(new IrTableItem(function.getName(), function.getType(), false, function, null));
                 token.visit(curIrTable);
             } else {
                 token.visit(curIrTable);

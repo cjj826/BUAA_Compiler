@@ -2,9 +2,8 @@ package frontend.Node;
 
 import frontend.Sym;
 import frontend.error.SymTable;
-import frontend.TableItem;
+import frontend.error.TableItem;
 import frontend.ir.IrTable;
-import frontend.ir.MyModule;
 import frontend.ir.Value.ConstantInteger;
 import frontend.ir.Value.Value;
 import frontend.ir.Value.instrs.BinaryOp;

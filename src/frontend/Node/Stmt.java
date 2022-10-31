@@ -3,7 +3,7 @@ package frontend.Node;
 import frontend.error.ErrorItem;
 import frontend.Sym;
 import frontend.error.SymTable;
-import frontend.TableItem;
+import frontend.error.TableItem;
 import frontend.ir.IrTable;
 import frontend.ir.MyModule;
 import frontend.ir.Value.BasicBlock;
@@ -39,7 +39,7 @@ public class Stmt extends Token {
             }
             return new Return(retValue, curBB);
         } else if (childTokens.get(0) instanceof LVal && childTokens.get(1).getSymbol().equals(Sym.Assign)) {
-            Value pointer = ((LVal) childTokens.get(0)).getPointer(irTable);
+            Value pointer = childTokens.get(0).visit(irTable); //最终的pointer
             Value value;
             if (childTokens.get(2).getSymbol().equals(Sym.Getint)) { //lval = getint();
                 Value func = MyModule.myModule.functions.get("getint");

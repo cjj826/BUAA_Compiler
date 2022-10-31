@@ -1,7 +1,5 @@
 package frontend.error;
 
-import frontend.TableItem;
-
 import java.util.ArrayList;
 
 public class FuncTableItem implements TableItem {

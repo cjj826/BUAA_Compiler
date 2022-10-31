@@ -4,14 +4,12 @@ import frontend.*;
 import frontend.error.ErrorItem;
 import frontend.error.SymTable;
 import frontend.error.SymTableItem;
+import frontend.error.TableItem;
 import frontend.ir.IrTable;
 import frontend.ir.IrTableItem;
-import frontend.ir.MyModule;
 import frontend.ir.Value.*;
-import frontend.ir.Value.instrs.Alloc;
-import frontend.ir.Value.instrs.Op;
-import frontend.ir.Value.instrs.Store;
-import frontend.ir.Value.instrs.Zext;
+import frontend.ir.Value.instrs.*;
+import frontend.ir.type.ArrayType;
 import frontend.ir.type.IntegerType;
 import frontend.ir.type.Type;
 
@@ -30,6 +28,7 @@ public class Token implements Node {
     public static boolean isGlobal = true;
     public static BasicBlock curBB = null;
     public static Function curFunc = null;
+    public static boolean isForce = false;
     
     public Token(String symbol, String token, int line) {
         this.symbol = symbol;
@@ -174,26 +173,84 @@ public class Token implements Node {
     
     public IrTableItem getVar(boolean isConst, IrTable irTable) {
         String name = "";
-        Value value = null;
-        for (Token token : childTokens) {
-            if (token.getSymbol().equals(Sym.Ident)) {
-                name = token.getToken();
-            } else if (token instanceof InitVal || token instanceof ConstInitVal) {
-                value = token.visit(irTable);
-            } else {
-                token.visit(irTable);
+        Value initialValue = null;
+        int size = childTokens.size();
+        ArrayList<Integer> arrayDim = new ArrayList<>();
+        name = childTokens.get(0).getToken();
+        varType = IntegerType.I32;
+        for (int i = 0; i < size; i++) {
+            if (childTokens.get(i).getSymbol().equals(Sym.Lm)) {
+                Value value = childTokens.get(i + 1).visit(irTable);
+                if (value instanceof ConstantInteger) {
+                    arrayDim.add(Integer.valueOf(value.getName()));
+                } else {
+                    System.out.println("you cannot get const!!!");
+                }
+            } else if (childTokens.get(i) instanceof InitVal || childTokens.get(i) instanceof ConstInitVal) {
+                initialValue = childTokens.get(i).visit(irTable); // 获取初始值
+                System.out.println("init " + initialValue.toString());
             }
+        }
+        int arraySize = arrayDim.size(); //2 维 或 1 维
+        for (int i = arraySize - 1; i >= 0; i--) {
+            varType = new ArrayType(varType, arrayDim.get(i));
         }
         Value pointer;
         if (isGlobal) {
-            pointer = new GlobalVariable(varType, name, value == null ? ConstantInteger.Constant0 : value, isConst);
+            if (initialValue == null) {
+                //全局变量未初始化
+                if (varType instanceof ArrayType) {
+                    initialValue = new ZeroInitArray(varType, "zeroinitializer");
+                } else {
+                    initialValue = ConstantInteger.Constant0;
+                }
+            }
+            pointer = new GlobalVariable(varType, name, initialValue, isConst);
         } else {
+            // 局部变量/常量
             pointer = new Alloc(varType, curBB);
-            if (value != null) {
-                new Store(value, pointer, curBB);
+            if (initialValue != null) {
+                if (varType instanceof ArrayType) {
+                    //局部数组初始化，需要先取出基地址
+                    int length = varType.getLength();
+                    ArrayList<Value> offsets = new ArrayList<>();
+                    for (int i = 0; i <= arraySize; i++) {
+                        offsets.add(ConstantInteger.Constant0);
+                    }
+                    Value basePointer = new GetElementPtr(pointer, offsets, curBB); //取出基地址
+                    //取基地址的即可
+                    Value tempInit = ((ConstantArray) initialValue).getValueByIndex(0);
+                    new Store(tempInit, basePointer, curBB);
+                    //以基地址为基准取其他的元素
+                    Value tempPointer;
+                    for (int i = 1; i < length; i++) {
+                        offsets = new ArrayList<>();
+                        offsets.add(new ConstantInteger(IntegerType.I32, String.valueOf(i)));
+                        tempPointer = new GetElementPtr(basePointer, offsets, curBB);
+                        tempInit = ((ConstantArray) initialValue).getValueByIndex(i);
+                        new Store(tempInit, tempPointer, curBB);
+                    }
+                } else {
+                    //局部变量初始化
+                    new Store(initialValue, pointer, curBB);
+                }
             }
         }
-        return new IrTableItem(name, varType, isConst, pointer);
+        return new IrTableItem(name, varType, isConst, pointer, initialValue); //符号表中存储当初 alloc 的 pointer
+    }
+    
+    public Value getArrayInitial(IrTable irTable) {
+        ArrayList<Value> values = new ArrayList<>();
+        ConstantArray constArray = new ConstantArray(null, "constInitial", values);
+        for (Token childToken : childTokens) {
+            if (childToken instanceof ConstInitVal || childToken instanceof InitVal) {
+                values.add(childToken.visit(irTable));
+            }
+        }
+        constArray.setSize(values.size());
+        constArray.setType(new ArrayType(values.get(0).getType(), values.size()));
+        constArray.setName(constArray.toString());
+        return constArray;
     }
     
     public Value checkIcmp(Value opValue) {

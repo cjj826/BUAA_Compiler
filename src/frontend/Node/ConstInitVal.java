@@ -11,6 +11,10 @@ public class ConstInitVal extends Token {
     
     @Override
     public Value visit(IrTable irTable) {
-        return getChildTokens().get(0).visit(irTable);
+        int size = getChildTokens().size();
+        if (size == 1) {
+            return getChildTokens().get(0).visit(irTable);
+        }
+        return getArrayInitial(irTable);
     }
 }

@@ -2,7 +2,7 @@ package frontend.Node;
 
 import frontend.error.SymTable;
 import frontend.error.SymTableItem;
-import frontend.TableItem;
+import frontend.error.TableItem;
 import frontend.ir.IrTable;
 import frontend.ir.Value.Value;
 

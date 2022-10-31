@@ -1,7 +1,5 @@
 package frontend.error;
 
-import frontend.TableItem;
-
 public class SymTableItem implements TableItem {
     private String name; //名字
     private int dimension; //声明维度

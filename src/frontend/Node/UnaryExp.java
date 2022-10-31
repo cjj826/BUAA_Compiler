@@ -4,6 +4,7 @@ import frontend.*;
 import frontend.error.ErrorItem;
 import frontend.error.FuncTableItem;
 import frontend.error.SymTable;
+import frontend.error.TableItem;
 import frontend.ir.IrTable;
 import frontend.ir.MyModule;
 import frontend.ir.Value.ConstantInteger;
@@ -29,12 +30,13 @@ public class UnaryExp extends Token {
         } else if (size == 2)  {
             //实现 unaryOp getUnaryOp.symbol
             String sym = childTokens.get(0).getChildTokens().get(0).getSymbol();
+            System.out.println("symbol is " + sym);
             Value value = childTokens.get(1).visit(irTable);
             value = checkIcmp(value);
             Op temp = sym.equals(Sym.Add) ? Op.Add :
                     sym.equals(Sym.Sub) ? Op.Sub : Op.Not;
             if (temp.equals(Op.Add)) {
-                return childTokens.get(1).visit(irTable);
+                return value;
             } else if (temp.equals(Op.Sub)) {
                 if (value instanceof ConstantInteger) {
                     return new ConstantInteger(value.getType(), eval("0", value.getName(), temp));

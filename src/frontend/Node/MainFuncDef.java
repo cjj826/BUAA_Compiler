@@ -2,7 +2,7 @@ package frontend.Node;
 
 import frontend.error.FuncTableItem;
 import frontend.error.SymTable;
-import frontend.TableItem;
+import frontend.error.TableItem;
 import frontend.ir.IrTable;
 import frontend.ir.IrTableItem;
 import frontend.ir.MyModule;
@@ -34,7 +34,7 @@ public class MainFuncDef extends Token {
         curFunc = function;
         MyModule.myModule.addFunction(function);
         curBB = new BasicBlock(new VoidType(), "Block" + BLOCK_NUM++, curFunc); //当前基本块
-        irTable.addItem(new IrTableItem(function.getName(), function.getType(), false, function));
+        irTable.addItem(new IrTableItem(function.getName(), function.getType(), false, function, null));
         childTokens.get(childTokens.size() - 1).visit(curIrTable); //解析BasicBlock
         return null;
     }

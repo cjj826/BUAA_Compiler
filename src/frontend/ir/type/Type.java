@@ -10,6 +10,15 @@ ARRAY：数组
  */
 
 public class Type {
+    
+    public int getLength() {
+        return 1;
+    }
+    
+    public Type getElementType() {
+        return null;
+    }
+    
     public boolean isIntegerType() {
         return this instanceof IntegerType;
     }
@@ -24,5 +33,9 @@ public class Type {
     
     public boolean isArrayType() {
         return this instanceof ArrayType;
+    }
+
+    public boolean isBasicType() {
+        return !(isArrayType() || isPointerType());
     }
 }
