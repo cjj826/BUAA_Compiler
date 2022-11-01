@@ -20,6 +20,22 @@ public class MyModule {
     public ArrayList<GlobalVariable> globals = new ArrayList<>();
     public HashMap<String, Function> functions = new HashMap<>();
     
+    public ArrayList<GlobalVariable> getGlobals() {
+        return globals;
+    }
+    
+    public void setGlobals(ArrayList<GlobalVariable> globals) {
+        this.globals = globals;
+    }
+    
+    public HashMap<String, Function> getFunctions() {
+        return functions;
+    }
+    
+    public void setFunctions(HashMap<String, Function> functions) {
+        this.functions = functions;
+    }
+    
     public MyModule() {
         debug = true;
         functions.put("getint", new Function(IntegerType.I32, "getint", new ArrayList<>()));

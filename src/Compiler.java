@@ -1,3 +1,4 @@
+import backend.GenMips;
 import frontend.Lexer;
 import frontend.Parser;
 import frontend.error.SetTable;
@@ -21,10 +22,14 @@ public class Compiler {
         SetTable setTable = new SetTable(parser.getRoot());
         if (setTable.isError()) {
             System.out.println("error in testfile");
-        } else {
+        } else { //不检查错误处理
             parser.getRoot().visit(new IrTable(null));
+    
+            //中端输出
             String ans = MyModule.myModule.toString();
-            System.out.println(ans);
+            //System.out.println(ans);
         }
+        //后端获取
+        GenMips genMips = new GenMips(MyModule.myModule);
     }
 }

@@ -11,6 +11,10 @@ import static frontend.Node.Token.curBB;
 name is %regNum
 */
 public class BinaryOp extends Instr {
+    public Op getOp() {
+        return op;
+    }
+    
     private Op op;
     private Type opType;
     

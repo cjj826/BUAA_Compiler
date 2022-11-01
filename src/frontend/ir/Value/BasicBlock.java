@@ -9,6 +9,14 @@ import frontend.ir.type.Type;
 import java.util.LinkedList;
 
 public class BasicBlock extends Value {
+    public LinkedList<Instr> getInstrs() {
+        return instrs;
+    }
+    
+    public void setInstrs(LinkedList<Instr> instrs) {
+        this.instrs = instrs;
+    }
+    
     private LinkedList<Instr> instrs;
     private Function parent;
     private boolean isTerminate;

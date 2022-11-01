@@ -10,6 +10,10 @@ public class Function extends Value {
         this.argument = argument;
     }
     
+    public ArrayList<Value> getArgument() {
+        return argument;
+    }
+    
     private ArrayList<Value> argument;
     
     public LinkedList<BasicBlock> getBlocks() {

@@ -9,6 +9,11 @@ public class Instr extends User {
     public Instr(BasicBlock parent) {
         super(parent.getType(), "");
         this.parent = parent;
-        this.parent.addInstr(this);
+        if (this instanceof Alloc) {
+            //如果是alloc则将其插入基本块头
+            this.parent.getInstrs().addFirst(this);
+        } else {
+            this.parent.addInstr(this);
+        }
     }
 }
