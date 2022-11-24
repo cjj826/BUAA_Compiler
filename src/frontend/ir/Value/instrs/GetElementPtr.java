@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 public class GetElementPtr extends Instr {
     
+    public Value getPointer() {
+        return pointer;
+    }
+    
     Value pointer;
     
     public GetElementPtr(BasicBlock parent) {

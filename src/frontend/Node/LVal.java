@@ -36,8 +36,6 @@ public class LVal extends Token {
                     this.canGet = false;
                 }
                 offsets.add(value);
-                System.out.println("offset is " + childToken.visit(irTable).getName());
-
             }
         }
         return offsets;

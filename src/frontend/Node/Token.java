@@ -223,13 +223,22 @@ public class Token implements Node {
                     new Store(tempInit, basePointer, curBB);
                     //以基地址为基准取其他的元素
                     Value tempPointer;
+                    ArrayList<Value> newOffsets;
                     for (int i = 1; i < length; i++) {
-                        offsets = new ArrayList<>();
-                        offsets.add(new ConstantInteger(IntegerType.I32, String.valueOf(i)));
-                        tempPointer = new GetElementPtr(basePointer, offsets, curBB);
+                        basePointer = new GetElementPtr(pointer, offsets, curBB); //权宜之计！！！
+                        newOffsets = new ArrayList<>();
+                        newOffsets.add(new ConstantInteger(IntegerType.I32, String.valueOf(i)));
+                        tempPointer = new GetElementPtr(basePointer, newOffsets, curBB);
                         tempInit = ((ConstantArray) initialValue).getValueByIndex(i);
                         new Store(tempInit, tempPointer, curBB);
                     }
+//                    for (int i = 1; i < length; i++) {
+//                        offsets = new ArrayList<>();
+//                        offsets.add(new ConstantInteger(IntegerType.I32, String.valueOf(i)));
+//                        tempPointer = new GetElementPtr(basePointer, offsets, curBB);
+//                        tempInit = ((ConstantArray) initialValue).getValueByIndex(i);
+//                        new Store(tempInit, tempPointer, curBB);
+//                    }
                 } else {
                     //局部变量初始化
                     new Store(initialValue, pointer, curBB);

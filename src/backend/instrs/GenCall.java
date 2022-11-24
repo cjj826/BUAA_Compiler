@@ -40,7 +40,6 @@ public class GenCall extends GenInstr {
                 this.res += "syscall\n";
             } else {
                 this.res += "li $v0, 5\nsyscall\n";
-                //regPool.addValue2reg(call.getName(), "$v0");
                 String newName = regPool.getFreeReg();
                 this.res += "move " + newName + ", $v0\n";
                 regPool.addValue2reg(call.getName(), newName);
@@ -77,11 +76,9 @@ public class GenCall extends GenInstr {
             sb.append(regPool.restoreReg(map, offset));
     
             //传递返回值
-//            regPool.addValue2reg(call.getName(), "$v0");
             String newName = regPool.getFreeReg();
             sb.append("move ").append(newName).append(", ").append("$v0\n");
             regPool.addValue2reg(call.getName(), newName);
-            //regPool.setSp(curSp); //维护sp
             this.res = sb.toString();
         }
     }

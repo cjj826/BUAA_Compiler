@@ -14,6 +14,10 @@ public class Function extends Value {
         return argument;
     }
     
+    public BasicBlock getFirstBlock() {
+        return this.blocks.getFirst();
+    }
+    
     private ArrayList<Value> argument;
     
     public LinkedList<BasicBlock> getBlocks() {

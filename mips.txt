@@ -1,0 +1,2359 @@
+.data
+global0: .word 4
+global1: .word 64
+global2: .word -49331
+global3: .word 24
+global4: .word 1040
+global5: .word 10086, 16
+global6: .word 212132, 76, 308, 26, 57048, 3194880, 8792, -687331, 908, 1040, 136, 10104
+global7: .word 4491858
+global8: .word -597
+global9: .space 4
+global10: .word 1983
+global11: .word 2323, 9254, 0, -1269906
+global12: .space 24
+global13: .space 8
+global14: .space 4
+global15: .word 287, -98662, 287, 11505
+global16: .space 4
+.text
+j main
+__:
+Block6:
+lw $t0, 4($sp)
+addi $t1, $t0, 0
+
+lw $t0, ($t1)
+li $t1, 99
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 97
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 108
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 108
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 101
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 100
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 32
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 102
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 117
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 110
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 99
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 58
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 32
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 95
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 95
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 44
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 32
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 97
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 114
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 114
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 97
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 121
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 91
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 48
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 93
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 32
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 61
+move $a0, $t1
+li $v0, 11
+syscall
+
+li $t1, 32
+move $a0, $t1
+li $v0, 11
+syscall
+
+move $a0, $t0
+li $v0, 1
+syscall
+
+li $t0, 10
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 10
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 10
+move $a0, $t0
+li $v0, 11
+syscall
+
+addi $sp, $sp, 8
+
+jr $ra
+
+
+
+__my_Ha_s__h:
+Block0:
+addi $sp, $sp , -8
+lw $t0, 8($sp)
+sw $t0, 0($sp)
+li $t0, 0
+sw $t0, 4($sp)
+j Block1
+
+Block1:
+lw $t0, 4($sp)
+lw $t1, 8($sp)
+slt $t0, $t0, $t1
+bnez $t0, Block2
+j Block3
+
+Block2:
+lw $t0, 0($sp)
+li $t1, 98326464
+add $t0, $t0, $t1
+sw $t0, 0($sp)
+lw $t0, 0($sp)
+li $t1, 20373381
+mul $t0, $t0, $t1
+sw $t0, 0($sp)
+lw $t0, 0($sp)
+li $t1, 23667832
+add $t0, $t0, $t1
+sw $t0, 0($sp)
+lw $t0, 0($sp)
+li $t1, 133
+div $t0, $t0, $t1
+sw $t0, 0($sp)
+lw $t0, 0($sp)
+li $t1, 1347887899
+add $t0, $t0, $t1
+sw $t0, 0($sp)
+lw $t0, 0($sp)
+li $t1, 99998099
+div $t0, $t1
+mfhi $t0
+sw $t0, 0($sp)
+lw $t0, 0($sp)
+li $t1, 123671861
+mul $t0, $t0, $t1
+li $t1, 236234
+sub $t0, $t0, $t1
+lw $t1, 0($sp)
+li $s0, 135632
+add $t1, $t1, $s0
+mul $t0, $t0, $t1
+li $t1, 7
+div $t0, $t0, $t1
+sw $t0, 0($sp)
+lw $t0, 4($sp)
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, 4($sp)
+j Block1
+
+Block3:
+lw $t0, 0($sp)
+addi $sp, $sp, 16
+move $v0, $t0
+jr $ra
+
+
+
+_Main:
+Block7:
+lw $t0, 0($sp)
+addi $t1, $t0, 0
+addi $t1, $t1, 0
+
+lw $t0, ($t1)
+lw $t1, 0($sp)
+addi $s0, $t1, 0
+addi $s0, $s0, 4
+
+lw $t1, ($s0)
+li $s0, 99
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 97
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 108
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 108
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 101
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 100
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 32
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 102
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 117
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 110
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 99
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 58
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 32
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 77
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 97
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 105
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 110
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 44
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 32
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 97
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 114
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 114
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 97
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 121
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 91
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 48
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 93
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 91
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 48
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 93
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 32
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 61
+move $a0, $s0
+li $v0, 11
+syscall
+
+li $s0, 32
+move $a0, $s0
+li $v0, 11
+syscall
+
+move $a0, $t0
+li $v0, 1
+syscall
+
+li $t0, 44
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 32
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 97
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 114
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 114
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 97
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 121
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 91
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 48
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 93
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 91
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 49
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 93
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 32
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 61
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 32
+move $a0, $t0
+li $v0, 11
+syscall
+
+move $a0, $t1
+li $v0, 1
+syscall
+
+li $t0, 10
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 10
+move $a0, $t0
+li $v0, 11
+syscall
+
+addi $sp, $sp, 4
+
+jr $ra
+
+
+
+_add_fake:
+Block8:
+lw $t0, 4($sp)
+lw $t1, 0($sp)
+add $t0, $t0, $t1
+li $t1, 10186
+sge $t0, $t0, $t1
+bnez $t0, Block9
+j Block10
+
+Block9:
+lw $t0, 4($sp)
+lw $t1, 0($sp)
+li $s0, 203
+mul $t1, $s0, $t1
+li $s0, 201
+div $t1, $t1, $s0
+add $t0, $t0, $t1
+addi $sp, $sp, 8
+move $v0, $t0
+jr $ra
+
+
+Block10:
+lw $t0, 4($sp)
+lw $t1, 0($sp)
+add $t0, $t0, $t1
+li $t1, 10086
+sub $t0, $t0, $t1
+li $t1, 12345678
+slt $t0, $t0, $t1
+bnez $t0, Block12
+j Block13
+
+Block11:
+addi $sp, $sp, 8
+li $v0, -10086
+jr $ra
+
+
+Block12:
+lw $t0, 4($sp)
+li $t1, 1003
+mul $t0, $t1, $t0
+li $t1, 1009
+div $t0, $t0, $t1
+lw $t1, 0($sp)
+li $s0, 2022
+mul $t1, $s0, $t1
+li $s0, 2019
+div $t1, $t1, $s0
+add $t0, $t0, $t1
+addi $sp, $sp, 8
+move $v0, $t0
+jr $ra
+
+
+Block13:
+lw $t0, 4($sp)
+lw $t1, 0($sp)
+add $t0, $t0, $t1
+li $t1, 233
+sub $t0, $t0, $t1
+addi $sp, $sp, 8
+move $v0, $t0
+jr $ra
+
+
+Block14:
+j Block11
+
+
+main:
+Block18:
+addi $sp, $sp , -136
+la $t0, 20($sp)
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+li $t1, 1
+sw $t1, ($t0)
+la $t0, 20($sp)
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+addi $t1, $t0, 4
+
+li $t0, 2
+sw $t0, ($t1)
+la $t0, 20($sp)
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+addi $t1, $t0, 8
+
+li $t0, 3
+sw $t0, ($t1)
+la $t0, 20($sp)
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+addi $t1, $t0, 12
+
+li $t0, 4
+sw $t0, ($t1)
+la $t0, 20($sp)
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+addi $t1, $t0, 16
+
+li $t0, 5
+sw $t0, ($t1)
+la $t0, 20($sp)
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+addi $t1, $t0, 20
+
+li $t0, 6
+sw $t0, ($t1)
+la $t0, 20($sp)
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+addi $t1, $t0, 24
+
+li $t0, 7
+sw $t0, ($t1)
+la $t0, 20($sp)
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+addi $t1, $t0, 28
+
+li $t0, 8
+sw $t0, ($t1)
+li $t0, 10
+sw $t0, 52($sp)
+li $t0, 20
+sw $t0, 56($sp)
+li $t0, 10
+sw $t0, 60($sp)
+li $t0, 0
+sw $t0, 64($sp)
+li $t0, 1
+sw $t0, 68($sp)
+li $v0, 5
+syscall
+move $t0, $v0
+
+sw $t0, 0($sp)
+li $v0, 5
+syscall
+move $t0, $v0
+
+sw $t0, 4($sp)
+li $v0, 5
+syscall
+move $t0, $v0
+
+sw $t0, 8($sp)
+li $v0, 5
+syscall
+move $t0, $v0
+
+sw $t0, 12($sp)
+li $v0, 5
+syscall
+move $t0, $v0
+
+sw $t0, 16($sp)
+lw $t0, 0($sp)
+li $t1, 20373381
+seq $t0, $t0, $t1
+bnez $t0, Block19
+j Block20
+
+Block19:
+lw $t0, 68($sp)
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, 68($sp)
+lw $t0, 64($sp)
+li $t1, 1332
+add $t0, $t0, $t1
+sw $t0, 64($sp)
+j Block20
+
+Block20:
+lw $t0, 4($sp)
+li $t1, 200
+sgt $t0, $t0, $t1
+bnez $t0, Block21
+j Block22
+
+Block21:
+lw $t0, 68($sp)
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, 68($sp)
+j Block22
+
+Block22:
+lw $t0, 8($sp)
+li $t1, 111
+sge $t0, $t0, $t1
+bnez $t0, Block23
+j Block24
+
+Block23:
+lw $t0, 12($sp)
+li $t1, 2234
+sne $t0, $t0, $t1
+bnez $t0, Block25
+j Block26
+
+Block24:
+li $t0, 0
+sw $t0, 72($sp)
+li $t0, 0
+sw $t0, 76($sp)
+j Block28
+
+Block25:
+lw $t0, 68($sp)
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, 68($sp)
+j Block27
+
+Block26:
+lw $t0, 68($sp)
+li $t1, 2729
+add $t0, $t0, $t1
+sw $t0, 68($sp)
+j Block27
+
+Block27:
+j Block24
+
+Block28:
+li $t0, 0
+li $t1, 0
+seq $t0, $t0, $t1
+bnez $t0, Block29
+j Block30
+
+Block29:
+lw $t0, 76($sp)
+lw $t1, 72($sp)
+la $s0, global5
+addi $s0, $s0, 0
+mul $t1, $t1, 4
+add $s0, $s0, $t1
+
+lw $t1, ($s0)
+add $t0, $t0, $t1
+sw $t0, 76($sp)
+lw $t0, 72($sp)
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, 72($sp)
+lw $t0, 72($sp)
+li $t1, 2
+sge $t0, $t0, $t1
+bnez $t0, Block31
+j Block32
+
+Block30:
+li $t0, 0
+sw $t0, 80($sp)
+j Block33
+
+Block31:
+j Block30
+
+Block32:
+j Block28
+
+Block33:
+li $t0, 1
+li $t1, 2
+sle $t0, $t0, $t1
+bnez $t0, Block34
+j Block35
+
+Block34:
+lw $t0, 80($sp)
+la $t1, 84($sp)
+addi $t1, $t1, 0
+mul $t0, $t0, 4
+add $t1, $t1, $t0
+
+li $t0, 0
+sw $t0, ($t1)
+lw $t0, 80($sp)
+li $t1, 5
+seq $t0, $t0, $t1
+bnez $t0, Block36
+j Block37
+
+Block35:
+li $t0, 0
+sw $t0, 132($sp)
+li $t0, 4
+li $t1, 5
+slt $t0, $t0, $t1
+bnez $t0, Block40
+j Block42
+
+Block36:
+lw $t0, 80($sp)
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, 80($sp)
+j Block33
+
+Block37:
+lw $t0, 80($sp)
+li $t1, 10
+sgt $t0, $t0, $t1
+bnez $t0, Block38
+j Block39
+
+Block38:
+j Block35
+
+Block39:
+lw $t0, 80($sp)
+la $t1, 84($sp)
+addi $t1, $t1, 0
+mul $t0, $t0, 4
+add $t1, $t1, $t0
+
+lw $t0, 80($sp)
+sw $t0, ($t1)
+lw $t0, 80($sp)
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, 80($sp)
+lw $t0, 76($sp)
+lw $t1, 80($sp)
+lw $s0, 80($sp)
+mul $t1, $t1, $s0
+add $t0, $t0, $t1
+sw $t0, 76($sp)
+lw $t0, 68($sp)
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, 68($sp)
+j Block33
+
+Block40:
+lw $t0, 132($sp)
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, 132($sp)
+j Block41
+
+Block41:
+li $t0, 24
+li $t1, 0
+slt $t0, $t0, $t1
+bnez $t0, Block45
+j Block44
+
+Block42:
+li $t0, 10086
+li $t1, 10
+slt $t0, $t0, $t1
+bnez $t0, Block40
+j Block41
+
+Block43:
+lw $t0, 132($sp)
+li $t1, 2
+add $t0, $t0, $t1
+sw $t0, 132($sp)
+j Block44
+
+Block44:
+la $t0, global12
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+li $v0, 5
+syscall
+move $t1, $v0
+
+sw $t1, ($t0)
+la $t0, global12
+addi $t0, $t0, 0
+addi $t0, $t0, 8
+addi $t0, $t0, 0
+
+li $v0, 5
+syscall
+move $t1, $v0
+
+sw $t1, ($t0)
+la $t0, global12
+addi $t0, $t0, 0
+addi $t0, $t0, 16
+addi $t0, $t0, 0
+
+li $v0, 5
+syscall
+move $t1, $v0
+
+sw $t1, ($t0)
+la $t0, global13
+addi $t0, $t0, 0
+addi $t0, $t0, 0
+
+li $v0, 5
+syscall
+move $t1, $v0
+
+sw $t1, ($t0)
+la $t0, global13
+addi $t0, $t0, 0
+addi $t0, $t0, 4
+
+li $v0, 5
+syscall
+move $t1, $v0
+
+sw $t1, ($t0)
+li $v0, 5
+syscall
+move $t0, $v0
+
+sw $t0, global14
+lw $t0, global14
+la $t1, global13
+addi $t1, $t1, 0
+addi $t1, $t1, 0
+
+lw $t1, ($t1)
+la $s0, global13
+addi $s0, $s0, 0
+addi $s0, $s0, 4
+
+lw $s0, ($s0)
+mul $t1, $t1, $s0
+add $t0, $t0, $t1
+la $t1, global12
+addi $t1, $t1, 0
+addi $t1, $t1, 0
+addi $t1, $t1, 4
+
+lw $t1, ($t1)
+li $s0, 2
+div $t1, $t1, $s0
+add $t0, $t0, $t1
+sw $t0, global14
+la $t0, global12
+addi $t0, $t0, 0
+addi $t0, $t0, 16
+addi $t0, $t0, 4
+
+la $t1, global12
+addi $t1, $t1, 0
+addi $t1, $t1, 16
+addi $t1, $t1, 0
+
+lw $t1, ($t1)
+la $s0, global12
+addi $s0, $s0, 0
+addi $s0, $s0, 8
+addi $s0, $s0, 0
+
+lw $s0, ($s0)
+mul $t1, $t1, $s0
+sw $t1, ($t0)
+lw $t0, 76($sp)
+lw $t1, 76($sp)
+mul $t0, $t0, $t1
+addi $sp, $sp, -8
+sw $t0, 0($sp)
+sw $ra, 4($sp)
+addi $sp, $sp, -12
+li $t1, 10
+sw $t1, 8($sp)
+li $t1, 20
+sw $t1, 4($sp)
+li $t1, 3
+sw $t1, 0($sp)
+jal _add
+lw $t0, 0($sp)
+lw $ra, 4($sp)
+addi $sp, $sp, 8
+move $t1, $v0
+
+add $t0, $t0, $t1
+sw $t0, global16
+li $t0, 50
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 48
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 51
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 55
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 51
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 51
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 56
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 49
+move $a0, $t0
+li $v0, 11
+syscall
+
+li $t0, 10
+move $a0, $t0
+li $v0, 11
+syscall
+
+lw $t0, 76($sp)
+addi $sp, $sp, -8
+sw $t0, 0($sp)
+sw $ra, 4($sp)
+addi $sp, $sp, -0
+jal _get_id
+lw $t0, 0($sp)
+lw $ra, 4($sp)
+addi $sp, $sp, 8
+move $t1, $v0
+
+add $t0, $t0, $t1
+lw $t1, 0($sp)
+addi $sp, $sp, -12
+sw $t0, 0($sp)
+sw $t1, 4($sp)
+sw $ra, 8($sp)
+addi $sp, $sp, -8
+li $s0, 123243
+sw $s0, 4($sp)
+sw $t1, 0($sp)
+jal _add_fake
+lw $t0, 0($sp)
+lw $t1, 4($sp)
+lw $ra, 8($sp)
+addi $sp, $sp, 12
+move $t1, $v0
+
+add $t0, $t0, $t1
+sw $t0, 76($sp)
+addi $sp, $sp, -4
+sw $ra, 0($sp)
+addi $sp, $sp, -0
+jal ___
+lw $ra, 0($sp)
+addi $sp, $sp, 4
+move $t0, $v0
+
+la $t1, global15
+addi $t1, $t1, 0
+addi $t1, $t1, 0
+
+addi $sp, $sp, -12
+sw $t0, 0($sp)
+sw $t1, 4($sp)
+sw $ra, 8($sp)
+addi $sp, $sp, -4
+sw $t1, 0($sp)
+jal _Main
+lw $t0, 0($sp)
+lw $t1, 4($sp)
+lw $ra, 8($sp)
+addi $sp, $sp, 12
+move $t1, $v0
+
+la $s0, global11
+addi $s0, $s0, 0
+addi $s0, $s0, 0
+
+addi $sp, $sp, -16
+sw $t0, 0($sp)
+sw $t1, 4($sp)
+sw $s0, 8($sp)
+sw $ra, 12($sp)
+addi $sp, $sp, -8
+sw $s0, 4($sp)
+li $s0, 3432
+sw $s0, 0($sp)
+jal __
+lw $t0, 0($sp)
+lw $t1, 4($sp)
+lw $s0, 8($sp)
+lw $ra, 12($sp)
+addi $sp, $sp, 16
+move $s0, $v0
+
+lw $t2, 132($sp)
+li $s1, 116
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 101
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 109
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 112
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 58
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 32
+move $a0, $s1
+li $v0, 11
+syscall
+
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 10
+move $a0, $t2
+li $v0, 11
+syscall
+
+la $t2, 84($sp)
+addi $t2, $t2, 0
+addi $t2, $t2, 0
+
+addi $sp, $sp, -20
+sw $t0, 0($sp)
+sw $t1, 4($sp)
+sw $s0, 8($sp)
+sw $t2, 12($sp)
+sw $ra, 16($sp)
+addi $sp, $sp, -8
+sw $t2, 4($sp)
+li $t2, 12
+sw $t2, 0($sp)
+jal __my_Ha_s__h
+lw $t0, 0($sp)
+lw $t1, 4($sp)
+lw $s0, 8($sp)
+lw $t2, 12($sp)
+lw $ra, 16($sp)
+addi $sp, $sp, 20
+move $t2, $v0
+
+lw $s1, 76($sp)
+lw $t3, global7
+lw $s2, global8
+lw $t4, global9
+lw $s3, global10
+la $t5, global12
+addi $t5, $t5, 0
+addi $t5, $t5, 0
+addi $t5, $t5, 0
+
+lw $t5, ($t5)
+la $s4, global12
+addi $s4, $s4, 0
+addi $s4, $s4, 0
+addi $s4, $s4, 4
+
+lw $s4, ($s4)
+la $t6, global12
+addi $t6, $t6, 0
+addi $t6, $t6, 8
+addi $t6, $t6, 0
+
+lw $t6, ($t6)
+la $s5, global12
+addi $s5, $s5, 0
+addi $s5, $s5, 8
+addi $s5, $s5, 4
+
+lw $s5, ($s5)
+la $t7, global12
+addi $t7, $t7, 0
+addi $t7, $t7, 16
+addi $t7, $t7, 0
+
+lw $t7, ($t7)
+la $s6, global12
+addi $s6, $s6, 0
+addi $s6, $s6, 16
+addi $s6, $s6, 4
+
+lw $s6, ($s6)
+la $t8, global13
+addi $t8, $t8, 0
+addi $t8, $t8, 0
+
+lw $t8, ($t8)
+la $s7, global13
+addi $s7, $s7, 0
+addi $s7, $s7, 4
+
+lw $s7, ($s7)
+lw $t9, global14
+lw $a1, global16
+la $a2, global13
+addi $a2, $a2, 0
+addi $a2, $a2, 0
+
+addi $sp, $sp, -84
+sw $t0, 0($sp)
+sw $t1, 4($sp)
+sw $s0, 8($sp)
+sw $t2, 12($sp)
+sw $s1, 16($sp)
+sw $t3, 20($sp)
+sw $s2, 24($sp)
+sw $t4, 28($sp)
+sw $s3, 32($sp)
+sw $t5, 36($sp)
+sw $s4, 40($sp)
+sw $t6, 44($sp)
+sw $s5, 48($sp)
+sw $t7, 52($sp)
+sw $s6, 56($sp)
+sw $t8, 60($sp)
+sw $s7, 64($sp)
+sw $t9, 68($sp)
+sw $ra, 72($sp)
+sw $a1, 76($sp)
+sw $a2, 80($sp)
+addi $sp, $sp, -8
+sw $a2, 4($sp)
+li $a2, 2
+sw $a2, 0($sp)
+jal __my_Ha_s__h
+lw $t0, 0($sp)
+lw $t1, 4($sp)
+lw $s0, 8($sp)
+lw $t2, 12($sp)
+lw $s1, 16($sp)
+lw $t3, 20($sp)
+lw $s2, 24($sp)
+lw $t4, 28($sp)
+lw $s3, 32($sp)
+lw $t5, 36($sp)
+lw $s4, 40($sp)
+lw $t6, 44($sp)
+lw $s5, 48($sp)
+lw $t7, 52($sp)
+lw $s6, 56($sp)
+lw $t8, 60($sp)
+lw $s7, 64($sp)
+lw $t9, 68($sp)
+lw $ra, 72($sp)
+lw $a1, 76($sp)
+lw $a2, 80($sp)
+addi $sp, $sp, 84
+move $a2, $v0
+
+addi $sp, $sp, -84
+sw $t0, 0($sp)
+sw $t1, 4($sp)
+sw $s0, 8($sp)
+sw $t2, 12($sp)
+sw $s1, 16($sp)
+sw $t3, 20($sp)
+sw $s2, 24($sp)
+sw $t4, 28($sp)
+sw $s3, 32($sp)
+sw $t5, 36($sp)
+sw $s4, 40($sp)
+sw $t6, 44($sp)
+sw $s5, 48($sp)
+sw $t7, 52($sp)
+sw $s6, 56($sp)
+sw $t8, 60($sp)
+sw $s7, 64($sp)
+sw $t9, 68($sp)
+sw $ra, 72($sp)
+sw $a1, 76($sp)
+sw $a2, 80($sp)
+addi $sp, $sp, -4
+sw $a2, 0($sp)
+jal _M__a_G_I___c
+lw $t0, 0($sp)
+lw $t1, 4($sp)
+lw $s0, 8($sp)
+lw $t2, 12($sp)
+lw $s1, 16($sp)
+lw $t3, 20($sp)
+lw $s2, 24($sp)
+lw $t4, 28($sp)
+lw $s3, 32($sp)
+lw $t5, 36($sp)
+lw $s4, 40($sp)
+lw $t6, 44($sp)
+lw $s5, 48($sp)
+lw $t7, 52($sp)
+lw $s6, 56($sp)
+lw $t8, 60($sp)
+lw $s7, 64($sp)
+lw $t9, 68($sp)
+lw $ra, 72($sp)
+lw $a1, 76($sp)
+lw $a2, 80($sp)
+addi $sp, $sp, 84
+move $a2, $v0
+
+la $a3, global15
+addi $a3, $a3, 0
+addi $a3, $a3, 0
+
+addi $v1, $a3, 0
+addi $v1, $v1, 0
+
+addi $sp, $sp, -88
+sw $t0, 0($sp)
+sw $t1, 4($sp)
+sw $s0, 8($sp)
+sw $t2, 12($sp)
+sw $s1, 16($sp)
+sw $t3, 20($sp)
+sw $s2, 24($sp)
+sw $t4, 28($sp)
+sw $s3, 32($sp)
+sw $t5, 36($sp)
+sw $s4, 40($sp)
+sw $t6, 44($sp)
+sw $s5, 48($sp)
+sw $t7, 52($sp)
+sw $s6, 56($sp)
+sw $t8, 60($sp)
+sw $s7, 64($sp)
+sw $t9, 68($sp)
+sw $ra, 72($sp)
+sw $a1, 76($sp)
+sw $a2, 80($sp)
+sw $v1, 84($sp)
+addi $sp, $sp, -8
+sw $v1, 4($sp)
+li $a3, 2
+sw $a3, 0($sp)
+jal __my_Ha_s__h
+lw $t0, 0($sp)
+lw $t1, 4($sp)
+lw $s0, 8($sp)
+lw $t2, 12($sp)
+lw $s1, 16($sp)
+lw $t3, 20($sp)
+lw $s2, 24($sp)
+lw $t4, 28($sp)
+lw $s3, 32($sp)
+lw $t5, 36($sp)
+lw $s4, 40($sp)
+lw $t6, 44($sp)
+lw $s5, 48($sp)
+lw $t7, 52($sp)
+lw $s6, 56($sp)
+lw $t8, 60($sp)
+lw $s7, 64($sp)
+lw $t9, 68($sp)
+lw $ra, 72($sp)
+lw $a1, 76($sp)
+lw $a2, 80($sp)
+lw $v1, 84($sp)
+addi $sp, $sp, 88
+move $a3, $v0
+
+lw $v1, 64($sp)
+lw reg full!!, 60($sp)
+lw reg full!!, 16($sp)
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $s1
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 1
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 64
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 24
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 1040
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 10086
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 16
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 212132
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 76
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 10
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 308
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 26
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 57048
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 3194880
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 8792
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, -687331
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 908
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 1040
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 136
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 10104
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 10
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $t3
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $s2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $t4
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $s3
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $t5
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $s4
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $t6
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $s5
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $t7
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $s6
+li $v0, 1
+syscall
+
+li $t2, 10
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $t8
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $s7
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $t9
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $a1
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $a2
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $a3
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, $v1
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, reg full!!
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+move $a0, reg full!!
+li $v0, 1
+syscall
+
+li $t2, 32
+move $a0, $t2
+li $v0, 11
+syscall
+
+li $t2, 3
+move $a0, $t2
+li $v0, 1
+syscall
+
+li $t2, 10
+move $a0, $t2
+li $v0, 11
+syscall
+
+lw $t2, 68($sp)
+addi $sp, $sp, -16
+sw $t0, 0($sp)
+sw $t1, 4($sp)
+sw $s0, 8($sp)
+sw $t2, 12($sp)
+sw $ra, 16($sp)
+addi $sp, $sp, -4
+sw $t2, 0($sp)
+jal ____
+lw $t0, 0($sp)
+lw $t1, 4($sp)
+lw $s0, 8($sp)
+lw $t2, 12($sp)
+lw $ra, 16($sp)
+addi $sp, $sp, 16
+move $t2, $v0
+
+addi $sp, $sp, 136
+li $v0, 10
+syscall
+
+
+Block45:
+li $s1, 10086
+li $t3, 10
+sgt $s1, $s1, $t3
+bnez $s1, Block43
+j Block44
+
+
+____:
+Block5:
+lw $s1, 0($sp)
+li $t3, 2
+mul $s1, $s1, $t3
+li $t3, 3
+mul $s1, $s1, $t3
+li $t3, 6
+div $s1, $s1, $t3
+li $t3, 47
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 47
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 99
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 97
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 108
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 108
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 101
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 100
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 32
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 102
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 117
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 110
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 99
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 58
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 32
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 95
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 95
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 95
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 95
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 44
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 32
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 95
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 97
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 114
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 103
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 32
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 61
+move $a0, $t3
+li $v0, 11
+syscall
+
+li $t3, 32
+move $a0, $t3
+li $v0, 11
+syscall
+
+move $a0, $s1
+li $v0, 1
+syscall
+
+li $s1, 10
+move $a0, $s1
+li $v0, 11
+syscall
+
+addi $sp, $sp, 4
+
+jr $ra
+
+
+
+_add:
+Block15:
+lw $s1, 8($sp)
+lw $t3, 4($sp)
+add $s1, $s1, $t3
+lw $t3, 0($sp)
+add $s1, $s1, $t3
+addi $sp, $sp, 12
+move $v0, $s1
+jr $ra
+
+
+
+_M__a_G_I___c:
+Block17:
+lw $s1, 0($sp)
+li $t3, -763835168
+add $s1, $s1, $t3
+li $t3, 1996325548
+div $s1, $t3
+mfhi $s1
+li $t3, 1881457024
+mul $s1, $s1, $t3
+li $t3, 11
+div $s1, $s1, $t3
+li $t3, 540488577
+mul $s1, $s1, $t3
+addi $sp, $sp, 4
+move $v0, $s1
+jr $ra
+
+
+
+_get_id:
+Block16:
+addi $sp, $sp , -8
+li $s1, 76
+sw $s1, 0($sp)
+lw $s1, 0($sp)
+move $a0, $s1
+li $v0, 1
+syscall
+
+li $s1, 10
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 10086
+sw $s1, 0($sp)
+lw $s1, 0($sp)
+move $a0, $s1
+li $v0, 1
+syscall
+
+li $s1, 10
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, -10
+sw $s1, 4($sp)
+lw $s1, 4($sp)
+move $a0, $s1
+li $v0, 1
+syscall
+
+li $s1, 10
+move $a0, $s1
+li $v0, 11
+syscall
+
+addi $sp, $sp, 8
+li $v0, 20373381
+jr $ra
+
+
+
+___:
+Block4:
+li $s1, 32
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 32
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 32
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 33
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 33
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 33
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 32
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 40
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 41
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 42
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 43
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 44
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 45
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 46
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 47
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 58
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 59
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 60
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 62
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 61
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 64
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 63
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 94
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 95
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 96
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 123
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 125
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 124
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 126
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 91
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 93
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 32
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 32
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 99
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 97
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 108
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 108
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 101
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 100
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 32
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 102
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 117
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 110
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 99
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 58
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 32
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 95
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 95
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 95
+move $a0, $s1
+li $v0, 11
+syscall
+
+li $s1, 10
+move $a0, $s1
+li $v0, 11
+syscall
+
+
+jr $ra
+
+
+

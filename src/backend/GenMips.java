@@ -60,7 +60,7 @@ public class GenMips {
         StringBuilder sb = new StringBuilder();
         ArrayList<GlobalVariable> globalVariables = irModule.getGlobals();
         for (GlobalVariable globalVariable : globalVariables) {
-            sb.append(new GenGlobalVariable(globalVariable.getName(), globalVariable.getInitialValue().getName()));
+            sb.append(new GenGlobalVariable(globalVariable));
             sb.append("\n");
         }
         return sb.toString();

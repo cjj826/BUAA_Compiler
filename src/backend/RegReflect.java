@@ -1,6 +1,6 @@
 package backend;
 
-import frontend.ir.Value.ConstantInteger;
+import frontend.ir.Value.GlobalVariable;
 import frontend.ir.Value.Value;
 
 import java.util.HashMap;
@@ -14,6 +14,15 @@ public class RegReflect {
     }
     
     private HashMap<String, Integer> reg2use;
+    private HashMap<String, String> regByUse;
+    
+    public HashMap<String, String> getValue2reg() {
+        return value2reg;
+    }
+    public HashMap<String, String> getRegByUse() {
+        return regByUse;
+    }
+    
     private HashMap<String, String> value2reg;
     private HashMap<String, Integer> loc2sp;
     
@@ -22,6 +31,7 @@ public class RegReflect {
         this.loc2sp = new HashMap<>();
         this.reg2use = new HashMap<>();
         this.value2reg = new HashMap<>();
+        this.regByUse = new HashMap<>();
         init();
     }
     
@@ -58,6 +68,18 @@ public class RegReflect {
         return num;
     }
 
+    public String getAddressName(Value pointer) {
+        if (pointer instanceof GlobalVariable) {
+            return pointer.getName().substring(1);
+        } else {
+            if (regPool.getValue2reg().containsKey(pointer.getName())) {
+                return "(" + regPool.useRegByName(pointer.getName()) + ")";
+            } else {
+                return regPool.getSpByName(pointer.getName());
+            }
+        }
+    }
+    
 //    public String getValueName(Value value) {
 //        String name;
 //        if (value instanceof ConstantInteger) {
@@ -100,6 +122,7 @@ public class RegReflect {
     }
     
     public void addLoc2sp(String loc, int offset) {
+        //存的是sp的当前值，在之后使用时做差即可得到offset
         loc2sp.put(loc, offset);
         System.out.println("reflect " + loc + " to " + offset + " the sp is " + sp);
     }
@@ -107,11 +130,14 @@ public class RegReflect {
     public void addValue2reg(String reg, String realReg) {
         value2reg.put(reg, realReg);
         reg2use.put(realReg, 1); //正在使用
+        regByUse.put(realReg, reg); //谁正在使用
         System.out.println("reflect " + reg + " to " + realReg);
     }
     
     public void freeReg(String name) {
-        reg2use.put(name, 0);
+        if (reg2use.containsKey(name)) {
+            reg2use.put(name, reg2use.get(name) - 1);
+        }
     }
     
     public String getFreeReg() {
@@ -121,22 +147,24 @@ public class RegReflect {
                 return s;
             }
         }
-        System.out.println("here");
+        System.out.println("here reg rull!!! now get sp");
         return "reg full!!";
     }
     
     public String getSpByName(String name) {
         int offset = loc2sp.get(name) - sp;
-        if (name.equals("%loc3")) {
-            System.out.println("!!!!" + loc2sp.get(name));
-            System.out.println(sp);
-        }
         return offset + "($sp)";
+    }
+    
+    public HashMap<String, Integer> getLoc2sp() {
+        return loc2sp;
     }
     
     public String useRegByName(String name) {
         String regName = value2reg.get(name);
-        reg2use.put(regName, 0); //free this reg
+        reg2use.put(regName, reg2use.get(regName) - 1); //free this reg
+//        value2reg.remove(name);
+        regByUse.remove(regName);
         return regName;
     }
 }

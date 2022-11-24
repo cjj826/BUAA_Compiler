@@ -65,4 +65,17 @@ public class ConstantArray extends Constant {
         sb.append("]");
         return sb.toString();
     }
+    
+    @Override
+    public String getEleName() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            if (i != 0) {
+                sb.append(", ");
+            }
+            Value subValue = values.get(i);
+            sb.append(subValue.getEleName());
+        }
+        return sb.toString();
+    }
 }

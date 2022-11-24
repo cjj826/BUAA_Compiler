@@ -21,6 +21,10 @@ public class Value {
         return name;
     }
     
+    public String getEleName() {
+        return name;
+    }
+    
     public void setName(String name) {
         this.name = name;
     }

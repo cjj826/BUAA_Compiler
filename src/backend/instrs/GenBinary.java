@@ -13,6 +13,7 @@ import static backend.RegReflect.regPool;
 public class GenBinary extends GenInstr {
     private String res;
     private ArrayList<String> names;
+    
     public GenBinary(BinaryOp binaryOp) {
         Op op = binaryOp.getOp();
         names = new ArrayList<>();
@@ -24,8 +25,7 @@ public class GenBinary extends GenInstr {
                 name = regPool.getFreeReg();
                 this.res += "li " + name + ", " + value.getName() + "\n";
             } else {
-                name = regPool.useRegByName(value.getName());
-                regPool.getReg2use().put(name, 1);
+                name = regPool.getValue2reg().get(value.getName()); //双目操作 暂时不能释放寄存器
             }
             names.add(name);
         }
@@ -35,10 +35,6 @@ public class GenBinary extends GenInstr {
         String newName = regPool.getFreeReg();
         regPool.addValue2reg(binaryOp.getName(), newName);
         res += getOp(op, newName);
-    }
-    
-    public String toString() {
-        return this.res;
     }
     
     public String getOp(Op op, String newName) {
@@ -53,8 +49,24 @@ public class GenBinary extends GenInstr {
                 return "div " + newName + ", " + names.get(0) + ", " + names.get(1);
             case Mod:
                 return "div " + names.get(0) + ", " + names.get(1) + "\nmfhi " + newName;
+            case Le:
+                return "sle " + newName + ", " + names.get(0) + ", " + names.get(1);
+            case Lt:
+                return "slt " + newName + ", " + names.get(0) + ", " + names.get(1);
+            case Ge:
+                return "sge " + newName + ", " + names.get(0) + ", " + names.get(1);
+            case Gt:
+                return "sgt " + newName + ", " + names.get(0) + ", " + names.get(1);
+            case Eq:
+                return "seq " + newName + ", " + names.get(0) + ", " + names.get(1);
+            case Ne:
+                return "sne " + newName + ", " + names.get(0) + ", " + names.get(1);
             default:
                 return "";
         }
+    }
+    
+    public String toString() {
+        return this.res;
     }
 }

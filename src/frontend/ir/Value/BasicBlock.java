@@ -18,6 +18,11 @@ public class BasicBlock extends Value {
     }
     
     private LinkedList<Instr> instrs;
+    
+    public Function getParent() {
+        return parent;
+    }
+    
     private Function parent;
     private boolean isTerminate;
     

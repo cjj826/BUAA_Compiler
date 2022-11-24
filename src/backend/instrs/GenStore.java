@@ -2,7 +2,6 @@ package backend.instrs;
 
 import backend.GenInstr;
 import frontend.ir.Value.ConstantInteger;
-import frontend.ir.Value.GlobalVariable;
 import frontend.ir.Value.Value;
 import frontend.ir.Value.instrs.Store;
 
@@ -24,11 +23,7 @@ public class GenStore extends GenInstr {
         } else {
             name = regPool.useRegByName(value.getName());
         }
-        if (pointer instanceof GlobalVariable) {
-            target = pointer.getName().substring(1);
-        } else {
-            target = regPool.getSpByName(pointer.getName());
-        }
+        target = regPool.getAddressName(pointer);
         this.res += "sw " + name + ", " + target;
     }
     
