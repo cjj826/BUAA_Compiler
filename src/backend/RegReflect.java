@@ -3,11 +3,29 @@ package backend;
 import frontend.ir.Value.GlobalVariable;
 import frontend.ir.Value.Value;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RegReflect {
     private int sp;
     public static final RegReflect regPool = new RegReflect();
+    private int curIndex;
+    public int totalOffset;
+    private int maxRegNum;
+    
+    public int getTotalOffset() {
+        return this.totalOffset;
+    }
+    
+    public void setTotalOffset() {
+        this.totalOffset = 0;
+    }
+    
+    public void restoreSp() {
+        this.setSp(getSp() + totalOffset);
+    }
+    
+    private ArrayList<String> regNames = new ArrayList<>();
     
     public HashMap<String, Integer> getReg2use() {
         return reg2use;
@@ -34,6 +52,7 @@ public class RegReflect {
         this.value2reg = new HashMap<>();
         this.regByUse = new HashMap<>();
         init();
+        this.curIndex = 1; // 1 - 20
     }
     
     public int getSp() {
@@ -51,14 +70,16 @@ public class RegReflect {
         //reg2use.put("$a0", 1);
         reg2use.put("$v1", 0);
         reg2use.put("$a1", 0);
-//        reg2use.put("$a2", 0);
-//        reg2use.put("$a3", 0);
-//        for (int i = 0; i <= 9; i++) {
-//            reg2use.put("$t" + i, 0);
-//        }
-//        for (int i = 0; i <= 7; i++) {
-//            reg2use.put("$s" + i, 0);
-//        }
+        reg2use.put("$a2", 0);
+        reg2use.put("$a3", 0);
+        for (int i = 0; i <= 9; i++) {
+            reg2use.put("$t" + i, 0);
+        }
+        for (int i = 0; i <= 7; i++) {
+            reg2use.put("$s" + i, 0);
+        }
+        maxRegNum = reg2use.keySet().size();
+        regNames.addAll(reg2use.keySet());
     }
     
     public int regInUse() {
@@ -68,13 +89,13 @@ public class RegReflect {
         }
         return num;
     }
-
-    public String getAddressName(Value pointer) {
+    
+    public String getAddressName(Value pointer, StringBuilder res) {
         if (pointer instanceof GlobalVariable) {
             return pointer.getName().substring(1);
         } else {
             if (regPool.getValue2reg().containsKey(pointer.getName())) {
-                return "(" + regPool.useRegByName(pointer.getName()) + ")";
+                return "(" + regPool.useRegByName(pointer.getName(), res) + ")";
             } else {
                 return regPool.getSpByName(pointer.getName());
             }
@@ -130,17 +151,31 @@ public class RegReflect {
         }
     }
     
-    public String getFreeReg() {
+    public String getFreeReg(StringBuilder res) {
         for (String s : reg2use.keySet()) {
             if (reg2use.get(s) == 0) {
                 reg2use.put(s, 1);
                 return s;
             }
         }
-        System.out.println("here reg rull!!! now get sp");
-        String valueName = regByUse.get("$t0");
-        
-        return "reg full!!";
+        System.out.println("here reg full!!! now get sp");
+        //得到正在使用寄存器的变量名
+        String regName = regNames.get(curIndex);
+        String valueName = regByUse.get(regName);
+        curIndex += 1;
+        if (curIndex >= maxRegNum) {
+            curIndex = 1;
+        }
+        //将其存放到栈上
+        setSp(getSp() - 4);
+        res.append("#temp\n");
+        res.append("addi $sp, $sp, -4\n");
+        value2reg.put(valueName, "#" + getSp());
+        res.append("sw ").append(regName).append(", 0($sp)\n");
+        //记录一个以基本块为单位的偏移量，以便之后还原
+        totalOffset += 4;
+        res.append("#total add\n");
+        return regName;
     }
     
     public String getSpByName(String name) {
@@ -152,26 +187,25 @@ public class RegReflect {
         return loc2sp;
     }
     
-    public String useRegByName(String name) {
+    public String useRegByName(String name, StringBuilder res) {
 //        String regName = value2reg.get(name);
-        String regName = Value2RegGetByName(name);
+        String regName = Value2RegGetByName(name, res);
         reg2use.put(regName, reg2use.get(regName) - 1); //free this reg
         regByUse.remove(regName);
         return regName;
     }
     
     //本质上将vlaue2reg.get的逻辑变得更加复杂，即value2reg.get可能会拿到 #sp，需要 lw 出 reg
-    public String Value2RegGetByName(String name) {
+    public String Value2RegGetByName(String name, StringBuilder res) {
         String regName = value2reg.get(name);
         if (regName.contains("#")) {
             //#sp
             int pastSp = Integer.parseInt(regName.substring(1));
             System.out.println("溢出时存储变量值的sp");
             System.out.println(pastSp);
-            String res = "";
-            String newRegName = getFreeReg();
+            String newRegName = getFreeReg(res);
             int offset = pastSp - sp;
-            res += "lw " + newRegName + ", " + offset + "($sp)";
+            res.append("lw ").append(newRegName).append(", ").append(offset).append("($sp)\n");
             return newRegName;
         } else {
             return regName;

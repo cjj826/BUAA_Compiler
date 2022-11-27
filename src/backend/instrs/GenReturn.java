@@ -9,24 +9,24 @@ import static backend.GenMips.isMain;
 import static backend.RegReflect.regPool;
 
 public class GenReturn extends GenInstr {
-    private String res;
+    private StringBuilder res;
     
     public GenReturn(Return ret) {
         Value retValue = ret.getOperandList().get(0);
-        this.res = "";
+        this.res = new StringBuilder("");
         if (isMain) {
-            this.res = "li $v0, 10\nsyscall\n";
+            this.res = new StringBuilder("li $v0, 10\nsyscall\n");
         } else {
             if (retValue instanceof ConstantInteger) {
-                this.res = "li $v0, " + retValue.getName();
+                this.res = new StringBuilder("li $v0, " + retValue.getName());
             } else if (retValue != null){ //ret 可能为 null
-                this.res = "move $v0, " + regPool.useRegByName(retValue.getName());
+                this.res = new StringBuilder("move $v0, " + regPool.useRegByName(retValue.getName(), res));
             }
-            this.res += "\njr $ra\n";
+            this.res.append("\njr $ra\n");
         }
     }
     
     public String toString() {
-        return this.res;
+        return this.res.toString();
     }
 }

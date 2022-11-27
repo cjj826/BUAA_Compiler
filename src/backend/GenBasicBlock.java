@@ -16,7 +16,10 @@ public class GenBasicBlock extends GenInstr {
     private LinkedList<Instr> irInstr;
     private int offset;
     
+    private int overflow;
+    
     public GenBasicBlock(BasicBlock basicBlock, int argNum, boolean isFirst) {
+        regPool.setTotalOffset();
         this.name = basicBlock.getName();
         this.instrs = new ArrayList<>();
         irInstr = basicBlock.getInstrs();
@@ -30,6 +33,8 @@ public class GenBasicBlock extends GenInstr {
             start = (num + argNum);
         }
         dealOtherInstr(start); //从num + argNum 或 0 开始解析，跳过对参数的store指令
+        overflow = regPool.getTotalOffset();
+        regPool.restoreSp();
     }
     
     public void dealOtherInstr(int start) {
@@ -91,8 +96,8 @@ public class GenBasicBlock extends GenInstr {
         StringBuilder sb = new StringBuilder();
         sb.append(this.name).append(":\n");
         //每个基本块都会出现寄存器溢出的风险，故需要时刻维护一个sp
-        curBlockSp = 0; //请在reg full的时候大胆改
-        
+        //curBlockSp = 0; //请在reg full的时候大胆改
+        regPool.setTotalOffset();
         if (offset != 0) { //减去的是局部变量
             sb.append("addi $sp, $sp ").append(", -").append(offset).append("\n");
         }
@@ -103,9 +108,13 @@ public class GenBasicBlock extends GenInstr {
                     sb.append("addi $sp, $sp, ").append(curFuncSpSize).append("\n");
                 }
             }
+            if (instr instanceof GenReturn || instr instanceof GeJump || instr instanceof GenBranch) {
+                if (overflow != 0) {
+                    sb.append("addi $sp, $sp, ").append(overflow).append("\n");
+                }
+            }
             sb.append(instr.toString()).append("\n");
         }
-        
         return sb.toString();
     }
     

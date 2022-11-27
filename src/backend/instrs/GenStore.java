@@ -8,26 +8,27 @@ import frontend.ir.Value.instrs.Store;
 import static backend.RegReflect.regPool;
 
 public class GenStore extends GenInstr {
-    private String res;
+    private StringBuilder res;
     
     public GenStore(Store store) {
         Value value = store.getOperandList().get(0);
         Value pointer = store.getOperandList().get(1);
         String name;
         String target;
-        res = "";
+        res = new StringBuilder();
         if (value instanceof ConstantInteger) {
-            name = regPool.getFreeReg();
-            this.res += "li " + name + ", " + value.getName() + "\n";
-            regPool.freeReg(name);
+//            name = regPool.getFreeReg();
+            name = "$a0";
+            this.res.append("li ").append(name).append(", ").append(value.getName()).append("\n");
+//            regPool.freeReg(name);
         } else {
-            name = regPool.useRegByName(value.getName());
+            name = regPool.useRegByName(value.getName(), res);
         }
-        target = regPool.getAddressName(pointer);
-        this.res += "sw " + name + ", " + target;
+        target = regPool.getAddressName(pointer, res);
+        this.res.append("sw ").append(name).append(", ").append(target);
     }
     
     public String toString() {
-        return this.res;
+        return this.res.toString();
     }
 }
