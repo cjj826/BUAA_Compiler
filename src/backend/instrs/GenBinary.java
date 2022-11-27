@@ -25,7 +25,8 @@ public class GenBinary extends GenInstr {
                 name = regPool.getFreeReg();
                 this.res += "li " + name + ", " + value.getName() + "\n";
             } else {
-                name = regPool.getValue2reg().get(value.getName()); //双目操作 暂时不能释放寄存器
+                name = regPool.Value2RegGetByName(value.getName());//双目操作 暂时不能释放寄存器
+//                name = regPool.getValue2reg().get(value.getName());
             }
             names.add(name);
         }

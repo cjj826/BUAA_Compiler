@@ -19,6 +19,7 @@ public class RegReflect {
     public HashMap<String, String> getValue2reg() {
         return value2reg;
     }
+    
     public HashMap<String, String> getRegByUse() {
         return regByUse;
     }
@@ -50,14 +51,14 @@ public class RegReflect {
         //reg2use.put("$a0", 1);
         reg2use.put("$v1", 0);
         reg2use.put("$a1", 0);
-        reg2use.put("$a2", 0);
-        reg2use.put("$a3", 0);
-        for (int i = 0; i <= 9; i++) {
-            reg2use.put("$t" + i, 0);
-        }
-        for (int i = 0; i <= 7; i++) {
-            reg2use.put("$s" + i, 0);
-        }
+//        reg2use.put("$a2", 0);
+//        reg2use.put("$a3", 0);
+//        for (int i = 0; i <= 9; i++) {
+//            reg2use.put("$t" + i, 0);
+//        }
+//        for (int i = 0; i <= 7; i++) {
+//            reg2use.put("$s" + i, 0);
+//        }
     }
     
     public int regInUse() {
@@ -79,17 +80,6 @@ public class RegReflect {
             }
         }
     }
-    
-//    public String getValueName(Value value) {
-//        String name;
-//        if (value instanceof ConstantInteger) {
-//            name = regPool.getFreeReg();
-//            this.res += "li " + name + ", " + value.getName() + "\n";
-//            regPool.freeReg(name);
-//        } else {
-//            name = regPool.useRegByName(value.getName());
-//        }
-//    }
     
     public String saveRegInUse(int num, HashMap<String, Integer> map) {
         StringBuilder sb = new StringBuilder();
@@ -136,7 +126,7 @@ public class RegReflect {
     
     public void freeReg(String name) {
         if (reg2use.containsKey(name)) {
-            reg2use.put(name, reg2use.get(name) - 1);
+            reg2use.put(name, 0);
         }
     }
     
@@ -148,6 +138,7 @@ public class RegReflect {
             }
         }
         System.out.println("here reg rull!!! now get sp");
+        String valueName = regByUse.get("$t0");
         
         return "reg full!!";
     }
@@ -162,10 +153,28 @@ public class RegReflect {
     }
     
     public String useRegByName(String name) {
-        String regName = value2reg.get(name);
+//        String regName = value2reg.get(name);
+        String regName = Value2RegGetByName(name);
         reg2use.put(regName, reg2use.get(regName) - 1); //free this reg
-//        value2reg.remove(name);
         regByUse.remove(regName);
         return regName;
+    }
+    
+    //本质上将vlaue2reg.get的逻辑变得更加复杂，即value2reg.get可能会拿到 #sp，需要 lw 出 reg
+    public String Value2RegGetByName(String name) {
+        String regName = value2reg.get(name);
+        if (regName.contains("#")) {
+            //#sp
+            int pastSp = Integer.parseInt(regName.substring(1));
+            System.out.println("溢出时存储变量值的sp");
+            System.out.println(pastSp);
+            String res = "";
+            String newRegName = getFreeReg();
+            int offset = pastSp - sp;
+            res += "lw " + newRegName + ", " + offset + "($sp)";
+            return newRegName;
+        } else {
+            return regName;
+        }
     }
 }
