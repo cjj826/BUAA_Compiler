@@ -12,9 +12,8 @@ public class GenLoad extends GenInstr {
     public GenLoad(Load load) {
         Value pointer = load.getOperandList().get(0);
         this.res = new StringBuilder();
-        String newName = regPool.getFreeReg(this.res); //申请一个
         String name = regPool.getAddressName(pointer, res);
-        regPool.addValue2reg(load.getName(), newName);
+        String newName = regPool.defReg(res, load.getName());
         this.res.append("lw ").append(newName).append(", ").append(name);
     }
     

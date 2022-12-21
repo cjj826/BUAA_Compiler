@@ -8,6 +8,7 @@ import frontend.ir.Value.instrs.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import static backend.RegReflect.curInstr;
 import static backend.RegReflect.regPool;
 
 public class GenBasicBlock extends GenInstr {
@@ -15,11 +16,9 @@ public class GenBasicBlock extends GenInstr {
     private ArrayList<GenInstr> instrs;
     private LinkedList<Instr> irInstr;
     private int offset;
+    private StringBuilder res;
     
-    private int overflow;
-    
-    public GenBasicBlock(BasicBlock basicBlock, int argNum, boolean isFirst) {
-        regPool.setTotalOffset();
+    public GenBasicBlock(BasicBlock basicBlock, boolean isFirst) {
         this.name = basicBlock.getName();
         this.instrs = new ArrayList<>();
         irInstr = basicBlock.getInstrs();
@@ -27,20 +26,27 @@ public class GenBasicBlock extends GenInstr {
         int start = 0;
         if (isFirst) {
             offset = 0;
-            int num = dealAllocInstr(argNum); //sp移动的多少
-            //调用结束后得到 offset 值为形参的sp大小，curSp为 sp 的大小
-            offset = curFuncSpSize - offset; //局部参数的sp
-            start = (num + argNum);
+            start = dealAllocInstr(); //sp移动的多少
         }
         dealOtherInstr(start); //从num + argNum 或 0 开始解析，跳过对参数的store指令
-        overflow = regPool.getTotalOffset();
-        regPool.restoreSp();
     }
     
     public void dealOtherInstr(int start) {
         int size = irInstr.size();
+        res = new StringBuilder();
         for (int i = start; i < size; i++) {
-            Value instr = irInstr.get(i);
+            Instr instr = irInstr.get(i);
+            curInstr = instr;
+            int flag = 0;
+            /*
+            Move指令优化
+             */
+            if (i + 1 < size && irInstr.get(i + 1) instanceof Move &&
+                    ((Move) irInstr.get(i + 1)).getSource().getName().equals(instr.getName())) {
+                instr.setName(irInstr.get(i + 1).getName());
+                flag = 1;
+            }
+            
             if (instr instanceof Return) {
                 instrs.add(new GenReturn((Return) instr));
             } else if (instr instanceof Store) {
@@ -56,36 +62,38 @@ public class GenBasicBlock extends GenInstr {
             } else if (instr instanceof Branch) {
                 instrs.add(new GenBranch((Branch) instr));
             } else if (instr instanceof Jump) {
-                instrs.add(new GeJump((Jump) instr));
+                instrs.add(new GenJump((Jump) instr));
             } else if (instr instanceof GetElementPtr) {
+                /*
+                TODO:窥孔优化之字符串输出
+                 */
                 instrs.add(new GenGetElementPtr((GetElementPtr) instr));
+            } else if (instr instanceof Move) {
+                instrs.add(new GenMove((Move) instr));
+            }
+            if (flag == 1) {
+                i += 1;
             }
         }
     }
     
-    public int dealAllocInstr(int argNum) {
-        //遍历instr直到不是alloca，倒数的argNum个为形参
-        int size = 0; //总的size大小
-        int num = 0;
+    public int dealAllocInstr() {
+        //遍历instr直到不是alloca，总的局部变量区size大小
+        int num = 0; //alloca指令数
         for (Instr instr : irInstr) {
             if (instr instanceof Alloc) {
                 num += 1;
-                size += instr.getType().getElementType().getLength() * 4;
+                offset += instr.getType().getElementType().getLength() * 4;
             } else {
                 break;
             }
         }
-        curFuncSpSize = size;//在此改变，之后会一直伴随该函数所有的基本块
+        curFuncSpSize += offset;//在此改变，之后会一直伴随该函数所有的基本块，此处加的只是局部数组变量
         if (num == 0) {
             return num;
         }
-        //映射参数，倒着遍历，即先第二个参数，再往前，栈是往下长的，靠前的参数在较高的位置
-        for (int i = num - argNum; i <= num - 1; i++) {
-            regPool.addLoc2sp(irInstr.get(i).getName(), (regPool.getSp() + offset));
-            offset += irInstr.get(i).getType().getElementType().getLength() * 4;
-        }
         //映射局部变量，顺序无所谓
-        for (int i = 0; i < num - argNum; i++) {
+        for (int i = 0; i < num; i++) {
             regPool.setSp(regPool.getSp() - irInstr.get(i).getType().getElementType().getLength() * 4);
             regPool.addLoc2sp(irInstr.get(i).getName(), regPool.getSp());
         }
@@ -95,27 +103,12 @@ public class GenBasicBlock extends GenInstr {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.name).append(":\n");
-        //每个基本块都会出现寄存器溢出的风险，故需要时刻维护一个sp
-        //curBlockSp = 0; //请在reg full的时候大胆改
-        regPool.setTotalOffset();
         if (offset != 0) { //减去的是局部变量
             sb.append("addi $sp, $sp ").append(", -").append(offset).append("\n");
         }
         for (GenInstr instr : instrs) {
-            if (instr instanceof GenReturn) {
-                //函数返回
-                if (curFuncSpSize != 0) { //返回值是进入函数时 减去的栈帧
-                    sb.append("addi $sp, $sp, ").append(curFuncSpSize).append("\n");
-                }
-            }
-            if (instr instanceof GenReturn || instr instanceof GeJump || instr instanceof GenBranch) {
-                if (overflow != 0) {
-                    sb.append("addi $sp, $sp, ").append(overflow).append("\n");
-                }
-            }
-            sb.append(instr.toString()).append("\n");
+            sb.append(instr).append("\n");
         }
         return sb.toString();
     }
-    
 }

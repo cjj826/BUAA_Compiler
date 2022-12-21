@@ -1,6 +1,5 @@
 package frontend.ir;
 
-import frontend.ir.Value.ConstantInteger;
 import frontend.ir.Value.Value;
 import frontend.ir.type.Type;
 

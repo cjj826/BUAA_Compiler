@@ -8,11 +8,10 @@ import frontend.ir.IrTable;
 import frontend.ir.MyModule;
 import frontend.ir.Value.BasicBlock;
 import frontend.ir.Value.ConstantInteger;
+import frontend.ir.Value.GlobalString;
 import frontend.ir.Value.Value;
-import frontend.ir.Value.instrs.Call;
-import frontend.ir.Value.instrs.Jump;
-import frontend.ir.Value.instrs.Return;
-import frontend.ir.Value.instrs.Store;
+import frontend.ir.Value.instrs.*;
+import frontend.ir.type.ArrayType;
 import frontend.ir.type.IntegerType;
 import frontend.ir.type.VoidType;
 
@@ -61,6 +60,7 @@ public class Stmt extends Token {
                     pos += 2;
                 }
             }
+            /*
             int argPosition = 0;
             for (int i = 1; i < len - 1; i++) {
                 ArrayList<Value> tempArgs = new ArrayList<>();
@@ -80,6 +80,41 @@ public class Stmt extends Token {
                     new Call(func.getType(), curBB, func, tempArgs);
                 }
             }
+            */
+            
+            int argPosition = 0;
+            StringBuilder tempStr = new StringBuilder();
+            int size = 0;
+            ArrayList<Value> tempArgs;
+            for (int i = 1; i < len - 1; i++) {
+                if (formatString.charAt(i) == '%') {
+                    //字符串结束，调用putstr或putchar
+                    String curStr = tempStr.toString();
+                    if (!curStr.isEmpty()) {
+                        getString(curStr, size);
+                    }
+                    tempStr = new StringBuilder();
+                    size = 0;
+                    tempArgs = new ArrayList<>();
+                    Value func = MyModule.myModule.functions.get("putint");
+                    tempArgs.add(args.get(argPosition++));
+                    new Call(func.getType(), curBB, func, tempArgs);
+                    i += 1;
+                } else {
+                    if (formatString.charAt(i) == '\\') {
+                        tempStr.append("\\n");
+                        size += 1;
+                        i += 1;
+                    } else {
+                        tempStr.append(formatString.charAt(i));
+                        size += 1;
+                    }
+                }
+            }
+            if (!tempStr.toString().isEmpty()) {
+                getString(tempStr.toString(), size);
+            }
+            
         } else if (childTokens.get(0).getSymbol().equals(Sym.If)) {
             return visitIf(irTable);
         } else if (childTokens.get(0) instanceof Block) {
@@ -91,12 +126,42 @@ public class Stmt extends Token {
             return new Jump(whileEnd.peek(), curBB);
         } else if (childTokens.get(0).getSymbol().equals(Sym.Continue)) {
             return new Jump(whileStart.peek(), curBB);
-        } else{
+        } else {
             for (Token token : childTokens) {
                 token.visit(irTable);
             }
         }
         return null;
+    }
+    
+    public void getString(String curStr, int size) {
+        //字符串结束，调用putstr或putchar
+        ArrayList<Value> tempArgs;
+        if (curStr.length() == 1) {
+            //调用putchar
+            tempArgs = new ArrayList<>();
+            Value func = MyModule.myModule.functions.get("putch");
+            if (curStr.charAt(0) == '\\') {
+                tempArgs.add(new ConstantInteger(IntegerType.I32, String.valueOf((int) ('\n'))));
+            } else {
+                tempArgs.add(new ConstantInteger(IntegerType.I32, String.valueOf((int) (curStr.charAt(0)))));
+            }
+            new Call(func.getType(), curBB, func, tempArgs);
+        } else {
+            //调用putstr
+            tempArgs = new ArrayList<>();
+            Value func = MyModule.myModule.functions.get("putstr");
+            GlobalString string = MyModule.myModule.findSameGlobalString(curStr);
+            if (string == null) {
+                string = new GlobalString(new ArrayType(new IntegerType("i8"), (size + 1)), "", curStr);
+            }
+            ArrayList<Value> offsets = new ArrayList<>();
+            offsets.add(ConstantInteger.Constant0);
+            offsets.add(ConstantInteger.Constant0);
+            Value pointer = new GetElementPtr(string, offsets, curBB);
+            tempArgs.add(pointer);
+            new Call(func.getType(), curBB, func, tempArgs);
+        }
     }
     
     public Value visitWhile(IrTable irTable) {

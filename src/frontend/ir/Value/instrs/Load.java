@@ -1,5 +1,6 @@
 package frontend.ir.Value.instrs;
 
+import frontend.ir.Use;
 import frontend.ir.Value.BasicBlock;
 import frontend.ir.Value.Value;
 import frontend.ir.type.PointerType;
@@ -13,6 +14,9 @@ public class Load extends Instr {
     public Load(Value pointer, BasicBlock parent) {
         super(parent);
         this.getOperandList().add(pointer);
+        Use use = new Use(this, 0);
+        this.getUseList().add(use);
+        pointer.addUser(use);
         setType(((PointerType) pointer.getType()).getElementType());
         setName("%reg" + REG_NUM++);
     }

@@ -14,6 +14,7 @@ public class Zext extends Instr {
     public Zext(Value op, Type targetType, BasicBlock parent) {
         super(parent);
         this.getOperandList().add(op);
+        addUse(op, 0);
         setType(targetType);
         setName("%reg" + REG_NUM++);
         this.targetType = targetType;

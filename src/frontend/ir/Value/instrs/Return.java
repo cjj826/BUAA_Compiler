@@ -1,5 +1,6 @@
 package frontend.ir.Value.instrs;
 
+import frontend.ir.Use;
 import frontend.ir.Value.BasicBlock;
 import frontend.ir.Value.Value;
 
@@ -8,6 +9,11 @@ public class Return extends Instr {
     public Return(Value retValue, BasicBlock parent) {
         super(parent);
         this.getOperandList().add(retValue);
+        if (retValue != null) {
+            Use use = new Use(this, 0);
+            this.getUseList().add(use);
+            retValue.addUser(use);
+        }
     }
     
     public Return(BasicBlock parent) {

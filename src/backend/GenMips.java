@@ -1,36 +1,27 @@
 package backend;
 
-import frontend.ir.MyModule;
 import frontend.ir.Value.Function;
+import frontend.ir.Value.GlobalString;
 import frontend.ir.Value.GlobalVariable;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 import static backend.RegReflect.regPool;
 
 public class GenMips {
-    private MyModule irModule;
-    private ArrayList<GenGlobalVariable> initGlobalVariables = new ArrayList<>();
-    private LinkedList<GenFunc> functions = new LinkedList<>();
+    ArrayList<GlobalVariable> globalVariables;
+    ArrayList<GlobalString> globalStrings;
+    ArrayList<Function> functions;
     public static boolean isMain;
     private boolean debug;
     
-    public void addInitGlobalVariable(GenGlobalVariable initGlobal) {
-        this.initGlobalVariables.add(initGlobal);
-    }
-    
-    public void addFunc(GenFunc function) {
-        //main 函数插到头部，内部声明函数不需要插入，也可以不解析
-        this.functions.add(function);
-    }
-    
-    public GenMips(MyModule myModule) {
-        this.irModule = myModule;
+    public GenMips(ArrayList<GlobalVariable> globalVariables, ArrayList<Function> functions, ArrayList<GlobalString> globalStrings) {
+        this.functions = functions;
+        this.globalVariables = globalVariables;
+        this.globalStrings = globalStrings;
         this.debug = true;
         regPool.setSp(0);
         String res = genMips();
@@ -51,6 +42,7 @@ public class GenMips {
         StringBuilder sb = new StringBuilder();
         sb.append(".data\n");
         sb.append(genGolbalVariables());
+        sb.append(genGlobalStrings());
         sb.append(".text\n").append("j main\n");
         sb.append(genFuncs());
         return sb.toString();
@@ -58,7 +50,6 @@ public class GenMips {
     
     public String genGolbalVariables() {
         StringBuilder sb = new StringBuilder();
-        ArrayList<GlobalVariable> globalVariables = irModule.getGlobals();
         for (GlobalVariable globalVariable : globalVariables) {
             sb.append(new GenGlobalVariable(globalVariable));
             sb.append("\n");
@@ -66,15 +57,20 @@ public class GenMips {
         return sb.toString();
     }
     
-    public String genFuncs() {
-        HashMap<String, Function> functions = irModule.getFunctions(); //name - function
+    public String genGlobalStrings() {
         StringBuilder sb = new StringBuilder();
-        for (String name : functions.keySet()) {
-            if (name.equals("getint") || name.equals("putint") || name.equals("putch")) {
-                continue; //库函数不解析
-            }
-            isMain = name.equals("main");
-            sb.append(new GenFunc(functions.get(name)));
+        for (GlobalString globalString : globalStrings) {
+            sb.append(new GenGlobalString(globalString));
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+    
+    public String genFuncs() {
+        StringBuilder sb = new StringBuilder();
+        for (Function function : functions) {
+            isMain = function.getName().equals("main");
+            sb.append(new GenFunc(function));
             sb.append("\n");
         }
         return sb.toString();

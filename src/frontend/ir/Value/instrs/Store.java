@@ -1,5 +1,6 @@
 package frontend.ir.Value.instrs;
 
+import frontend.ir.Use;
 import frontend.ir.Value.BasicBlock;
 import frontend.ir.Value.Value;
 
@@ -12,7 +13,17 @@ public class Store extends Instr {
     public Store(Value value, Value pointer, BasicBlock parent) {
         super(parent);
         this.getOperandList().add(value);
+        Use use = new Use(this, 0);
+        value.addUser(use);
+        this.getUseList().add(use);
         this.getOperandList().add(pointer);
+        use = new Use(this, 1);
+        pointer.addUser(use);
+        this.getUseList().add(use);
+    }
+    
+    public Value getOpValue() {
+        return this.getOperandList().get(0);
     }
     
     public String toString() {

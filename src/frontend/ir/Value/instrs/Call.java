@@ -21,6 +21,10 @@ public class Call extends Instr {
         }
         this.getOperandList().add(func);
         this.getOperandList().addAll(args);
+        int len = this.getOperandList().size();
+        for (int i = 0; i < len; i++) {
+            this.addUse(this.getOperandList().get(i), i);
+        }
     }
     
     public String toString() {

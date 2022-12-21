@@ -17,10 +17,8 @@ public class GenStore extends GenInstr {
         String target;
         res = new StringBuilder();
         if (value instanceof ConstantInteger) {
-//            name = regPool.getFreeReg();
             name = "$a0";
             this.res.append("li ").append(name).append(", ").append(value.getName()).append("\n");
-//            regPool.freeReg(name);
         } else {
             name = regPool.useRegByName(value.getName(), res);
         }

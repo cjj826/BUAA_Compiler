@@ -13,7 +13,8 @@ public class GenZext extends GenInstr {
         res = new StringBuilder();
         Value op = zext.getOperandList().get(0);
         String regName = regPool.useRegByName(op.getName(), res);
-        regPool.addValue2reg(zext.getName(), regName);
+        String newName = regPool.defReg(res, zext.getName());
+        res.append("move ").append(newName).append(", ").append(regName);
     }
     
     public String toString() {

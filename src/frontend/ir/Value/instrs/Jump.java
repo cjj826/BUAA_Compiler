@@ -12,6 +12,7 @@ public class Jump extends Instr {
     public Jump(BasicBlock targetBB, BasicBlock parent) {
         super(parent);
         this.getOperandList().add(targetBB);
+        this.addUse(targetBB, 0);
     }
     
     public String toString() {
