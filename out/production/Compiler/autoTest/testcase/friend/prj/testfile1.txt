@@ -1,0 +1,101 @@
+const int flag = 1, plag = 0;
+const int two = 2 , three = 3 , four = 4;
+const int arry_one[5] = {0,0,0,0,0};
+const int arry_two[5][5] = {{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0}};
+int a = 1;
+int b = 2, c = 3, d = 4;
+int pp = 7, ppp = 6;
+int array_one[5] = {1,2,3,4,5};
+int array_two[5][5] = {{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}};
+int getSign(int a){
+    if(a>0) {
+        return 1;
+    }
+    else {
+        return -1;
+    }
+    return 0;
+}
+int getZero(){
+    return 0;
+}
+int plus(int a, int b){
+    return a + b;
+}
+int plusplus(int arr[]){
+    int ans = 0;
+    int i = 1;
+    while(i<=5){
+        ans = arr[i-1] + ans;
+        i = i + 1;
+    }
+    return ans;
+}
+int plusplusplus(int arr[][5]){
+    int ans = 0;
+    int i = 1;
+    while(i<=5){
+        ans = arr[0][i-1] + ans;
+        i = i + 1;
+    }
+    i = 0;
+    while(i<=5){
+        ans = arr[1][i-1] + ans;
+        i = i + 1;
+    }
+    i = 0;
+    while(i<=5){
+        ans = arr[2][i-1] + ans;
+        i = i + 1;
+    }
+    i = 0;
+    while(i<=5){
+        ans = arr[3][i-1] + ans;
+        i = i + 1;
+    }
+    i = 0;
+    while(i<=5){
+        ans = arr[4][i-1] + ans;
+        i = i + 1;
+    }
+    return ans;
+}
+void hellow(){
+    printf("hellow\n");
+}
+int superplus(int a , int b, int c){
+    int re = 0;
+    re = a + b + c;
+    return re;
+}
+void hellow_num(int a){
+    int j = 0;
+    while(j<a){
+        j = j + 1;
+        printf("hellow");
+    }
+    printf("\n");
+}
+int main()
+{
+    printf("20373080\n");
+    int k;
+    k = plusplus(array_one);
+    printf("k=%d\n", k);
+    int s; 
+    s = getZero();
+    printf("s=%d\n", s);
+    int t;
+    t = plus(s, 3);
+    printf("t=%d\n", t);
+    printf("%d\n",array_one[4]);
+    k = getSign(t);
+    k = superplus(k, 1, 5);
+    printf("k=%d\n", k);
+    t = (4 % 3 * 5);
+    hellow_num(t);
+    hellow_num(array_two[0][3]);
+    hellow();
+    hellow();
+    return 0;
+}

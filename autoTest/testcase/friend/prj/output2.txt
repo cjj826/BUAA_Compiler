@@ -1,0 +1,10 @@
+20373080
+out = 5
+out = 0
+out = -2
+out = 0
+out = -1
+a_o = -1
+a_t = -5
+out = 25
+out = 24

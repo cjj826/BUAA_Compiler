@@ -4,10 +4,9 @@ declare void @putch(i32)
 declare void @putstr(i8*)
 define i32 @main() {
 Block0:
-	%loc0 = alloca [2 x i32]
-	%loc1 = getelementptr inbounds [2 x i32], [2 x i32]* %loc0, i32 0, i32 0
-	store i32 1, i32* %loc1
-	%loc2 = getelementptr inbounds i32, i32* %loc1, i32 1
-	store i32 2, i32* %loc2
+	move 1 to %reg8
+	br label %Block2
+Block2:
+	call void @putint(i32 %reg8)
 	ret i32 0
 }

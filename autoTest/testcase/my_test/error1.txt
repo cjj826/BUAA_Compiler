@@ -1,0 +1,146 @@
+
+const int global_var_1 = 1
+const int global_var_2 = global_var_1 * 2
+const int global_var_3 = global_var_1 + global_var_2, global_array_1[3 = {global_var_1 * 10, -1, 10-global_var_2};
+int var_1, var_2 = (global_var_1 + global_var_3) * global_var_2
+int var_3 = 10, array_1[2[2] = {{1, 2}, {3, 4}};
+const int array_2_2[1][1 = {{100}};
+const int aaaa = 10, aaab = 9, aaaac = 8
+
+int function_1(int formal_param {
+    return (formal_param + 4) * 5
+}
+
+void cal(int formal_param_1, int formal_param_2 {
+    if (1 == 1)
+        return;
+    return (formal_param_2 - formal_param_1 * 4) * global_var_3 + array_2_2[formal_param_1 - formal_param_1[0];
+}
+
+void my_print(int param {
+    if (1 == 0)
+        return (1+ 10 ) *10;
+    printf("%d\n", param)
+    return (param + 12) * 10;
+}
+
+int my_print_array(int length, int array[) {
+    int i = -1
+    {
+        i = 0
+    }
+    while (i < length && 1 {
+        printf("The %d element of target array is %d\n", i, array[i);
+        i = i + 1
+    }
+
+    {{
+        return 0;
+    }}
+}
+
+void increment( {
+    var_2 = var_2 + 1
+}
+
+void return_value( {
+    while (1 == 1) {
+        return ;
+    }
+
+    return 10;
+}
+
+int my_print_array_2(int array[[4], int index_1, int index_2) {
+    printf("The target element is %d\n", array[index_1][index_2);
+    return 0;
+}
+
+void function_10() {
+
+}
+
+
+void function_11(int a) {
+
+}
+
+void function_12(int a[]) {
+
+}
+
+void function_13(int a[], int b) {
+}
+
+void function_14(int a[][10], int b[]) {
+
+}
+
+int main() {
+    printf("20373037\n";
+    increment(;
+    int local_array_1[5 = {global_var_2, global_var_1, global_var_2 * global_var_1, 10, 4};
+
+    printf("My Number is %d\n", array_1[1[1] + var_3 + var_2);
+
+    int i = return_value(;
+    while (i < 3 {
+        printf("The %d element of array_1 is %d\n", i, local_array_1[i);
+        i = i + 1
+        increment(;
+        if (i == 1 {
+            break;
+        } else {
+            continue;
+        }
+    }
+
+    break;
+    continue;;;;;;;;;;;
+    break;;;;break;;;;;;
+    printf("hello!\n", 1, 2);
+    printf("%dd");
+    printf("%d%d%d%d%d%d%d\n", 1, 2, 3, 4, 5);
+    my_print_array(2, array_1[1);
+
+    int array_2[4[4] = {{1, 1, 1, 1}, {0, 0, 0, 0}, {2, 2, 2, 2}, {4, 5, var_2, 7}};
+    array_2[3][0 = array_2[0][0] + array_2[1][0] - array_2[2][0];
+    my_print_array_2(array_2, 0, 3);
+
+
+    my_print_array(array_2[3]);
+    my_print_array();
+    my_print_array(array_2, array_2[3]);
+    function_10(function_10());
+    function_11(function_10());
+
+    int a
+    a = getint(;
+
+    local_array_1[a] = a*local_array_1[1]*local_array_1[2/local_array_1[a - 1] + 2;
+    if (1 || local_array_1[0] == 2 {
+        printf("branch success!\n";
+        return (1 + 10);
+    } else {
+        printf("No problem!\n";
+        return ;
+    }
+    int _b = 10, _c = -8
+    int _d = -19, _e = 2037, _t = 10;
+
+    if (_b > a || _c >= a && a != 10000 {
+        _d  = _e + _t
+    }
+    if (_d < a && _t <= a || a == a {
+        _c  = _b + _t * _e -_d
+    }
+    if(1 {}
+    if (!(_d -10) { ;}
+
+    int _ans = +-_b*-_c/a%9090 + -function_1(_e % _t - -18*+-90 * var_2;
+
+    int _ans_2 = -+-(_ans + _b*_c/-cal(4, _b+(_c*(_d /  _e)))) / local_array_1[a * _ans;
+    my_print(_ans_2);
+
+    return 0;
+}

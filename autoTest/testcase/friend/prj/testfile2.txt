@@ -1,0 +1,52 @@
+const int flag = 1;
+const int two = 2 , three = 3 , four = 4;
+const int arry_one[5] = {0,0,0,0,0};
+const int arry_two[5][5] = {{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0}};
+int a = 1;
+int b = 2, c = 3, d = 4;
+int array_one[5] = {1,2,3,4,5};
+int array_two[5][5] = {{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}};
+int getSign(int a){
+    if(a>0) {
+        return 1;
+    }
+    else {
+        return -1;
+    }
+    return 0;
+}
+int getZero(){
+    return 0;
+}
+int plus(int a, int b){
+    int re; 
+    re = a + b;
+    return re;
+}
+int main()
+{
+    printf("20373080\n");
+    int out = 0;
+    out = array_one[4];
+    printf("out = %d\n", out);
+    out = 0;
+    printf("out = %d\n", out);
+    out = getSign(out);
+    out = out + array_one[0] * 0 - array_one[1] / 1 + array_one[2] % 2;
+    printf("out = %d\n", out);
+    out = out / array_one[3];
+    out = -out;
+    printf("out = %d\n", out);
+    out = -1;
+    printf("out = %d\n", out);
+    array_one[0] = out;
+    printf("a_o = %d\n", array_one[0]);
+    array_two[0][0] = -5;
+    printf("a_t = %d\n", array_two[0][0]);
+    out = +5;
+    out = out * out;
+    printf("out = %d\n", out);
+    out = 7 + 5/2 + 7%2 + 7 * 2;
+    printf("out = %d\n", out); 
+    return 0;
+}

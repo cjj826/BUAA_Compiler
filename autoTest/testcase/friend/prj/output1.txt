@@ -1,0 +1,10 @@
+20373080
+k=15
+s=0
+t=3
+5
+k=7
+hellowhellowhellowhellowhellow
+hellow
+hellow
+hellow

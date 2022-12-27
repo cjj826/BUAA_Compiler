@@ -52,4 +52,14 @@ public class MainFuncDef extends Token {
         this.isReturnRight(type);
         return null;
     }
+    
+    @Override
+    public void isReturnRight(String type) {
+        //调用者一定是FuncDef，子节点为type, ident, (, [FuncParams], ), Block
+        //有返回值的函数的最后一句一定会显示地给出return语句，没有可以视为错误
+        //无返回值的函数出现return不一定算错，可能由return;
+        Token block = this.getChildTokens().get(this.getChildTokens().size() - 1);
+        //block子节点为 {, blockItem, }
+        block.isReturnRight(type);
+    }
 }

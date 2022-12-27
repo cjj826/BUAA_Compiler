@@ -1,0 +1,48 @@
+
+int flag[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, cnt = 1;
+int out[10];
+
+void print(int total) {
+    int i = 0;
+    while (i < total) {
+        if (i < total - 1) {
+            printf("%d ", out[i]);
+        } else {
+            printf("%d", out[i]);
+        }
+        i = i + 1;
+    }
+    printf("\n");
+
+    return;
+}
+
+void dfs(int have, int total) {
+    if (cnt == 10) {
+        return ;
+    }
+    if (have == total) {
+        print(total);
+        cnt = cnt + 1;
+        return ;
+    }
+
+    int i = 1;
+    while (i <= total) {
+        if (flag[i] == 0) {
+            flag[i] = 1;
+            out[have + 1] = i;
+            dfs(have + 1, total);
+            flag[i] =   0;  
+        }
+        i = i + 1;
+    }
+    return ;
+}
+
+int main() {
+    printf("20373037\n");
+    dfs(0, 4);
+
+    return 0;
+}

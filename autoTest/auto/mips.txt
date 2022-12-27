@@ -1,0 +1,392 @@
+.data
+global0: .word 1
+global1: .word 2
+global2: .word 3
+global3: .word 4
+global4: .word 10
+global5: .word 20
+global6: .word 99
+global7: .word 66
+str0: .asciiz "Got a number: "
+str1: .asciiz "!\n"
+str2: .asciiz "19373348\n"
+str3: .asciiz "\n"
+.text
+j main
+gi:
+Block26:
+li $v0, 5
+syscall
+move $v1, $v0
+
+la $a2, str0
+
+la $a0, ($a2)
+li $v0, 4
+syscall
+
+move $a0, $v1
+li $v0, 1
+syscall
+
+la $a1, str1
+
+la $a0, ($a1)
+li $v0, 4
+syscall
+
+move $v0, $v1
+jr $ra
+
+
+f0:
+Block0:
+jr $ra
+
+
+main:
+addi $sp, $sp, -8
+Block27:
+la $s0, str2
+
+la $a0, ($s0)
+li $v0, 4
+syscall
+
+addi $sp, $sp, -4
+sw $ra, 0($sp)
+jal gi
+lw $ra, 0($sp)
+addi $sp, $sp, 4
+move $t0, $v0
+
+addi $sp, $sp, -4
+sw $ra, 0($sp)
+addi $sp, $sp, -12
+li $a0, 1
+sw $a0, 8($sp)
+li $a0, 2
+sw $a0, 4($sp)
+sw $t0, 0($sp)
+jal f2
+lw $ra, 0($sp)
+addi $sp, $sp, 4
+move $a2, $v0
+
+addi $sp, $sp, -8
+sw $ra, 0($sp)
+sw $a2, 4($sp)
+jal f0
+lw $ra, 0($sp)
+lw $a2, 4($sp)
+addi $sp, $sp, 8
+
+move $a0, $a2
+li $v0, 1
+syscall
+
+la $v1, str3
+
+la $a0, ($v1)
+li $v0, 4
+syscall
+
+addi $sp, $sp, -12
+sw $ra, 0($sp)
+sw $a2, 4($sp)
+sw $v1, 8($sp)
+jal gi
+lw $ra, 0($sp)
+lw $a2, 4($sp)
+lw $v1, 8($sp)
+addi $sp, $sp, 12
+move $s1, $v0
+
+addi $sp, $sp, -12
+sw $ra, 0($sp)
+sw $a2, 4($sp)
+sw $v1, 8($sp)
+addi $sp, $sp, -4
+sw $s1, 0($sp)
+jal f1
+lw $ra, 0($sp)
+lw $a2, 4($sp)
+lw $v1, 8($sp)
+addi $sp, $sp, 12
+move $s2, $v0
+
+move $a0, $s2
+li $v0, 1
+syscall
+
+la $a0, ($v1)
+li $v0, 4
+syscall
+
+addi $sp, $sp, -12
+sw $ra, 0($sp)
+sw $a2, 4($sp)
+sw $v1, 8($sp)
+jal gi
+lw $ra, 0($sp)
+lw $a2, 4($sp)
+lw $v1, 8($sp)
+addi $sp, $sp, 12
+move $s4, $v0
+
+addi $sp, $sp, -8
+sw $ra, 0($sp)
+sw $v1, 4($sp)
+addi $sp, $sp, -12
+sw $a2, 8($sp)
+li $a0, 1
+sw $a0, 4($sp)
+sw $s4, 0($sp)
+jal f2
+lw $ra, 0($sp)
+lw $v1, 4($sp)
+addi $sp, $sp, 8
+move $a1, $v0
+
+move $a0, $a1
+li $v0, 1
+syscall
+
+la $a0, ($v1)
+li $v0, 4
+syscall
+
+lw $s7, global4
+addi $sp, $sp, -16
+sw $ra, 4($sp)
+sw $a1, 8($sp)
+sw $s7, 0($sp)
+sw $v1, 12($sp)
+jal gi
+lw $ra, 4($sp)
+lw $a1, 8($sp)
+lw $s7, 0($sp)
+lw $v1, 12($sp)
+addi $sp, $sp, 16
+move $t1, $v0
+
+addi $sp, $sp, -8
+sw $ra, 0($sp)
+sw $v1, 4($sp)
+addi $sp, $sp, -12
+sw $a1, 8($sp)
+sw $s7, 4($sp)
+sw $t1, 0($sp)
+jal f2
+lw $ra, 0($sp)
+lw $v1, 4($sp)
+addi $sp, $sp, 8
+move $a3, $v0
+
+move $a0, $a3
+li $v0, 1
+syscall
+
+la $a0, ($v1)
+li $v0, 4
+syscall
+
+addi $sp, $sp, -12
+sw $ra, 0($sp)
+sw $a3, 4($sp)
+sw $v1, 8($sp)
+jal gi
+lw $ra, 0($sp)
+lw $a3, 4($sp)
+lw $v1, 8($sp)
+addi $sp, $sp, 12
+move $s3, $v0
+
+lw $s6, global7
+addi $sp, $sp, -8
+sw $ra, 0($sp)
+sw $v1, 4($sp)
+addi $sp, $sp, -12
+sw $a3, 8($sp)
+sw $s3, 4($sp)
+sw $s6, 0($sp)
+jal f2
+lw $ra, 0($sp)
+lw $v1, 4($sp)
+addi $sp, $sp, 8
+move $s5, $v0
+
+move $a0, $s5
+li $v0, 1
+syscall
+
+la $a0, ($v1)
+li $v0, 4
+syscall
+
+li $v0, 10
+syscall
+
+
+
+f1:
+addi $sp, $sp, -20
+Block1:
+lw $t0, 20($sp)
+li $a0, 0
+sge $t1, $t0, $a0
+bnez $t1, Block2
+j Block28
+
+Block2:
+lw $t0, 20($sp)
+addiu $t1, $t0, 1
+
+move $a1, $t1
+j Block3
+
+Block3:
+li $a0, 0
+sle $t0, $a1, $a0
+bnez $t0, Block4
+j Block5
+
+Block4:
+addiu $s7, $a1, 1
+
+move $s0, $s7
+j Block6
+
+Block5:
+move $s0, $a1
+j Block6
+
+Block6:
+addiu $s6, $s0, 1
+
+move $a2, $s6
+j Block7
+
+Block7:
+li $a0, 0
+slt $t0, $a2, $a0
+sw $t0, 16($sp)
+bnez $t0, Block8
+j Block9
+
+Block8:
+li $a0, 0
+subu $s1, $a0, $a2
+move $a2, $s1
+j Block7
+
+Block9:
+move $a3, $a2
+j Block10
+
+Block10:
+li $a0, 0
+sgt $s3, $a3, $a0
+bnez $s3, Block11
+j Block12
+
+Block11:
+li $a0, 0
+subu $s4, $a0, $a3
+move $a3, $s4
+j Block10
+
+Block12:
+move $v1, $a3
+j Block13
+
+Block13:
+li $a0, 0
+seq $s5, $v1, $a0
+bnez $s5, Block14
+j Block16
+
+Block14:
+addiu $t0, $v1, 1
+
+move $v1, $t0
+sw $t0, 12($sp)
+j Block13
+
+Block16:
+li $a0, 0
+sne $s2, $v1, $a0
+bnez $s2, Block21
+j Block21
+
+Block21:
+move $v0, $v1
+addi $sp, $sp, 24
+jr $ra
+
+Block28:
+lw $t0, 20($sp)
+move $a1, $t0
+j Block3
+
+
+f2:
+addi $sp, $sp, -12
+Block25:
+lw $s0, global4
+sll $s2, $s0, 1
+
+lw $t0, 20($sp)
+addu $s7, $t0, $s2
+lw $s5, global5
+li $a0, 1431655766
+mult $a0, $s5
+mfhi $a0
+sra $t1, $a0, 0
+li $a0, 0
+slt $a0, $s5, $a0
+addu $t1, $t1, $a0
+
+subu $t2, $s7, $t1
+lw $t3, 12($sp)
+li $a0, 1431655766
+mult $a0, $t3
+mfhi $a0
+sra $v1, $a0, 0
+slt $a0, $t3, $a0
+addu $v1, $v1, $a0
+li $a0, 3
+mult $a0, $v1
+mflo $a0
+subu $v1, $t3, $a0
+
+addu $a3, $t2, $v1
+addiu $a1, $a3, 233
+
+li $a0, 0
+lw $t4, 16($sp)
+subu $s1, $a0, $t4
+addu $s3, $a1, $s1
+addi $sp, $sp, -16
+sw $t0, 0($sp)
+sw $ra, 12($sp)
+sw $t4, 4($sp)
+sw $s3, 8($sp)
+addi $sp, $sp, -4
+sw $t4, 0($sp)
+jal f1
+lw $t0, 0($sp)
+lw $ra, 12($sp)
+lw $t4, 4($sp)
+lw $s3, 8($sp)
+addi $sp, $sp, 16
+move $s6, $v0
+
+addu $t5, $s3, $s6
+addu $a2, $t0, $t4
+addu $s4, $a2, $t5
+move $v0, $s4
+addi $sp, $sp, 24
+jr $ra
+
+

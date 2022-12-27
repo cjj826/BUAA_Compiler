@@ -1,0 +1,10 @@
+20373080
+in = 30
+2 in
+3 in
+5 in
+con == 1 true
+con not =0  true
+both
+con >= 0
+con <= 0

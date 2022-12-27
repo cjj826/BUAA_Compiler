@@ -1,0 +1,26 @@
+//C-test0
+/*
+	try to test declaration
+	include ConstDecl | VarDecl
+*/
+const int M = 10, M2[5] = {0, 1, 2, 3, 4}, P2P[5][5] = {{0, 1, 2, 3, 4}, {5, 6, 7, 8, 9}, {10, 11, 12, 13, 14}, {15, 16, 17, 18, 19}, {20, 21, 22, 23, 24}};
+int a, b[20], c[10][1008];
+int abondon = 114514, littleRabbit[2] = {2, 3}, Matrix[2][3] = {{111, 222, 333}, {4444, 5555, 6666}};
+int main() {
+	printf("20373025\n");
+	printf("%d\n", M);
+	printf("%d %d\n", M2[3], P2P[3][4]);
+	a = 20;
+	b[10] = 10086;
+	c[4][100] = 7758258;
+	printf("%d||%d%d\n", a, b[10], c[4][100]);
+	const int i = 5;
+	printf("%d\n", i);
+	int abondon = 875875;
+	printf("%d\n", abondon);
+	printf("%d\n", littleRabbit[0]);
+	printf("%d %d\n", Matrix[1][2], Matrix[0][2]);
+	printf("abacad\n");
+	printf("%d\n", M + abondon);
+	return 0;
+}

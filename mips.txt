@@ -3,15 +3,15 @@
 j main
 main:
 Block0:
-addi $sp, $sp , -8
-la $v1, 0($sp)
+li $v1, 1
 
-li $a0, 1
-sw $a0, ($v1)
-addiu $a1, $v1, 4
+j Block2
 
-li $a0, 2
-sw $a0, ($a1)
+Block2:
+move $a0, $v1
+li $v0, 1
+syscall
+
 li $v0, 10
 syscall
 

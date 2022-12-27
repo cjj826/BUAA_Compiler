@@ -19,7 +19,7 @@ public class CompUnit extends Token {
     
     public CompUnit(String symbol, String token, int line) {
         super(symbol, token, line);
-        debug = false;
+        debug = true;
         isError = false;
     }
     

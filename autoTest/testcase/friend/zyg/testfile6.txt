@@ -1,0 +1,30 @@
+//C-test3
+/*
+	test for if and while and compare
+*/
+
+int main() {
+	printf("20373025\n");
+	int a, b;
+	a = getint();
+	b = getint(); 
+	if (a >= b)	printf(">=\n");
+	if (a > b)	printf("%d\n", a - b);
+	else if (a < b)	printf("%d\n", b - a);
+	else printf("0\n");
+	int i = 0;
+	while (i < a) {
+		printf("%d\n", i);
+		i = i + 1;
+		if (i == b){
+			i = i + 1;
+			continue;
+		}
+	}
+	int f = 0;
+	if (f && i && 1)	printf("ans1\n");
+	else printf("ans2\n");
+	if (!f || 0 && a)	printf("ans3\n");
+	else	printf("ans4\n");
+	return 0;
+}

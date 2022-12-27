@@ -1,0 +1,66 @@
+const int flag = 1;
+const int two = 2 , three = 3 , four = 4;
+const int arry_one[5] = {0,0,0,0,0};
+const int arry_two[5][5] = {{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0}};
+int a = 1;
+int b = 2, c = 3, d = 4;
+int array_one[5] = {1,2,3,4,5};
+int array_two[5][5] = {{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}};
+int main(){
+    printf("20373080\n");
+    int i = 0;
+    while(i < 5){
+        i = i + 1;
+    }
+    while (i < 10){
+        if(i == 7){
+            break;
+        }
+        i = i + 1;
+    }
+    int ans = 1;
+    i = 0;
+    while(i < 5){
+        i = i + 1;
+        if( i == 3){
+            continue;
+        }
+        ans = ans * 2;
+    }
+    int in; 
+    in = getint();
+    printf("in = %d\n", in);
+    if( in % 2 == 0){
+    	printf("2 in\n");
+	}
+	if( in % 3 == 0){
+		printf("3 in\n");
+	}
+	if( in % 5 == 0){
+		printf("5 in\n");
+	}
+    int con = 1;
+    if(con == 1){
+        printf("con == 1 true\n");
+    }
+    if(con != 0){
+        printf("con not =0  true\n");
+    }
+    if(con == 1 && con != 0){
+        printf("both\n");
+    }
+    con = con * 7 % 3 - con;
+    if(con >= 0){
+        printf("con >= 0\n");
+    }
+    if(con <= 0 || con < 0){
+        printf("con <= 0\n");
+    }
+    if(con){
+        printf("single\n");
+    }
+    if( ! con == 0 ){
+        printf("con\n");
+    }
+    return 0;
+} 

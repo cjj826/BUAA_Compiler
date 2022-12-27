@@ -1,0 +1,48 @@
+//B-testfile 0
+
+/*
+B-test
+try to test all basic rules for SysY
+*/
+
+//declare test
+const int N = 100, M2n[3][4] = {{0, 1, 2, 3},
+								{101, 102, 103, 104},
+								{555, 444, 333, 111}};
+int a1010 = 101, a2M;
+int t[3] = {8, 9, 7}, y[109][100];
+int a = 5;
+
+//FuncType test
+void prsth(int a, int b[], int c[]) {
+	printf("%dabasdf%d\n%d", c[3], a, b[2]);
+	printf("%d\n", b[0]);
+	printf("%d\n", c[0]);
+}
+
+
+
+//MainFuncDef
+
+int main() {
+	printf("20373025\n");
+	int a;
+	a = getint();
+	printf("%d\n",M2n[a][3]);
+	prsth(10, t, y[1]);
+	int j = a1010 * a + (t[0] + M2n[0][1]) * (10 - a);
+	int p = a1010 % a + t[2] / M2n[0][2];
+	printf("%d\n", j);
+	printf("%d\n", p);
+	if (0) {
+		printf("%d\n", (100 + 2) / 24);
+	} else {
+		printf("%d\n", 71414 - 141458);
+	}
+	a2M = +-+-+-100;
+	printf("%d\n", a2M);
+	if (1 && 1 || 0) {
+		printf("%d\n", 0);
+	}
+	return 0;
+}

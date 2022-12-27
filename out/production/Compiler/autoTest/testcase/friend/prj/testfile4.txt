@@ -1,0 +1,66 @@
+const int flag = 1;
+const int two = 2 , three = 3 , four = 4;
+const int arry_one[5] = {0,0,0,0,0};
+const int arry_two[5][5] = {{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0}};
+int a = 1;
+int b = 2, c = 3, d = 4;
+int array_one[5] = {1,2,3,4,5};
+int array_two[5][5] = {{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}};
+int getZero(){
+    return 0;
+}
+int plus(int a, int b){
+    int re; 
+    re = a + b;
+    return re;
+}
+int getSign(int a){
+    if(a>0) {
+        return 1;
+    }
+    else {
+        return -1;
+    }
+    return 0;
+}
+int plusplus(int arr[]){
+    int ans = 0;
+    int i = 1;
+    while(i<=5){
+        ans = arr[i-1] + ans;
+        i = i + 1;
+    }
+    return ans;
+}
+void hellow(){
+    printf("hellow\n");
+}
+void superplus(int a , int b, int c){
+    int re = 0;
+    re = a + b + c;
+}
+void hellow_num(int a){
+    int j = 0;
+    while(j<a){
+        j = j + 1;
+        printf("hellow");
+    }
+    printf("\n");
+}
+void space(){
+}
+void spacereturn(){
+    return;
+}
+int main(){
+    printf("20373080\n");
+    int i = 1;
+    while(i <= 9){
+    	printf("%d\n",i);
+    	i=i+1;
+	} 
+    if ( i == 9) ;
+    if ( i == 9 ) {
+}
+    return 0;
+} 

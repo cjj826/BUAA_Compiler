@@ -4,15 +4,12 @@ import frontend.Parser;
 import frontend.error.SetTable;
 import frontend.ir.IrTable;
 import frontend.ir.MyModule;
-import frontend.ir.Value.BasicBlock;
 import frontend.ir.Value.Function;
 import midend.*;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Compiler {
     public static boolean isProcessError;
@@ -22,7 +19,7 @@ public class Compiler {
     public static boolean isMergeBlock;
     
     public static void main(String[] args) throws IOException {
-        isProcessError = true;
+        isProcessError = false;
         isMem2reg = true;
         isGVN = true; //GVN 存在一些问题，考试时可以关闭
         isRemovePhi = true;
@@ -41,6 +38,7 @@ public class Compiler {
             SetTable setTable = new SetTable(parser.getRoot());
             if (setTable.isError()) {
                 System.out.println("error in testfile");
+                return;
             } else {
                 parser.getRoot().visit(new IrTable(null));
                 String ans = MyModule.myModule.toString();

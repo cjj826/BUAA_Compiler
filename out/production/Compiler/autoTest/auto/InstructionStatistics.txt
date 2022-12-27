@@ -1,0 +1,6 @@
+DIV 	: 0
+MULT 	: 12
+JUMP/BRANCH 	: 116
+MEM 	: 138
+OTHER 	: 481
+FinalCycle : 1036.0

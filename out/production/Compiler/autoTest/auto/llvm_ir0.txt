@@ -1,0 +1,205 @@
+@global0 = constant i32 1
+@global1 = constant i32 2
+@global2 = constant i32 3
+@global3 = constant i32 4
+@global4 = global i32 10
+@global5 = global i32 20
+@global6 = global i32 99
+@global7 = global i32 66
+@str0 = constant [15 x i8] c"Got a number: \00"
+@str1 = constant [3 x i8] c"!\0a\00"
+@str2 = constant [10 x i8] c"19373348\0a\00"
+@str3 = constant [2 x i8] c"\0a\00"
+declare i32 @getint()
+define i32 @gi() {
+Block26:
+	%loc5 = alloca i32
+	%reg51 = call i32 @getint()
+	store i32 %reg51, i32* %loc5
+	%loc6 = getelementptr inbounds [15 x i8], [15 x i8]* @str0, i32 0, i32 0
+	call void @putstr(i8* %loc6)
+	%reg52 = load i32, i32* %loc5
+	call void @putint(i32 %reg52)
+	%loc7 = getelementptr inbounds [3 x i8], [3 x i8]* @str1, i32 0, i32 0
+	call void @putstr(i8* %loc7)
+	%reg53 = load i32, i32* %loc5
+	ret i32 %reg53
+}
+declare void @putint(i32)
+declare void @putch(i32)
+declare void @putstr(i8*)
+define void @f0() {
+Block0:
+	ret void
+}
+define i32 @main() {
+Block27:
+	%loc14 = alloca i32
+	%loc13 = alloca i32
+	%loc12 = alloca i32
+	%loc9 = alloca i32
+	%loc8 = getelementptr inbounds [10 x i8], [10 x i8]* @str2, i32 0, i32 0
+	call void @putstr(i8* %loc8)
+	%reg54 = call i32 @gi()
+	%reg55 = call i32 @f2(i32 1, i32 2, i32 %reg54)
+	store i32 %reg55, i32* %loc9
+	call void @f0()
+	%reg56 = load i32, i32* %loc9
+	call void @putint(i32 %reg56)
+	%loc10 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc10)
+	%reg57 = call i32 @gi()
+	%reg58 = call i32 @f1(i32 %reg57)
+	call void @putint(i32 %reg58)
+	%loc11 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc11)
+	%reg59 = load i32, i32* %loc9
+	%reg60 = call i32 @gi()
+	%reg61 = call i32 @f2(i32 %reg59, i32 1, i32 %reg60)
+	store i32 %reg61, i32* %loc12
+	%reg62 = load i32, i32* %loc12
+	call void @putint(i32 %reg62)
+	%loc15 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc15)
+	%reg63 = load i32, i32* %loc12
+	%reg64 = load i32, i32* @global4
+	%reg65 = call i32 @gi()
+	%reg66 = call i32 @f2(i32 %reg63, i32 %reg64, i32 %reg65)
+	store i32 %reg66, i32* %loc13
+	%reg67 = load i32, i32* %loc13
+	call void @putint(i32 %reg67)
+	%loc16 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc16)
+	%reg68 = load i32, i32* %loc13
+	%reg69 = call i32 @gi()
+	%reg70 = load i32, i32* @global7
+	%reg71 = call i32 @f2(i32 %reg68, i32 %reg69, i32 %reg70)
+	call void @putint(i32 %reg71)
+	%loc17 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc17)
+	store i32 0, i32* %loc14
+	%reg72 = load i32, i32* %loc14
+	ret i32 %reg72
+}
+define i32 @f1(i32 %f0) {
+Block1:
+	%loc0 = alloca i32
+	store i32 %f0, i32* %loc0
+	%reg0 = load i32, i32* %loc0
+	%reg1 = icmp sge i32 %reg0, 0
+	br i1 %reg1, label %Block2, label %Block3
+Block2:
+	%reg2 = load i32, i32* %loc0
+	%reg3 = add i32 %reg2, 1
+	store i32 %reg3, i32* %loc0
+	br label %Block3
+Block3:
+	%reg4 = load i32, i32* %loc0
+	%reg5 = icmp sle i32 %reg4, 0
+	br i1 %reg5, label %Block4, label %Block5
+Block4:
+	%reg6 = load i32, i32* %loc0
+	%reg7 = add i32 %reg6, 1
+	store i32 %reg7, i32* %loc0
+	br label %Block6
+Block5:
+	br label %Block6
+Block6:
+	%reg8 = load i32, i32* %loc0
+	%reg9 = add i32 %reg8, 1
+	store i32 %reg9, i32* %loc0
+	br label %Block7
+Block7:
+	%reg10 = load i32, i32* %loc0
+	%reg11 = icmp slt i32 %reg10, 0
+	br i1 %reg11, label %Block8, label %Block9
+Block8:
+	%reg12 = load i32, i32* %loc0
+	%reg13 = sub i32 0, %reg12
+	store i32 %reg13, i32* %loc0
+	br label %Block7
+Block9:
+	br label %Block10
+Block10:
+	%reg14 = load i32, i32* %loc0
+	%reg15 = icmp sgt i32 %reg14, 0
+	br i1 %reg15, label %Block11, label %Block12
+Block11:
+	%reg16 = load i32, i32* %loc0
+	%reg17 = sub i32 0, %reg16
+	store i32 %reg17, i32* %loc0
+	br label %Block10
+Block12:
+	br label %Block13
+Block13:
+	%reg18 = load i32, i32* %loc0
+	%reg19 = icmp eq i32 %reg18, 0
+	br i1 %reg19, label %Block14, label %Block15
+Block14:
+	%reg20 = load i32, i32* %loc0
+	%reg21 = add i32 %reg20, 1
+	store i32 %reg21, i32* %loc0
+	br label %Block13
+Block15:
+	br label %Block16
+Block16:
+	%reg22 = load i32, i32* %loc0
+	%reg23 = icmp ne i32 %reg22, 0
+	br i1 %reg23, label %Block17, label %Block18
+Block17:
+	br label %Block18
+Block18:
+	br label %Block19
+Block19:
+	%reg24 = icmp ne i32 1, 0
+	br i1 %reg24, label %Block20, label %Block21
+Block20:
+	br label %Block22
+Block21:
+	%reg26 = load i32, i32* %loc0
+	ret i32 %reg26
+Block22:
+	%reg25 = icmp eq i32 0, 1
+	br i1 %reg25, label %Block23, label %Block24
+Block23:
+	br label %Block22
+Block24:
+	br label %Block21
+}
+define i32 @f2(i32 %f1, i32 %f2, i32 %f3) {
+Block25:
+	%loc4 = alloca i32
+	%loc3 = alloca i32
+	%loc2 = alloca i32
+	%loc1 = alloca i32
+	store i32 %f1, i32* %loc1
+	store i32 %f2, i32* %loc2
+	store i32 %f3, i32* %loc3
+	%reg27 = load i32, i32* %loc1
+	%reg28 = load i32, i32* @global4
+	%reg29 = mul i32 %reg28, 2
+	%reg30 = add i32 %reg27, %reg29
+	%reg31 = load i32, i32* @global5
+	%reg32 = sdiv i32 %reg31, 3
+	%reg33 = sub i32 %reg30, %reg32
+	%reg34 = load i32, i32* %loc3
+	%reg35 = srem i32 %reg34, 3
+	%reg36 = add i32 %reg33, %reg35
+	%reg37 = add i32 %reg36, 233
+	%reg38 = load i32, i32* %loc2
+	%reg39 = sub i32 0, %reg38
+	%reg40 = add i32 %reg37, %reg39
+	%reg41 = load i32, i32* %loc2
+	%reg42 = call i32 @f1(i32 %reg41)
+	%reg43 = add i32 %reg40, %reg42
+	store i32 %reg43, i32* %loc4
+	%reg44 = load i32, i32* %loc4
+	%reg45 = mul i32 %reg44, 1
+	store i32 %reg45, i32* %loc4
+	%reg46 = load i32, i32* %loc1
+	%reg47 = load i32, i32* %loc2
+	%reg48 = add i32 %reg46, %reg47
+	%reg49 = load i32, i32* %loc4
+	%reg50 = add i32 %reg48, %reg49
+	ret i32 %reg50
+}

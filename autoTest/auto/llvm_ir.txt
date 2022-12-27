@@ -1,0 +1,153 @@
+@global0 = constant i32 1
+@global1 = constant i32 2
+@global2 = constant i32 3
+@global3 = constant i32 4
+@global4 = global i32 10
+@global5 = global i32 20
+@global6 = global i32 99
+@global7 = global i32 66
+@str0 = constant [15 x i8] c"Got a number: \00"
+@str1 = constant [3 x i8] c"!\0a\00"
+@str2 = constant [10 x i8] c"19373348\0a\00"
+@str3 = constant [2 x i8] c"\0a\00"
+declare i32 @getint()
+declare void @putint(i32)
+declare void @putch(i32)
+declare void @putstr(i8*)
+define i32 @gi() {
+Block26:
+	%reg51 = call i32 @getint()
+	%loc6 = getelementptr inbounds [15 x i8], [15 x i8]* @str0, i32 0, i32 0
+	call void @putstr(i8* %loc6)
+	call void @putint(i32 %reg51)
+	%loc7 = getelementptr inbounds [3 x i8], [3 x i8]* @str1, i32 0, i32 0
+	call void @putstr(i8* %loc7)
+	ret i32 %reg51
+}
+define void @f0() {
+Block0:
+	ret void
+}
+define i32 @main() {
+Block27:
+	%loc8 = getelementptr inbounds [10 x i8], [10 x i8]* @str2, i32 0, i32 0
+	call void @putstr(i8* %loc8)
+	%reg54 = call i32 @gi()
+	%reg55 = call i32 @f2(i32 1, i32 2, i32 %reg54)
+	call void @f0()
+	call void @putint(i32 %reg55)
+	%loc10 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc10)
+	%reg57 = call i32 @gi()
+	%reg58 = call i32 @f1(i32 %reg57)
+	call void @putint(i32 %reg58)
+	%loc11 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc11)
+	%reg60 = call i32 @gi()
+	%reg61 = call i32 @f2(i32 %reg55, i32 1, i32 %reg60)
+	call void @putint(i32 %reg61)
+	%loc15 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc15)
+	%reg64 = load i32, i32* @global4
+	%reg65 = call i32 @gi()
+	%reg66 = call i32 @f2(i32 %reg61, i32 %reg64, i32 %reg65)
+	call void @putint(i32 %reg66)
+	%loc16 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc16)
+	%reg69 = call i32 @gi()
+	%reg70 = load i32, i32* @global7
+	%reg71 = call i32 @f2(i32 %reg66, i32 %reg69, i32 %reg70)
+	call void @putint(i32 %reg71)
+	%loc17 = getelementptr inbounds [2 x i8], [2 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc17)
+	ret i32 0
+}
+define i32 @f1(i32 %f0) {
+Block1:
+	%reg1 = icmp sge i32 %f0, 0
+	br i1 %reg1, label %Block2, label %Block3
+Block2:
+	%reg3 = add i32 %f0, 1
+	br label %Block3
+Block3:
+	%reg73 = phi i32 [ %f0, %Block1 ], [ %reg3, %Block2 ]
+	%reg5 = icmp sle i32 %reg73, 0
+	br i1 %reg5, label %Block4, label %Block5
+Block4:
+	%reg7 = add i32 %reg73, 1
+	br label %Block6
+Block5:
+	br label %Block6
+Block6:
+	%reg74 = phi i32 [ %reg7, %Block4 ], [ %reg73, %Block5 ]
+	%reg9 = add i32 %reg74, 1
+	br label %Block7
+Block7:
+	%reg75 = phi i32 [ %reg9, %Block6 ], [ %reg13, %Block8 ]
+	%reg11 = icmp slt i32 %reg75, 0
+	br i1 %reg11, label %Block8, label %Block9
+Block8:
+	%reg13 = sub i32 0, %reg75
+	br label %Block7
+Block9:
+	br label %Block10
+Block10:
+	%reg76 = phi i32 [ %reg75, %Block9 ], [ %reg17, %Block11 ]
+	%reg15 = icmp sgt i32 %reg76, 0
+	br i1 %reg15, label %Block11, label %Block12
+Block11:
+	%reg17 = sub i32 0, %reg76
+	br label %Block10
+Block12:
+	br label %Block13
+Block13:
+	%reg77 = phi i32 [ %reg76, %Block12 ], [ %reg21, %Block14 ]
+	%reg19 = icmp eq i32 %reg77, 0
+	br i1 %reg19, label %Block14, label %Block15
+Block14:
+	%reg21 = add i32 %reg77, 1
+	br label %Block13
+Block15:
+	br label %Block16
+Block16:
+	%reg23 = icmp ne i32 %reg77, 0
+	br i1 %reg23, label %Block17, label %Block18
+Block17:
+	br label %Block18
+Block18:
+	br label %Block19
+Block19:
+	%reg24 = icmp ne i32 1, 0
+	br i1 %reg24, label %Block20, label %Block21
+Block20:
+	br label %Block22
+Block21:
+	ret i32 %reg77
+Block22:
+	%reg25 = icmp eq i32 0, 1
+	br i1 %reg25, label %Block23, label %Block24
+Block23:
+	br label %Block22
+Block24:
+	br label %Block21
+}
+define i32 @f2(i32 %f1, i32 %f2, i32 %f3) {
+Block25:
+	%reg28 = load i32, i32* @global4
+	%reg29 = mul i32 %reg28, 2
+	%reg30 = add i32 %f1, %reg29
+	%reg31 = load i32, i32* @global5
+	%reg32 = sdiv i32 %reg31, 3
+	%reg33 = sub i32 %reg30, %reg32
+	%reg35 = srem i32 %f3, 3
+	%reg36 = add i32 %reg33, %reg35
+	%reg37 = add i32 %reg36, 233
+	%reg39 = sub i32 0, %f2
+	%reg40 = add i32 %reg37, %reg39
+	%reg42 = call i32 @f1(i32 %f2)
+	%reg43 = add i32 %reg40, %reg42
+	%reg45 = mul i32 %reg43, 1
+	%reg48 = add i32 %f1, %f2
+	%reg50 = add i32 %reg48, %reg45
+	ret i32 %reg50
+}
