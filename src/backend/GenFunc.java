@@ -5,7 +5,6 @@ import frontend.ir.Value.Function;
 import frontend.ir.Value.Value;
 import frontend.ir.Value.instrs.Alloc;
 import frontend.ir.Value.instrs.Instr;
-import jdk.nashorn.internal.objects.Global;
 
 import java.util.*;
 

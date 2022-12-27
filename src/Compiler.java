@@ -20,6 +20,7 @@ public class Compiler {
     public static boolean isGVN;
     public static boolean isRemovePhi;
     public static boolean isMergeBlock;
+    
     public static void main(String[] args) throws IOException {
         isProcessError = true;
         isMem2reg = true;
@@ -46,7 +47,7 @@ public class Compiler {
             }
         } else {
             parser.getRoot().visit(new IrTable(null));
-            String ans = MyModule.myModule.toString(); 
+            String ans = MyModule.myModule.toString();
         }
         
         //优化
@@ -89,9 +90,9 @@ public class Compiler {
         
         if (isMergeBlock) {
             new MergeBlock(functions);
-            MyModule.myModule.toMidOut(functions, "llvm_mergeBB.txt");
+            MyModule.myModule.toMidOut(functions, "llvm_ir_merge.txt");
         }
-
+        
         //后端获取
         new GenMips(MyModule.myModule.getGlobals(), functions, MyModule.myModule.getStrings());
     }

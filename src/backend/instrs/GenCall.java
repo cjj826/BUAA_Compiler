@@ -90,7 +90,6 @@ public class GenCall extends GenInstr {
             if (!call.getName().equals("")) {
                 String newName = regPool.defReg(res, call.getName());
                 res.append("move ").append(newName).append(", ").append("$v0\n");
-                ;
             }
         }
     }

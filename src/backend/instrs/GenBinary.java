@@ -28,6 +28,10 @@ public class GenBinary extends GenInstr {
             boolean divOp = (op.equals(Op.Div)) ? divOpt(binaryOp) : false;
             boolean modOp = (op.equals(Op.Mod)) ? modOpt(binaryOp) : false;
             boolean addOp = (op.equals(Op.Add)) ? addOpt(binaryOp) : false;
+//            boolean mulOp = false;
+//            boolean divOp = false;
+//            boolean modOp = false;
+//            boolean addOp = false;
             
             if (!mulOp && !divOp && !modOp && !addOp) {
                 for (int i = 0; i < 2; i++) {

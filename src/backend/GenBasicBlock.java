@@ -2,7 +2,6 @@ package backend;
 
 import backend.instrs.*;
 import frontend.ir.Value.BasicBlock;
-import frontend.ir.Value.Value;
 import frontend.ir.Value.instrs.*;
 
 import java.util.ArrayList;
@@ -39,14 +38,14 @@ public class GenBasicBlock extends GenInstr {
             curInstr = instr;
             int flag = 0;
             /*
-            Move指令优化
+            Move指令优化，BUG：2021-B-testfile17
              */
+            /*
             if (i + 1 < size && irInstr.get(i + 1) instanceof Move &&
                     ((Move) irInstr.get(i + 1)).getSource().getName().equals(instr.getName())) {
                 instr.setName(irInstr.get(i + 1).getName());
                 flag = 1;
-            }
-            
+            }*/
             if (instr instanceof Return) {
                 instrs.add(new GenReturn((Return) instr));
             } else if (instr instanceof Store) {

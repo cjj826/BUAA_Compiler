@@ -1,0 +1,276 @@
+@global0 = global [20 x [20 x i32]] zeroinitializer
+@global1 = global [20 x i32] zeroinitializer
+@global2 = global [20 x i32] zeroinitializer
+@global3 = global i32 30
+@global4 = global i32 0
+@global5 = global i32 0
+@str0 = constant [10 x i8] c"20373360\0a\00"
+@str1 = constant [8 x i8] c"input:\0a\00"
+@str2 = constant [29 x i8] c"4\0a7\0a1 2 3\0a2 3 4\0a3 4 5\0a4 5 6\0a\00"
+@str3 = constant [17 x i8] c"Your answer is:\0a\00"
+@str4 = constant [2 x i8] c"\0a\00"
+@str5 = constant [9 x i8] c"expect:\0a\00"
+@str6 = constant [15 x i8] c"1 4 7\0a2 5\0a3 6\0a\00"
+declare i32 @getint()
+declare void @putint(i32)
+declare void @putch(i32)
+declare void @putstr(i8*)
+define void @init() {
+Block1:
+	move 0 to %reg105
+	br label %Block2
+Block2:
+	%reg3 = icmp slt i32 %reg105, 20
+	br i1 %reg3, label %Block3, label %Block4
+Block3:
+	%loc1 = getelementptr inbounds [20 x i32], [20 x i32]* @global1, i32 0, i32 %reg105
+	store i32 0, i32* %loc1
+	%loc2 = getelementptr inbounds [20 x i32], [20 x i32]* @global2, i32 0, i32 %reg105
+	store i32 0, i32* %loc2
+	%reg7 = add i32 %reg105, 1
+	move %reg7 to %reg105
+	br label %Block2
+Block4:
+	ret void
+}
+define i32 @func() {
+Block0:
+	%reg0 = load i32, i32* @global5
+	%reg1 = add i32 %reg0, 1
+	store i32 %reg1, i32* @global5
+	ret i32 1
+}
+define i32 @main() {
+Block25:
+	%loc20 = alloca [3 x i32]
+	%loc16 = getelementptr inbounds [10 x i8], [10 x i8]* @str0, i32 0, i32 0
+	call void @putstr(i8* %loc16)
+	call void @init()
+	%reg55 = call i32 @getint()
+	%reg56 = call i32 @getint()
+	store i32 %reg56, i32* @global4
+	move 0 to %reg110
+	move 0 to %reg108
+	br label %Block26
+Block26:
+	%reg59 = icmp slt i32 %reg110, %reg55
+	br i1 %reg59, label %Block27, label %Block28
+Block27:
+	move 0 to %reg109
+	br label %Block29
+Block28:
+	call void @attribute(i32 1, i32 1)
+	%loc41 = getelementptr inbounds [8 x i8], [8 x i8]* @str1, i32 0, i32 0
+	call void @putstr(i8* %loc41)
+	%loc42 = getelementptr inbounds [29 x i8], [29 x i8]* @str2, i32 0, i32 0
+	call void @putstr(i8* %loc42)
+	%loc43 = getelementptr inbounds [17 x i8], [17 x i8]* @str3, i32 0, i32 0
+	call void @putstr(i8* %loc43)
+	move 1 to %reg111
+	move 0 to %reg106
+	br label %Block35
+Block29:
+	br label %Block30
+Block30:
+	%reg61 = call i32 @getint()
+	%loc22 = getelementptr inbounds [3 x i32], [3 x i32]* %loc20, i32 0, i32 %reg109
+	store i32 %reg61, i32* %loc22
+	%reg65 = icmp sgt i32 %reg109, 1
+	br i1 %reg65, label %Block32, label %Block33
+Block31:
+	%loc23 = getelementptr inbounds [3 x i32], [3 x i32]* %loc20, i32 0, i32 0
+	%reg68 = load i32, i32* %loc23
+	%loc24 = getelementptr inbounds [3 x i32], [3 x i32]* %loc20, i32 0, i32 1
+	%reg69 = load i32, i32* %loc24
+	%loc25 = getelementptr inbounds [20 x [20 x i32]], [20 x [20 x i32]]* @global0, i32 0, i32 %reg68, i32 %reg69
+	store i32 1, i32* %loc25
+	%reg70 = load i32, i32* %loc24
+	%reg71 = load i32, i32* %loc23
+	%loc28 = getelementptr inbounds [20 x [20 x i32]], [20 x [20 x i32]]* @global0, i32 0, i32 %reg70, i32 %reg71
+	store i32 1, i32* %loc28
+	%reg72 = load i32, i32* %loc23
+	%loc30 = getelementptr inbounds [3 x i32], [3 x i32]* %loc20, i32 0, i32 2
+	%reg73 = load i32, i32* %loc30
+	%loc31 = getelementptr inbounds [20 x [20 x i32]], [20 x [20 x i32]]* @global0, i32 0, i32 %reg72, i32 %reg73
+	store i32 1, i32* %loc31
+	%reg74 = load i32, i32* %loc30
+	%reg75 = load i32, i32* %loc23
+	%loc34 = getelementptr inbounds [20 x [20 x i32]], [20 x [20 x i32]]* @global0, i32 0, i32 %reg74, i32 %reg75
+	store i32 1, i32* %loc34
+	%reg76 = load i32, i32* %loc24
+	%reg77 = load i32, i32* %loc30
+	%loc37 = getelementptr inbounds [20 x [20 x i32]], [20 x [20 x i32]]* @global0, i32 0, i32 %reg76, i32 %reg77
+	store i32 1, i32* %loc37
+	%reg78 = load i32, i32* %loc30
+	%reg79 = load i32, i32* %loc24
+	%loc40 = getelementptr inbounds [20 x [20 x i32]], [20 x [20 x i32]]* @global0, i32 0, i32 %reg78, i32 %reg79
+	store i32 1, i32* %loc40
+	%reg81 = add i32 %reg110, 1
+	move %reg81 to %reg110
+	move %reg109 to %reg108
+	br label %Block26
+Block32:
+	br label %Block31
+Block33:
+	%reg67 = add i32 %reg109, 1
+	br label %Block34
+Block34:
+	move %reg67 to %reg109
+	br label %Block29
+Block35:
+	%reg83 = load i32, i32* @global3
+	%reg84 = icmp sle i32 %reg111, %reg83
+	br i1 %reg84, label %Block36, label %Block37
+Block36:
+	move 1 to %reg107
+	br label %Block38
+Block37:
+	%loc47 = getelementptr inbounds [9 x i8], [9 x i8]* @str5, i32 0, i32 0
+	call void @putstr(i8* %loc47)
+	%loc48 = getelementptr inbounds [15 x i8], [15 x i8]* @str6, i32 0, i32 0
+	call void @putstr(i8* %loc48)
+	br label %Block44
+Block38:
+	%reg86 = load i32, i32* @global4
+	%reg87 = icmp sle i32 %reg107, %reg86
+	br i1 %reg87, label %Block39, label %Block40
+Block39:
+	%loc45 = getelementptr inbounds [20 x i32], [20 x i32]* @global2, i32 0, i32 %reg107
+	%reg89 = load i32, i32* %loc45
+	%reg91 = icmp eq i32 %reg89, %reg111
+	br i1 %reg91, label %Block41, label %Block42
+Block40:
+	%loc46 = getelementptr inbounds [2 x i8], [2 x i8]* @str4, i32 0, i32 0
+	call void @putstr(i8* %loc46)
+	%reg96 = add i32 %reg111, 1
+	move %reg96 to %reg111
+	move %reg107 to %reg106
+	br label %Block35
+Block41:
+	call void @putint(i32 %reg107)
+	br label %Block42
+Block42:
+	%reg94 = add i32 %reg107, 1
+	move %reg94 to %reg107
+	br label %Block38
+Block43:
+	br label %Block44
+Block44:
+	%reg100 = load i32, i32* @global5
+	call void @putint(i32 %reg100)
+	%loc49 = getelementptr inbounds [2 x i8], [2 x i8]* @str4, i32 0, i32 0
+	call void @putstr(i8* %loc49)
+	br label %Block46
+Block45:
+	%reg98 = call i32 @func()
+	%reg99 = icmp ne i32 %reg98, 0
+	br i1 %reg99, label %Block43, label %Block44
+Block46:
+	br label %Block47
+Block47:
+	%reg104 = load i32, i32* @global5
+	call void @putint(i32 %reg104)
+	call void @putstr(i8* %loc49)
+	ret i32 0
+Block48:
+	%reg102 = call i32 @func()
+	%reg103 = icmp ne i32 %reg102, 0
+	br i1 %reg103, label %Block46, label %Block47
+}
+define void @copy() {
+Block5:
+	move 0 to %reg112
+	br label %Block6
+Block6:
+	%reg9 = icmp slt i32 %reg112, 20
+	br i1 %reg9, label %Block7, label %Block8
+Block7:
+	%loc4 = getelementptr inbounds [20 x i32], [20 x i32]* @global2, i32 0, i32 %reg112
+	%loc5 = getelementptr inbounds [20 x i32], [20 x i32]* @global1, i32 0, i32 %reg112
+	%reg12 = load i32, i32* %loc5
+	store i32 %reg12, i32* %loc4
+	%reg14 = add i32 %reg112, 1
+	move %reg14 to %reg112
+	br label %Block6
+Block8:
+	ret void
+}
+define void @attribute(i32 %f0, i32 %f1) {
+Block9:
+	%reg16 = load i32, i32* @global4
+	%reg17 = icmp sgt i32 %f0, %reg16
+	br i1 %reg17, label %Block10, label %Block11
+Block10:
+	%reg19 = load i32, i32* @global3
+	%reg20 = icmp slt i32 %f1, %reg19
+	br i1 %reg20, label %Block12, label %Block13
+Block11:
+	move 1 to %reg118
+	move 0 to %reg115
+	move 0 to %reg113
+	br label %Block14
+Block12:
+	store i32 %f1, i32* @global3
+	call void @copy()
+	br label %Block13
+Block13:
+	ret void
+Block14:
+	%reg24 = icmp sle i32 %reg118, %f1
+	br i1 %reg24, label %Block15, label %Block16
+Block15:
+	move 0 to %reg117
+	move 1 to %reg114
+	br label %Block17
+Block16:
+	%loc15 = getelementptr inbounds [20 x i32], [20 x i32]* @global1, i32 0, i32 %f0
+	%reg50 = add i32 %f1, 1
+	store i32 %reg50, i32* %loc15
+	%reg52 = add i32 %f0, 1
+	call void @attribute(i32 %reg52, i32 %reg50)
+	ret void
+Block17:
+	%reg26 = load i32, i32* @global4
+	%reg27 = icmp sle i32 %reg114, %reg26
+	br i1 %reg27, label %Block18, label %Block19
+Block18:
+	%loc11 = getelementptr inbounds [20 x [20 x i32]], [20 x [20 x i32]]* @global0, i32 0, i32 %f0, i32 %reg114
+	%reg30 = load i32, i32* %loc11
+	%reg31 = icmp eq i32 %reg30, 1
+	br i1 %reg31, label %Block22, label %Block49
+Block19:
+	%reg39 = icmp eq i32 %reg117, 0
+	br i1 %reg39, label %Block23, label %Block24
+Block20:
+	move 1 to %reg116
+	br label %Block21
+Block21:
+	%reg37 = add i32 %reg114, 1
+	move %reg116 to %reg117
+	move %reg37 to %reg114
+	br label %Block17
+Block22:
+	%loc12 = getelementptr inbounds [20 x i32], [20 x i32]* @global1, i32 0, i32 %reg114
+	%reg33 = load i32, i32* %loc12
+	%reg35 = icmp eq i32 %reg33, %reg118
+	br i1 %reg35, label %Block20, label %Block50
+Block23:
+	%loc13 = getelementptr inbounds [20 x i32], [20 x i32]* @global1, i32 0, i32 %f0
+	store i32 %reg118, i32* %loc13
+	%reg43 = add i32 %f0, 1
+	call void @attribute(i32 %reg43, i32 %f1)
+	store i32 0, i32* %loc13
+	br label %Block24
+Block24:
+	%reg47 = add i32 %reg118, 1
+	move %reg47 to %reg118
+	move %reg117 to %reg115
+	move %reg114 to %reg113
+	br label %Block14
+Block49:
+	move %reg117 to %reg116
+	br label %Block21
+Block50:
+	move %reg117 to %reg116
+	br label %Block21
+}

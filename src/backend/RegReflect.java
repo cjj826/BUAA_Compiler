@@ -126,7 +126,6 @@ public class RegReflect {
         }
         for (BasicBlock block : start.getSucBB()) {
             //竞速点没卡这个，考试时如果TLE可以解开
-            /*
             if (!has && !def && block.equals(curBlock)) {
                 //循环又访问到本块，那么需要考虑curInstr之前的指令
                 int end = curBlock.getInstrs().indexOf(curInstr);
@@ -142,7 +141,7 @@ public class RegReflect {
                         break;
                     }
                 }
-            }*/
+            }
             if (!visited.contains(block) && !has && !def) {
                 dfsForAllBlock(block, visited, valueName);
             }
@@ -296,6 +295,19 @@ public class RegReflect {
         }
         System.out.println("here reg full!!! now get sp");
         //得到正在使用寄存器的变量名
+        /*
+        寻找不用写回的寄存器作为溢出寄存器
+         */
+        /*
+        for (int i = 0; i < maxRegNum; i++) {
+            String regName = regNames.get(i);
+            String valueName = regByUse.get(regName);
+            if (!(defInBlock.contains(valueName) && willBeUse(valueName))) {
+                curIndex = i;
+                break;
+            }
+        }
+        */
         String regName = regNames.get(curIndex);
         String valueName = regByUse.get(regName);
         curIndex += 1;
